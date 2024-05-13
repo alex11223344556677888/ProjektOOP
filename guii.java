@@ -1,8 +1,8 @@
-import javax.swing.*;
+import javax.swing.*; //jshdkdakdjpo
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+//jsdjdnsjndksand
 public class guii extends JFrame {
 
     public guii() {
@@ -33,6 +33,7 @@ public class guii extends JFrame {
                 add(button2);
                 remove(button);
                 revalidate();
+                
                 
 
             }
