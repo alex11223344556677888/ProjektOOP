@@ -8,8 +8,8 @@ public class LKW extends KFZ {
 
         //Konstruktor
 
-    public LKW(float fzghöhe,float fzgbreite,float ladelänge,float ladevolumen,int fzggewicht, int zulässigesgewicht,String fzgkategorie,String getriebe,String motorisierung,String farbe,String ausstattung ,boolean klimatisiert ,boolean beheizt, int anzahltüren,int sitzplätze,int co2emission,int minalter,String führerscheinklasse,String kennzeichen, int fzgnummer){
-        super(fzgkategorie, getriebe, motorisierung, farbe, ausstattung , klimatisiert , beheizt, anzahltüren, sitzplätze, co2emission, minalter,führerscheinklasse,fzgnummer,kennzeichen);
+    public LKW(float fzghöhe,float fzgbreite,float ladelänge,float ladevolumen,int fzggewicht, int zulässigesgewicht,String fzgkategorie,String getriebe,String motorisierung,String farbe,String ausstattung ,boolean klimatisiert ,boolean beheizt, int anzahltüren,int sitzplätze,int co2emission,int minalter,String fuehrerscheinklasse,String kennzeichen, int fzgnummer,boolean gebucht){
+        super(fzgkategorie, getriebe, motorisierung, farbe, ausstattung , klimatisiert , beheizt, anzahltüren, sitzplätze, co2emission, minalter,fuehrerscheinklasse,fzgnummer,kennzeichen,gebucht);
       
     }
 

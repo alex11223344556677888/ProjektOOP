@@ -12,6 +12,7 @@ public class KFZ {
 
     private boolean klimatisiert;
     private boolean beheizt;
+    private boolean gebucht;
 
     private int anzahltüren;
     private int sitzplätze;
@@ -22,7 +23,7 @@ public class KFZ {
 
         //Konstruktor
 
-    public KFZ(String fzgkategorie,String getriebe,String motorisierung,String farbe,String ausstattung ,boolean klimatisiert ,boolean beheizt, int anzahltüren,int sitzplätze,int co2emission,int minalter,String führerscheinklasse, int fzgnummer, String kennzeichen){
+    public KFZ(String fzgkategorie,String getriebe,String motorisierung,String farbe,String ausstattung ,boolean klimatisiert ,boolean beheizt, int anzahltüren,int sitzplätze,int co2emission,int minalter,String führerscheinklasse, int fzgnummer, String kennzeichen,boolean gebucht){
         this.fzgkategorie = fzgkategorie;
         this.getriebe =getriebe;
         this.motorisierung = motorisierung;
@@ -37,6 +38,7 @@ public class KFZ {
         this.führerscheinklasse = führerscheinklasse;
         this.fzgnummer = fzgnummer;
         this.kennzeichen = kennzeichen; 
+        this.gebucht = gebucht;
     }
 
         //Getters & Setters
@@ -77,9 +79,9 @@ public class KFZ {
 
     public void setSitzplätze(int sitzplätze) {this.sitzplätze = sitzplätze;}
 
-    public int getCO2emission() {return co2emission;}
+    public int getCo2emission() {return co2emission;}
 
-    public void setCoO2emission(int co2emission) {this.co2emission = co2emission;}
+    public void setCo2emission(int co2emission) {this.co2emission = co2emission;}
 
     public void setMinalter(int minalter){this.minalter = minalter;}
     
@@ -96,6 +98,10 @@ public class KFZ {
     public String getKennzeichen() {return kennzeichen;}
 
     public void setKennzeichen(String kennzeichen) {this.kennzeichen = kennzeichen;}
+
+    public boolean isGebucht() {return gebucht;}
+
+    public void setGebucht(boolean gebucht) {this.gebucht = gebucht;}
 
 
     public void Print(){
@@ -116,6 +122,10 @@ public class KFZ {
         System.out.println("Mindest alter für das Fahrzeug: "+minalter);
         
     }
+
+   
+
+    
 
   
 
