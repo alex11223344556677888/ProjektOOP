@@ -7,5 +7,6 @@ Allgemeiner Programmablauf
 Word doc: https://1drv.ms/w/c/067ab1af87a5c49c/EWPnieviK6VFqlNQOmlT_pkBntLot12Hp5fGLE3oyD-zBA?e=C67Tpc
 
 
-Draw.io: ![image](https://github.com/alex11223344556677888/ProjektOOP/assets/169679411/5ec07de9-7ac5-4cc9-bf3e-c54c562811d1)
+Draw.io: ![image](https://github.com/alex11223344556677888/ProjektOOP/assets/169679411/a10e6d60-4f7c-4f55-9c0c-bb4ffa9d288c)
+
 
