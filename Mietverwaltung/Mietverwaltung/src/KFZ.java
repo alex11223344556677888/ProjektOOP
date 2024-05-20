@@ -4,7 +4,7 @@ public class KFZ {
 
     private String fzgkategorie;
     private String getriebe;
-    private String motorisierung;
+    
     private String farbe;
     private String ausstattung;
     private String führerscheinklasse;
@@ -19,14 +19,14 @@ public class KFZ {
     private int co2emission;
     private int minalter;
     private int fzgnummer; 
-    
+    private int motorleistung;
 
         //Konstruktor
 
-    public KFZ(String fzgkategorie,String getriebe,String motorisierung,String farbe,String ausstattung ,boolean klimatisiert ,boolean beheizt, int anzahltüren,int sitzplätze,int co2emission,int minalter,String führerscheinklasse, int fzgnummer, String kennzeichen,boolean gebucht){
+    public KFZ(String fzgkategorie,String getriebe, int motorleistung,String farbe,String ausstattung ,boolean klimatisiert ,boolean beheizt, int anzahltüren,int sitzplätze,int co2emission,int minalter,String führerscheinklasse, int fzgnummer, String kennzeichen,boolean gebucht){
         this.fzgkategorie = fzgkategorie;
         this.getriebe =getriebe;
-        this.motorisierung = motorisierung;
+        this.motorleistung = motorleistung;
         this.farbe = farbe;
         this.ausstattung = ausstattung;
         this.klimatisiert = klimatisiert;
@@ -51,9 +51,9 @@ public class KFZ {
 
     public void setGetriebe(String getriebe) {this.getriebe = getriebe;}
 
-    public String getMotorisierung() {return motorisierung;}
+    public int getMotorleistung() { return motorleistung;}
 
-    public void setMotorisierung(String motorisierung) {this.motorisierung = motorisierung;}
+    public void setMotorleistung(int motorleistung) { this.motorleistung = motorleistung;}
 
     public String getFarbe() {return farbe;}
 
@@ -108,7 +108,7 @@ public class KFZ {
         System.out.println("_________________________________");
         System.out.println("Fahrzeugkategorie: "+fzgkategorie);
         System.out.println("Getriebart: "+getriebe);
-        System.out.println("Antriebsart: "+motorisierung);
+        System.out.println("Antriebsart: "+motorleistung);
         System.out.println("Farbe des Fahrzeugs: "+farbe);
         System.out.println("Ausstatungpaket: "+ausstattung);
         System.out.println();
@@ -123,6 +123,7 @@ public class KFZ {
         
     }
 
+    
    
 
     
