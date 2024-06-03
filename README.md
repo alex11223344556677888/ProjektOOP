@@ -1,6 +1,6 @@
 Wichtig: bei kfz.class boolischen Wert für "gebucht" oder "nicht gebucht" machen!
 
-!!! was machen wir mit der Buchungssansicht? d.h. man hat ein Auto ausgesucht und möchte bezahlen --> vllt etwas für ein Abgrenzungskriterium
+!!! was machen wir mit der Buchungssansicht? d.h. man hat ein Auto ausgesucht und möchte bezahlen --> vllt etwas für ein Abgrenzungskriterium???
 
 
 
