@@ -17,3 +17,7 @@ Draw.io: ![image](https://github.com/alex11223344556677888/ProjektOOP/assets/169
 <img width="842" alt="Bildschirmfoto 2024-05-20 um 14 48 32" src="https://github.com/alex11223344556677888/ProjektOOP/assets/169674607/18b77d36-fcc9-4e04-9bd0-874595e3842e">
 
 
+![drawio drawio](https://github.com/alex11223344556677888/ProjektOOP/assets/169679411/a7336ebc-40ef-4948-a714-213d3f6b625a)
+
+
+
