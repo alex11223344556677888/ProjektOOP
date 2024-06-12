@@ -1,8 +1,8 @@
-package verwaltungsklassen;
+package de.autovermietung.verwaltungsklassen;
 
-import fachklassen.Kunde;
-import fachklassen.PKW;
-import fachklassen.Auftrag;
+import de.autovermietung.fachklassen.Auftrag;
+import de.autovermietung.fachklassen.Kunde;
+import de.autovermietung.fachklassen.PKW;
 
 public class Kostenberechnung {
     private Kunde kunde;
@@ -32,64 +32,82 @@ public class Kostenberechnung {
     }
 
     private double calculatePreis() {
+        double ergebnis =0;
         double grundpreis = calculateGrundpreis();
+        
 
         if (pkw.isKlimatisiert()) {
-            grundpreis *= 1.1;
+            ergebnis = (grundpreis * 1.1 - grundpreis);
+            System.out.println(ergebnis);
         }
 
         if (kunde.getFuehrerscheinzeitraum() <= 2) {
-            grundpreis *= 1.5;
+            ergebnis += (grundpreis * 1.5 - grundpreis);
+            System.out.println(ergebnis);
         } else if (kunde.getFuehrerscheinzeitraum() >= 2 && kunde.getFuehrerscheinzeitraum() <= 4) {
-            grundpreis *= 1.3;
+            ergebnis += (grundpreis * 1.3 - grundpreis);
+            System.out.println(ergebnis);
         } else {
-            grundpreis *= 1.2;
+            ergebnis += (grundpreis * 1.2 - grundpreis);
+            System.out.println(ergebnis);
         }
 
         if (pkw.isElektrofahrzeug()) {
-            grundpreis *= 0.8;
+            ergebnis += (grundpreis * 0.8 - grundpreis);
+            System.out.println(ergebnis);
         }
 
         if (pkw.isParkassistent()) {
-            grundpreis *= 1.15;
+            ergebnis += (grundpreis * 1.15 - grundpreis);
+            System.out.println(ergebnis);
         }
 
         if (pkw.isFahrassistent()) {
-            grundpreis *= 1.15;
+            ergebnis += (grundpreis * 1.15 - grundpreis);
+            System.out.println(ergebnis);
         }
 
         if (auftrag.isKindersitz()) {
-            grundpreis += 7;
+            ergebnis +=7;
+            System.out.println(ergebnis);
         }
 
         if (auftrag.isDachbox()) {
-            grundpreis += 7;
+            ergebnis +=7;
+            System.out.println(ergebnis);
         }
 
         if (auftrag.isAuslandsfahrt()) {
-            grundpreis += 7;
+            ergebnis +=7;
+            System.out.println(ergebnis);
         }
 
         switch (auftrag.getVersicherungsklasse()) {
             case 1:
-                grundpreis *= 1.3;
+            ergebnis += (grundpreis * 1.3 - grundpreis);
+            System.out.println(ergebnis);
                 break;
             case 2:
-                grundpreis *= 1.6;
+            ergebnis += (grundpreis * 1.6 - grundpreis);
+            System.out.println(ergebnis);
                 break;
             case 3:
-                grundpreis *= 1.9;
+            ergebnis += (grundpreis * 1.9 - grundpreis);
+            System.out.println(ergebnis);
                 break;
         }
 
         if (auftrag.isKilometerpaket()) {
-            grundpreis += 30;
+            ergebnis += 30;
+            System.out.println(ergebnis);
         }
 
-        return grundpreis;
+        return ergebnis + grundpreis;
     }
 
     public double getPreis() {
         return preis;
     }
 }
+
+
