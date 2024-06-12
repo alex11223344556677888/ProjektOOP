@@ -1,6 +1,8 @@
 package de.autovermietung.fachklassen;
 
-public class PKW {
+import java.io.Serializable;
+
+public class PKW implements Serializable{
     private int id;
     private String fzgkategorie;
     private String fahrzeugmarke;
@@ -16,6 +18,9 @@ public class PKW {
     private boolean beheizt;
     private boolean gebucht;
     private boolean navi;
+    private boolean elektrofahrzeug;
+    private boolean fahrassistent;
+    private boolean parkassistent;
 
     
     private int anzahltüren;
@@ -28,7 +33,7 @@ public class PKW {
 
         //Konstruktor
 
-        public PKW(int id, String fzgkategorie, String fahrzeugmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltüren, int sitzplätze, int co2emission, int minalter, String führerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi) {
+        public PKW(int id, String fzgkategorie, String fahrzeugmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltüren, int sitzplätze, int co2emission, int minalter, String führerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi, boolean fahrassistent, boolean parkassistent, boolean elektrofahrzeug) {
         this.id = id;
         this.fzgkategorie = fzgkategorie;
         this.getriebe =getriebe;
@@ -46,6 +51,10 @@ public class PKW {
         this.kennzeichen = kennzeichen; 
         this.gebucht = gebucht;
         this.fahrzeugmarke = fahrzeugmarke;
+        this.fahrassistent = fahrassistent;
+        this.parkassistent = parkassistent;
+        this.elektrofahrzeug = elektrofahrzeug;
+        this.baujahr = baujahr;
     }
 
     @Override
@@ -71,6 +80,7 @@ public class PKW {
                 ", Fzgnummer=" + fzgnummer +
                 ", Motorleistung=" + motorleistung +
                 ", Baujahr=" + baujahr +
+                
                 '}';
     }
 
@@ -237,6 +247,29 @@ public class PKW {
         this.id = id;
     }
 
+    public boolean isElektrofahrzeug() {
+        return elektrofahrzeug;
+    }
+
+    public void setElektrofahrzeug(boolean elektrofahrzeug) {
+        this.elektrofahrzeug = elektrofahrzeug;
+    }
+
+    public boolean isFahrassistent() {
+        return fahrassistent;
+    }
+
+    public void setFahrassistent(boolean fahrassistent) {
+        this.fahrassistent = fahrassistent;
+    }
+
+    public boolean isParkassistent() {
+        return parkassistent;
+    }
+
+    public void setParkassistent(boolean parkassistent) {
+        this.parkassistent = parkassistent;
+    }
+
     
 }
-
