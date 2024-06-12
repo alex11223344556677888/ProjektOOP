@@ -20,15 +20,6 @@ Draw.io: ![image](https://github.com/alex11223344556677888/ProjektOOP/assets/169
 
 
 
-![Uploading image.png…]()
-![Uploading image.png…]()
-![Uploading image.png…]()
-![Uploading image.png…]()
-![Uploading image.png…]()
-![Uploading image.png…]()
-![Uploading image.png…]()
-![Uploading image.png…]()
-![Uploading image.png…]()
 
 
 
