@@ -2,24 +2,29 @@ package verwaltungsklassen;
 
 import fachklassen.Kunde;
 import fachklassen.PKW;
+import fachklassen.Auftrag;
 
 public class Kostenberechnung {
     private Kunde kunde;
     private PKW pkw;
+    private Auftrag auftrag;
     private double grundpreis;
     private double preis;
 
-    public Kostenberechnung(Kunde kunde, PKW pkw) {
+    public Kostenberechnung(Kunde kunde, PKW pkw, Auftrag auftrag) {
         this.kunde = kunde;
         this.pkw = pkw;
+        this.auftrag = auftrag;
         this.grundpreis = calculateGrundpreis();
         this.preis = calculatePreis();
     }
 
     private double calculateGrundpreis() {
-        if (pkw.getFzgkategorie().equals("suv")) {
+        if (pkw.getFzgkategorie().equals("SUV")) {
+            return 90;
+        } else if (pkw.getFzgkategorie().equals("Kombi")) {
             return 70;
-        } else if (pkw.getFzgkategorie().equals("cabrio")) {
+        } else if (pkw.getFzgkategorie().equals("Kleinwagen")) {
             return 50;
         } else {
             return 0; // default value
@@ -27,27 +32,64 @@ public class Kostenberechnung {
     }
 
     private double calculatePreis() {
-        double fuehrerscheinFaktor = calculateFuehrerscheinFaktor();
-        double klimatisiertFaktor = pkw.isKlimatisiert() ? 1.1 : 1.0;
-        return grundpreis * fuehrerscheinFaktor * klimatisiertFaktor;
-    }
+        double grundpreis = calculateGrundpreis();
 
-    private double calculateFuehrerscheinFaktor() {
-        if (kunde.getFuehrerscheinzeitraum() < 2) {
-            return 1.5;
-        } else if (kunde.getFuehrerscheinzeitraum() >= 2 && kunde.getFuehrerscheinzeitraum() <= 4) {
-            return 1.3;
-        } else {
-            return 1.2;
+        if (pkw.isKlimatisiert()) {
+            grundpreis *= 1.1;
         }
+
+        if (kunde.getFuehrerscheinzeitraum() <= 2) {
+            grundpreis *= 1.5;
+        } else if (kunde.getFuehrerscheinzeitraum() >= 2 && kunde.getFuehrerscheinzeitraum() <= 4) {
+            grundpreis *= 1.3;
+        } else {
+            grundpreis *= 1.2;
+        }
+
+        if (pkw.isElektrofahrzeug()) {
+            grundpreis *= 0.8;
+        }
+
+        if (pkw.isParkassistent()) {
+            grundpreis *= 1.15;
+        }
+
+        if (pkw.isFahrassistent()) {
+            grundpreis *= 1.15;
+        }
+
+        if (auftrag.isKindersitz()) {
+            grundpreis += 7;
+        }
+
+        if (auftrag.isDachbox()) {
+            grundpreis += 7;
+        }
+
+        if (auftrag.isAuslandsfahrt()) {
+            grundpreis += 7;
+        }
+
+        switch (auftrag.getVersicherungsklasse()) {
+            case 1:
+                grundpreis *= 1.3;
+                break;
+            case 2:
+                grundpreis *= 1.6;
+                break;
+            case 3:
+                grundpreis *= 1.9;
+                break;
+        }
+
+        if (auftrag.isKilometerpaket()) {
+            grundpreis += 30;
+        }
+
+        return grundpreis;
     }
 
     public double getPreis() {
         return preis;
     }
-  /**   Kunde kunde = new Kunde(vorname, name, geburtsdatum, alter, kundennummer, telefonnummer, fuehrerscheinklasse, email, zahlungsmittel, historie, strasse, hausnummer, postleitzahl, ort, kundenkarte, kundennummer,fuehrerscheinzeitraum); // create a Kunde object
-PKW pkw = new PKW(klimatisiert,fzgkategorie); // create a PKW object
-
-Kostenberechnung kostenberechnung = new Kostenberechnung(kunde, pkw);
-double preis = kostenberechnung.getPreis();*/
 }
