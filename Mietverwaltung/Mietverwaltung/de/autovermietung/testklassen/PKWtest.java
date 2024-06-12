@@ -7,25 +7,33 @@ import java.util.List;
 public class PKWtest  {
 
 	public static void main(String[] args) {
+
 		PKWVerwaltung pkwVerwaltung = new PKWVerwaltung();
 
-        pkwVerwaltung.pkwHinzufuegen("Kleinwagen", "Volkswagen", "Automatik", 75, "Blau", " Basis", "Benzin", true, true, 2015, 3, 5, 120, 18, "B", 1234, "VB-1234", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Mittelklasse", "Audi", "Schaltgetriebe", 110, "Schwarz", "Komfort", "Diesel", true, true, 2018, 4, 5, 140, 20, "B", 5678, "AB-5678", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Oberklasse", "Mercedes", "Automatik", 220, "Weiß", "Luxus", "Benzin", true, true, 2020, 4, 5, 180, 25, "B", 9012, "MB-9012", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Kompaktklasse", "Opel", "Schaltgetriebe", 90, "Rot", "Sport", "Benzin", true, true, 2012, 3, 5, 130, 19, "B", 3456, "OL-3456", false, false);
-        pkwVerwaltung.pkwHinzufuegen("SUV", "Toyota", "Automatik", 150, "Silber", "Premium", "Diesel", true, true, 2019, 5, 7, 160, 22, "B", 7890, "TY-7890", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Cabrio", "BMW", "Schaltgetriebe", 180, "Weiß", "Luxus", "Benzin", true, true, 2016, 2, 4, 190, 24, "B", 1111, "BM-1111", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Kleinwagen", "Ford", "Automatik", 60, "Gelb", "Basis", "Benzin", true, true, 2014, 3, 5, 110, 17, "B", 4321, "FO-4321", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Mittelklasse", "Skoda", "Schaltgetriebe", 100, "Grau", "Komfort", "Diesel", true, true, 2017, 4, 5, 130, 20, "B", 6543, "SK-6543", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Oberklasse", "Porsche", "Automatik", 250, "Schwarz", "Luxus", "Benzin", true, true, 2022, 4, 5, 200, 28, "B", 9876, "PO-9876", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Kompaktklasse", "Renault", "Schaltgetriebe", 80, "Blau", "Sport", "Benzin", true, true, 2013, 3, 5, 120, 18, "B", 2109, "RE-2109", false, false);
-        pkwVerwaltung.pkwHinzufuegen("SUV", "Nissan", "Automatik", 170, "Silber", "Premium", "Diesel", true, true, 2020, 5, 7, 170, 23, "B", 8765, "NI-8765", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Cabrio", "Mini", "Schaltgetriebe", 160, "Rot", "Luxus", "Benzin", true, true, 2018, 2, 4, 180, 25, "B", 5678, "MI-5678", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Kleinwagen", "Peugeot", "Automatik", 70, "Weiß", "Basis", "Benzin", true, true, 2016, 3, 5, 100, 16, "B", 3456, "PE-3456", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Mittelklasse", "Hyundai", "Schaltgetriebe", 120, "Grau", "Komfort", "Diesel", true, true, 2019, 4, 5, 140, 21, "B", 1234, "HY-1234", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Oberklasse", "Jaguar", "Automatik", 280, "Schwarz", "Luxus", "Benzin", true, true, 2021, 4, 5, 220, 30, "B", 9012, "JA-9012", false, true);
-        pkwVerwaltung.pkwHinzufuegen("Kompaktklasse", "Kia", "Schaltgetriebe", 95, "Blau", "Sport", "Benzin", true, true, 2015, 3, 5, 125, 19, "B", 4567, "KI-4567", false, false);
-
+        pkwVerwaltung.pkwHinzufuegen("Kleinwagen", "Volkswagen", "Automatik", 75, "Blau", "Basis", "Benzin", true, true, 2015, 3, 5, 120, 18, "B", 1234, "VB-1234", false, true, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("Mittelklasse", "Audi", "Schaltgetriebe", 110, "Schwarz", "Komfort", "Diesel", true, true, 2018, 4, 5, 140, 20, "B", 5678, "AB-5678", false, true, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("SUV", "Toyota", "Automatik", 150, "Silber", "Luxus", "Benzin", true, true, 2020, 5, 7, 180, 22, "A", 9012, "TY-9012", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Kleinwagen", "Fiat", "Schaltgetriebe", 60, "Rot", "Basis", "Diesel", false, false, 2012, 3, 4, 100, 16, "B", 3456, "FI-3456", false, false, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("Mittelklasse", "BMW", "Automatik", 120, "Weiß", "Komfort", "Benzin", true, true, 2019, 4, 5, 140, 20, "A", 7890, "BM-7890", true, true, true, true, false);
+        pkwVerwaltung.pkwHinzufuegen("Elektroauto", "Tesla", "Automatik", 250, "Schwarz", "Luxus", "Elektro", true, true, 2022, 5, 7, 200, 24, "A", 1111, "TE-1111", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Kombi", "Volkswagen", "Schaltgetriebe", 100, "Grau", "Basis", "Diesel", false, false, 2015, 3, 5, 120, 18, "B", 2345, "VW-2345", false, false, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("Sportwagen", "Porsche", "Automatik", 300, "Rot", "Luxus", "Benzin", true, true, 2020, 2, 4, 220, 26, "A", 5678, "PO-5678", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Mittelklasse", "Audi", "Schaltgetriebe", 110, "Blau", "Komfort", "Diesel", true, true, 2018, 4, 5, 140, 20, "A", 9012, "AU-9012", true, true, true, true, false);
+        pkwVerwaltung.pkwHinzufuegen("Kleinwagen", "Peugeot", "Automatik", 70, "Gelb", "Basis", "Benzin", false, false, 2013, 3, 4, 100, 16, "B", 3456, "PE-3456", false, false, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("SUV", "Hyundai", "Schaltgetriebe", 130, "Silber", "Luxus", "Diesel", true, true, 2021, 5, 7, 160, 22, "A", 1234, "HY-1234", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Elektroauto", "Nissan", "Automatik", 200, "Weiß", "Komfort", "Elektro", true, true, 2022, 5, 7, 180, 24, "A", 7890, "NI-7890", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Kombi", "Ford", "Schaltgetriebe", 90, "Grau", "Basis", "Benzin", false, false, 2016, 3, 5, 110, 18, "B", 5678, "FO-5678", false, false, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("Kleinwagen", "Kia", "Schaltgetriebe", 65, "Rot", "Basis", "Benzin", false, false, 2014, 3, 4, 100, 16, "B", 9012, "KI-9012", false, false, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("Mittelklasse", "Skoda", "Automatik", 125, "Silber", "Komfort", "Diesel", true, true, 2019, 4, 5, 140, 20, "A", 3456, "SK-3456", true, true, true, true, false);
+        pkwVerwaltung.pkwHinzufuegen("SUV", "Mazda", "Schaltgetriebe", 145, "Weiß", "Luxus", "Benzin", true, true, 2021, 5, 7, 160, 22, "A", 1234, "MA-1234", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Elektroauto", "Rivian", "Automatik", 220, "Schwarz", "Luxus", "Elektro", true, true, 2022, 5, 7, 200, 24, "A", 7890, "RI-7890", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Kombi", "Opel", "Schaltgetriebe", 105, "Grau", "Basis", "Diesel", false, false, 2017, 3, 5, 120, 18, "B", 5678, "OP-5678", false, false, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("Sportwagen", "Lamborghini", "Automatik", 350, "Rot", "Luxus", "Benzin", true, true, 2020, 2, 4, 250, 28, "A", 1111, "LA-1111", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Mittelklasse", "Honda", "Schaltgetriebe", 115, "Blau", "Komfort", "Benzin", true, true, 2018, 4, 5, 130, 20, "A", 9012, "HO-9012", true, true, true, true, false);
+        pkwVerwaltung.pkwHinzufuegen("Kleinwagen", "Suzuki", "Automatik", 75, "Gelb", "Basis", "Benzin", false, false, 2015, 3, 4, 100, 16, "B", 3456, "SU-3456", false, false, false, false, false);
+        pkwVerwaltung.pkwHinzufuegen("SUV", "Jeep", "Schaltgetriebe", 160, "Silber", "Luxus", "Diesel", true, true, 2021, 5, 7, 180, 24, "A", 1234, "JE-1234", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Elektroauto", "Audi", "Automatik", 240, "Weiß", "Luxus", "Elektro", true, true, 2022, 5, 7, 220, 26, "A", 7890, "AU-7890", true, true, true, true, true);
+        pkwVerwaltung.pkwHinzufuegen("Kombi", "Seat", "Schaltgetriebe", 100, "Grau", "Basis", "Benzin", false, false, 2016, 3, 5, 110, 18, "B", 5678, "SE-5678", false, false, false, false, false);
         System.out.println();
         
         //pkwVerwaltung.sortierePKWListeNachMotorisierung();
@@ -63,6 +71,15 @@ public class PKWtest  {
          
          pkwVerwaltung.buchePKW(1002);
          pkwVerwaltung.ausgebenPKW(1002);
+
+         pkwVerwaltung.pkwListeAusgebenAusDatei();
+         pkwVerwaltung.pkwLoeschenAusDatei(1013);
+         pkwVerwaltung.pkwLoeschenAusDatei(1014);
+         pkwVerwaltung.pkwLoeschenAusDatei(1015);
+         pkwVerwaltung.pkwLoeschenAusDatei(1016);
+         pkwVerwaltung.pkwListeAusgebenAusDatei();
+
+        
 
        
 	}
