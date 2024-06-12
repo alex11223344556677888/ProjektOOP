@@ -1,4 +1,4 @@
-package fachklassen;
+package fachklassen;        // das einzige was jetzt noch nicht passt sind die package bezeichnungen
 
 public class Person {
     private String vorname;
