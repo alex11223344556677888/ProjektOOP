@@ -1,0 +1,95 @@
+public class PKWGUI extends Application {
+
+    private PKWVerwaltung pkwVerwaltung;
+    private ListView<String> listView;
+
+    public PKWGUI(PKWVerwaltung pkwVerwaltung) {
+        this.pkwVerwaltung = pkwVerwaltung;
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("PKW-Verwaltung");
+
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(10));
+        root.setAlignment(Pos.CENTER);
+
+        Label filterLabel = new Label("Filter:");
+        root.getChildren().add(filterLabel);
+
+        ComboBox<String> filterComboBox = new ComboBox<>();
+        filterComboBox.getItems().addAll(getFilterValues("Antrieb"));
+        filterComboBox.getItems().addAll(getFilterValues("Marke"));
+        filterComboBox.getItems().addAll(getFilterValues("Fahrzeugtyp"));
+        filterComboBox.getItems().addAll(getFilterValues("Farbe"));
+        root.getChildren().add(filterComboBox);
+
+        Button filterButton = new Button("Filtern");
+        filterButton.setOnAction(e -> {
+            String wert = filterComboBox.getValue();
+            List<PKW> gefilterteListe = pkwVerwaltung.filterPKW(wert);
+            ObservableList<String> items = FXCollections.observableArrayList();
+            for (PKW pkw : gefilterteListe) {
+                items.add(pkw.toString());
+            }
+            listView.setItems(items);
+        });
+        root.getChildren().add(filterButton);
+
+        CheckBox idCheckBox = new CheckBox("ID");
+        CheckBox motorleistungCheckBox = new CheckBox("Motorleistung");
+        CheckBox baujahrCheckBox = new CheckBox("Baujahr");
+        root.getChildren().addAll(idCheckBox, motorleistungCheckBox, baujahrCheckBox);
+
+        Button sortButton = new Button("Sortieren");
+        sortButton.setOnAction(e -> {
+            boolean idSort = idCheckBox.isSelected();
+            boolean motorleistungSort = motorleistungCheckBox.isSelected();
+            boolean baujahrSort = baujahrCheckBox.isSelected();
+            List<PKW> sortedList = pkwVerwaltung.sortPKW(idSort, motorleistungSort, baujahrSort);
+            ObservableList<String> items = FXCollections.observableArrayList();
+            for (PKW pkw : sortedList) {
+                items.add(pkw.toString());
+            }
+            listView.setItems(items);
+        });
+        root.getChildren().add(sortButton);
+
+        listView = new ListView<>();
+        root.getChildren().add(listView);
+
+        Scene scene = new Scene(root, 400, 600);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private List<String> getFilterValues(String attribut) {
+        List<String> values = new ArrayList<>();
+        for (PKW pkw : pkwVerwaltung.getPkwListe()) {
+            switch (attribut) {
+                case "Antrieb":
+                    values.add(pkw.getAntrieb());
+                    break;
+                case "Marke":
+                    values.add(pkw.getMarke());
+                    break;
+                case "Fahrzeugtyp":
+                    values.add(pkw.getFahrzeugtyp());
+                    break;
+                case "Farbe":
+                    values.add(pkw.getFarbe());
+                    break;
+            }
+        }
+        return values.stream().distinct().collect(Collectors.toList());
+    }
+
+    public static void main(String[] args) {
+        PKWVerwaltung pkwVerwaltung = new PKWVerwaltung();
+        pkwVerwaltung.addPKW(new PKW("VW", "Golf", "Benzin", "Schwarz", 100, 2000));
+        pkwVerwaltung.addPKW(new PKW("Audi", "A4", "Diesel", "Weiss", 120, 2010));
+        pkwVerwaltung.addPKW(new PKW("BMW", "320i", "Benzin", "Schwarz", 150, 2015));
+        launch(args);
+    }
+}
