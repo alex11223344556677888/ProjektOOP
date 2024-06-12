@@ -1,4 +1,4 @@
-package verwaltungsklassen;   // das einzige was jetzt noch nicht passt sind die package bezeichnungen
+package de.autovermietung.verwaltungsklassen;   // das einzige was jetzt noch nicht passt sind die package bezeichnungen
 import java.util.ArrayList;
 import java.util.Scanner;
 
