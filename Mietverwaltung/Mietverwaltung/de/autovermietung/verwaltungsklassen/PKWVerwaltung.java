@@ -1,31 +1,100 @@
 package de.autovermietung.verwaltungsklassen;
 
 import de.autovermietung.fachklassen.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 
-public class PKWVerwaltung {
-    private final List<PKW> pkwListe;
+public class PKWVerwaltung implements Serializable{
+    private  List<PKW> pkwListe;
     private int pkwIDCounter = 1000;
 
     public PKWVerwaltung() {
         this.pkwListe = new ArrayList<>();
+
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("pkwListe.ser"))) {
+            out.writeObject(new ArrayList<>());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     //PKW hinzufügen
-    public void pkwHinzufuegen(String fzgkategorie, String fahrzeugmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltueren, int sitzplaetze, int co2emission, int minalter, String fuehrerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi) {
+    // public void pkwHinzufuegen(String fzgkategorie, String fahrzeugmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltueren, int sitzplaetze, int co2emission, int minalter, String fuehrerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi) {
+    //     int id = pkwIDCounter++;
+    //     PKW neuerPkw = new PKW(id, fzgkategorie, fahrzeugmarke, getriebe, motorleistung, farbe, ausstattung, kraftstoff, klimatisiert, beheizt, baujahr, anzahltueren, sitzplaetze, co2emission, minalter, fuehrerscheinklasse, fzgnummer, kennzeichen, gebucht, navi);
+    //     if (!pkwListe.contains(neuerPkw)) {
+    //         pkwListe.add(neuerPkw);
+    //         System.out.println("PKW hinzugefügt: " + neuerPkw.getFahrzeugmarke() + " " + neuerPkw.getFzgkategorie());
+    //     } else {
+    //         System.out.println("PKW bereits in der Liste vorhanden.");
+    //     }
+        
+    // }
+
+    public void pkwHinzufuegen(String fzgkategorie, String fahrzeugmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltueren, int sitzplaetze, int co2emission, int minalter, String fuehrerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi, boolean elektrofahrzeug, boolean fahrassistent, boolean parkassistent) {
         int id = pkwIDCounter++;
-        PKW neuerPkw = new PKW(id, fzgkategorie, fahrzeugmarke, getriebe, motorleistung, farbe, ausstattung, kraftstoff, klimatisiert, beheizt, baujahr, anzahltueren, sitzplaetze, co2emission, minalter, fuehrerscheinklasse, fzgnummer, kennzeichen, gebucht, navi);
+        PKW neuerPkw = new PKW(id, fzgkategorie, fahrzeugmarke, getriebe, motorleistung, farbe, ausstattung, kraftstoff, klimatisiert, beheizt, baujahr, anzahltueren, sitzplaetze, co2emission, minalter, fuehrerscheinklasse, fzgnummer, kennzeichen, gebucht, navi, elektrofahrzeug, fahrassistent, parkassistent);
         if (!pkwListe.contains(neuerPkw)) {
             pkwListe.add(neuerPkw);
+            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("pkwListe.ser"))) {
+                out.writeObject(pkwListe);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.println("PKW hinzugefügt: " + neuerPkw.getFahrzeugmarke() + " " + neuerPkw.getFzgkategorie());
         } else {
             System.out.println("PKW bereits in der Liste vorhanden.");
         }
-        
     }
+
+
+    public void pkwListeAusgebenAusDatei() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("pkwListe.ser"))) {
+            List<PKW> pkwListe = (List<PKW>) ois.readObject();
+            System.out.println("Inhalt der PKW-Liste:");
+            for (PKW pkw : pkwListe) {
+                System.out.println("ID: " + pkw.getId());
+                System.out.println("Fahrzeugmarke: " + pkw.getFahrzeugmarke());
+                System.out.println("Fahrzeugkategorie: " + pkw.getFzgkategorie());
+                System.out.println();
+                // man könnte noch mehr eigenschaften ausgeben aber lassen erstmal so damits übersichtlicher ist
+            }
+        } catch (IOException e) {
+            System.err.println("Fehler beim Ausgeben der PKW-Liste: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.err.println("Fehler beim Ausgeben der PKW-Liste: " + e.getMessage());
+        }
+    }
+
+    public void pkwLoeschenAusDatei(int id) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("pkwliste.ser"))) {
+            pkwListe = (List<PKW>) ois.readObject();
+            for (PKW pkw : pkwListe) {
+                if (pkw.getId() == id) {
+                    pkwListe.remove(pkw);
+                    break;
+                }
+            }
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("pkwliste.ser"))) {
+                oos.writeObject(pkwListe);
+            }
+        } catch (IOException e) {
+            System.err.println("Fehler beim Löschen des PKW: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.err.println("Fehler beim Löschen des PKW: " + e.getMessage());
+        }
+    }
+
+
+
     public List<PKW> getPkwListe() {
         return this.pkwListe;
     }
@@ -52,10 +121,10 @@ public class PKWVerwaltung {
 
     //Sortierte Liste nach ID
     public void sortierePKWListeNachID() {
-        Collections.sort(this.pkwListe, Comparator.comparing(PKW::getId));
-        System.out.println("PKW-Liste nach ID sortiert:");
-        for (PKW pkw : this.pkwListe) {
-            System.out.println( pkw.getId() + " " + pkw.getFahrzeugmarke() + " " + pkw.getFzgkategorie());
+    Collections.sort(this.pkwListe, Comparator.comparing(PKW::getId));
+    System.out.println("PKW-Liste nach ID sortiert:");
+    for (PKW pkw : this.pkwListe) {
+        System.out.println(pkw.getId() + " " + pkw.getFahrzeugmarke() + " " + pkw.getFzgkategorie());
         }
         System.out.println();
     }
@@ -95,7 +164,7 @@ public class PKWVerwaltung {
         Collections.sort(this.pkwListe, Comparator.comparing(PKW::getBaujahr));
         System.out.println("PKW-Liste nach Baujahr sortiert:");
         for (PKW pkw : this.pkwListe) {
-            System.out.println( pkw.getFahrzeugmarke() + " " + pkw.getFzgkategorie() + " " + pkw.getBaujahr());
+            System.out.println(pkw.getFahrzeugmarke() + " " + pkw.getFzgkategorie() + " " + pkw.getBaujahr());
         }
         System.out.println();
     }
