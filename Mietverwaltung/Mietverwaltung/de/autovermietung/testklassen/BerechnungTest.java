@@ -1,9 +1,9 @@
 package de.autovermietung.testklassen;
 
-import fachklassen.Kunde;
-import fachklassen.PKW;
-import fachklassen.Auftrag;
-import verwaltungsklassen.Kostenberechnung;
+import de.autovermietung.fachklassen.Auftrag;
+import de.autovermietung.fachklassen.Kunde;
+import de.autovermietung.fachklassen.PKW;
+import de.autovermietung.verwaltungsklassen.Kostenberechnung;
 
 public class KostenrechnungTest {
     public static void main(String[] args) {
@@ -30,7 +30,7 @@ public class KostenrechnungTest {
         // Beispiel-PKW erstellen
         PKW pkw = new PKW(
                 1,
-                "Kombi",
+                "Kleinwagen",
                 "VW",
                 "Manuell",
                 150,
