@@ -26,6 +26,12 @@ public class Kostenberechnung {
             return 70;
         } else if (pkw.getFzgkategorie().equals("Kleinwagen")) {
             return 50;
+        } else if (pkw.getFzgkategorie().equals("Limousine")) {
+            return 90;
+        } else if (pkw.getFzgkategorie().equals("Coupe")) {
+            return 100;
+        } else if (pkw.getFzgkategorie().equals("Cabrio")) {
+            return 110;
         } else {
             return 0; // default value
         }
