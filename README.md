@@ -20,6 +20,8 @@ Draw.io: ![image](https://github.com/alex11223344556677888/ProjektOOP/assets/169
 ![image](https://github.com/alex11223344556677888/ProjektOOP/assets/169679411/9e9d7815-258c-4270-b0ca-0ebf4fc8f2cf)
 
 
+https://1drv.ms/w/c/067ab1af87a5c49c/EVjTVjSFj3RIlDIHy777qWIBzlGUa4bNC9L-uf42BoDN8A?e=Gb5674
+
 
 
 
