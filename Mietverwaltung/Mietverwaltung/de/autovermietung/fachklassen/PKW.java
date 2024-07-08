@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class PKW implements Serializable{
     private int id;
     private String fzgkategorie;
-    private String fahrzeugmarke;
+    private String fzgmarke;
     private String getriebe;
     private String kraftstoff;
     
@@ -33,7 +33,7 @@ public class PKW implements Serializable{
 
         //Konstruktor
 
-        public PKW(int id, String fzgkategorie, String fahrzeugmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltüren, int sitzplätze, int co2emission, int minalter, String führerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi, boolean fahrassistent, boolean parkassistent, boolean elektrofahrzeug) {
+        public PKW(int id, String fzgkategorie, String fzgmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltüren, int sitzplätze, int co2emission, int minalter, String führerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi, boolean fahrassistent, boolean parkassistent, boolean elektrofahrzeug) {
         this.id = id;
         this.fzgkategorie = fzgkategorie;
         this.getriebe =getriebe;
@@ -50,43 +50,49 @@ public class PKW implements Serializable{
         this.fzgnummer = fzgnummer;
         this.kennzeichen = kennzeichen; 
         this.gebucht = gebucht;
-        this.fahrzeugmarke = fahrzeugmarke;
+        this.fzgmarke = fzgmarke;
         this.fahrassistent = fahrassistent;
         this.parkassistent = parkassistent;
         this.elektrofahrzeug = elektrofahrzeug;
         this.baujahr = baujahr;
     }
 
+    // @Override
+    // public String toString() {
+    //     return "PKW{" +
+    //             "ID='" + id + '\'' +
+    //             "Fzgkategorie='" + fzgkategorie + '\'' +
+    //             ", Fahrzeugmarke='" + fzgmarke + '\'' +
+    //             ", Getriebe='" + getriebe + '\'' +
+    //             ", Kraftstoff='" + kraftstoff + '\'' +
+    //             ", Farbe='" + farbe + '\'' +
+    //             ", Ausstattung='" + ausstattung + '\'' +
+    //             ", Führerscheinklasse='" + führerscheinklasse + '\'' +
+    //             ", Kennzeichen='" + kennzeichen + '\'' +
+    //             ", Klimatisiert=" + klimatisiert +
+    //             ", Beheizt=" + beheizt +
+    //             ", Gebucht=" + gebucht +
+    //             ", Navi=" + navi +
+    //             ", Anzahltüren=" + anzahltüren +
+    //             ", Sitzplätze=" + sitzplätze +
+    //             ", CO2-Emission=" + co2emission +
+    //             ", Mindestalter=" + minalter +
+    //             ", Fzgnummer=" + fzgnummer +
+    //             ", Motorleistung=" + motorleistung +
+    //             ", Baujahr=" + baujahr +
+                
+    //             '}';
+    // }
     @Override
     public String toString() {
-        return "PKW{" +
-                "ID='" + id + '\'' +
+        return "PKW{ " +
                 "Fzgkategorie='" + fzgkategorie + '\'' +
-                ", Fahrzeugmarke='" + fahrzeugmarke + '\'' +
-                ", Getriebe='" + getriebe + '\'' +
-                ", Kraftstoff='" + kraftstoff + '\'' +
-                ", Farbe='" + farbe + '\'' +
-                ", Ausstattung='" + ausstattung + '\'' +
-                ", Führerscheinklasse='" + führerscheinklasse + '\'' +
-                ", Kennzeichen='" + kennzeichen + '\'' +
-                ", Klimatisiert=" + klimatisiert +
-                ", Beheizt=" + beheizt +
-                ", Gebucht=" + gebucht +
-                ", Navi=" + navi +
-                ", Anzahltüren=" + anzahltüren +
-                ", Sitzplätze=" + sitzplätze +
-                ", CO2-Emission=" + co2emission +
-                ", Mindestalter=" + minalter +
-                ", Fzgnummer=" + fzgnummer +
-                ", Motorleistung=" + motorleistung +
+                ", Fahrzeugmarke='" + fzgmarke + '\'' +
                 ", Baujahr=" + baujahr +
                 
                 '}';
     }
-
-
-    
-
+ 
     public String getFzgkategorie() {
         return fzgkategorie;
     }
@@ -223,12 +229,12 @@ public class PKW implements Serializable{
         this.navi = navi;
     }
 
-    public String getFahrzeugmarke() {
-        return fahrzeugmarke;
+    public String getFzgmarke() {
+        return fzgmarke;
     }
 
-    public void setFahrzeugmarke(String fahrzeugmarke) {
-        this.fahrzeugmarke = fahrzeugmarke;
+    public void setFzgmarke(String fahrzeugmarke) {
+        this.fzgmarke = fahrzeugmarke;
     }
 
     public int getBaujahr() {
@@ -270,6 +276,4 @@ public class PKW implements Serializable{
     public void setParkassistent(boolean parkassistent) {
         this.parkassistent = parkassistent;
     }
-
-    
 }
