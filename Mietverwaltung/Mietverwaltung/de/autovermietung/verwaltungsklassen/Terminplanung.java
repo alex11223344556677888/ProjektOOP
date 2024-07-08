@@ -1,7 +1,111 @@
 package de.autovermietung.verwaltungsklassen;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class Terminplanung {
-    
+import de.autovermietung.fachklassen.PKW;
+
+public class Terminplanung implements Serializable{
+    private List<Termin> terminListe;
+    private List<PKW> pkwListe;
+
+    public Terminplanung(String pkwListeFile) {
+        this.terminListe = new ArrayList<>();
+        this.pkwListe = ladePKWListe(pkwListeFile);
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<PKW> ladePKWListe(String filename) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            return (List<PKW>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Fehler beim Laden der PKW-Liste: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    public void buchePKW(int pkwId, Date vonDatum, Date bisDatum) {
+        PKW pkw = findePKW(pkwId);
+        if (pkw != null) {
+            Termin termin = new Termin(pkw, vonDatum, bisDatum);
+            terminListe.add(termin);
+        } else {
+            System.out.println("PKW mit ID " + pkwId + " nicht gefunden.");
+        }
+    }
+
+    private PKW findePKW(int pkwId) {
+        for (PKW pkw : pkwListe) {
+            if (pkw.getId() == pkwId) {
+                return pkw;
+            }
+        }
+        return null;
+    }
+
+    public void entbuchePKW(int i, Date vonDatum, Date bisDatum) {
+        for (Termin termin : terminListe) {
+            if (termin.getPkw().equals(i) && termin.getVonDatum().equals(vonDatum) && termin.getBisDatum().equals(bisDatum)) {
+                terminListe.remove(termin);
+                return;
+            }
+        }
+    }
+
+    public boolean istPKWVerfügbar(int i, Date vonDatum, Date bisDatum) {
+        for (Termin termin : terminListe) {
+            if (termin.getPkw().equals(i) && termin.getVonDatum().before(bisDatum) && termin.getBisDatum().after(vonDatum)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<Termin> getTerminListe() {
+        return terminListe;
+    }
+
+    public static class Termin implements Serializable {
+        private PKW pkw;
+        private Date vonDatum;
+        private Date bisDatum;
+
+        public Termin(PKW pkw, Date vonDatum, Date bisDatum) {
+            this.pkw = pkw;
+            this.vonDatum = vonDatum;
+            this.bisDatum = bisDatum;
+        }
+
+        public PKW getPkw() {
+            return pkw;
+        }
+
+        public Date getVonDatum() {
+            return vonDatum;
+        }
+
+        public Date getBisDatum() {
+            return bisDatum;
+        }
+    }
+
+    public void speichereTermine(String filename) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            oos.writeObject(terminListe);
+        } catch (IOException e) {
+            System.err.println("Fehler beim Speichern der Termine: " + e.getMessage());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void ladeTermine(String filename) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            terminListe = (List<Termin>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Fehler beim Laden der Termine: " + e.getMessage());
+        }
+    }
 }
 
 
