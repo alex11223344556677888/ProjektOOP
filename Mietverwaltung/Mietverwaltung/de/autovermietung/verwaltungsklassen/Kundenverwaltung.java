@@ -1,95 +1,104 @@
-package de.autovermietung.verwaltungsklassen;   // das einzige was jetzt noch nicht passt sind die package bezeichnungen
+package Verwaltungsklassen;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
-import fachklassen.Kunde;
+import javax.swing.JOptionPane;
 
+import Fachklassen.Kunde;
+import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 public class Kundenverwaltung {
-    private ArrayList<Kunde> kundenListe;
+    private HashMap<Integer, Kunde> kundenMap;
     private int kundennummerCounter;
 
     public Kundenverwaltung() {
-        this.kundenListe = new ArrayList<>();
+        this.kundenMap = new HashMap<>();
         this.kundennummerCounter = 100000000; // start with a unique 9-digit customer number
     }
 
-    public void neuenKundenErstellen() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Vorname: ");
-        String vorname = scanner.nextLine();
-
-        System.out.print("Name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Geburtsdatum (DD.MM.YYYY): ");
-        String geburtsdatum = scanner.nextLine();
-
-        System.out.print("Alter: ");
-        int alter = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
-
-        System.out.print("Telefonnummer: ");
-        int telefonnummer = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
-
-        System.out.print("Führerscheinklasse: ");
-        String fuehrerscheinklasse = scanner.nextLine();
-
-        System.out.print("E-Mail: ");
-        String email = scanner.nextLine();
-
-        System.out.print("Zahlungsmittel: ");
-        String zahlungsmittel = scanner.nextLine();
-
-        System.out.print("Historie: ");
-        String historie = scanner.nextLine();
-
-        System.out.print("Strasse: ");
-        String strasse = scanner.nextLine();
-
-        System.out.print("Hausnummer: ");
-        int hausnummer = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
-
-        System.out.print("Postleitzahl: ");
-        int postleitzahl = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
-
-        System.out.print("Ort: ");
-        String ort = scanner.nextLine();
-
-        System.out.print("Kundenkarte (true/false): ");
-        boolean kundenkarte = scanner.nextBoolean();
-        scanner.nextLine(); // consume newline left-over
-
-        System.out.print("Führerscheinzeitraum (in Jahren): ");
-        int fuehrerscheinzeitraum = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
-
-        int kundennummer = kundennummerCounter++;
-        Kunde kunde = new Kunde(vorname, name, geburtsdatum, alter, kundennummer, telefonnummer, fuehrerscheinklasse, email, zahlungsmittel, historie, strasse, hausnummer, postleitzahl, ort, kundenkarte, kundennummer,fuehrerscheinzeitraum);
-
-        kundenListe.add(kunde);
-        System.out.println("Kunde erfolgreich erstellt!");
+    public void neuenKundenErstellen(Kunde kunde) {
+        kundenMap.put(kunde.getKundennummer(), kunde);
     }
 
     public Kunde getKundeByKundennummer(int kundennummer) {
-        for (Kunde kunde : kundenListe) {
-            if (kunde.getKundennummer() == kundennummer) {
+        return kundenMap.get(kundennummer);
+    }
+
+    public void kundenLoeschen(int kundennummer) {
+        if (!kundenMap.containsKey(kundennummer)) {
+            throw new NoSuchElementException("Kunde nicht gefunden!");
+        }
+        kundenMap.remove(kundennummer);
+    }
+
+    public ArrayList<Kunde> getKundenListe() {
+        return new ArrayList<>(kundenMap.values());
+    }
+
+    public void printKundenListe() {
+        for (Kunde kunde : kundenMap.values()) {
+            System.out.println("Nachname: " + kunde.getName() + ", Vorname: " + kunde.getVorname() + ", Kundennummer: " + kunde.getKundennummer());
+        }
+    }
+
+    public void printKundenListeAlphabetisch() {
+        ArrayList<Kunde> sortedList = new ArrayList<>(kundenMap.values());
+        Collections.sort(sortedList, Comparator.comparing(Kunde::getName));
+        for (Kunde kunde : sortedList) {
+            System.out.println("Nachname: " + kunde.getName() + ", Vorname: " + kunde.getVorname() + ", Kundennummer: " + kunde.getKundennummer());
+        }
+    }
+
+    public static void addKunde(Kunde kunde) {
+        // Add the customer to the database or file
+        kunde.saveDataToFile();
+    }
+
+    public void displayKunde(Kunde kunde) {
+        System.out.println("Nachname: " + kunde.getName() + ", Vorname: " + kunde.getVorname() + ", Kundennummer: " + kunde.getKundennummer() + "\n" +
+                "Geburtsdatum: " + kunde.getGeburtsdatum() + ", Alter: " + kunde.getAlter() + "\n" +
+                "Telefonnummer: " + kunde.getTelefonnummer() + ", Führerscheinklasse: " + kunde.getFuehrerscheinklasse() + "\n" +
+                "E-Mail: " + kunde.getEmail() + ", Zahlungsmittel: " + kunde.getZahlungsmittel() + "\n" +
+                "Historie: " + kunde.getHistorie() + ", Strasse: " + kunde.getStrasse() + "\n" +
+                "Hausnummer: " + kunde.getHausnummer() + ", Postleitzahl: " + kunde.getPostleitzahl() + ", Ort: " + kunde.getOrt() + "\n" +
+                "Kundenkarte: " + kunde.isKundenkarte() + ", Führerscheinzeitraum: " + kunde.getFuehrerscheinzeitraum());
+    }
+
+    public Kunde sucheNachName(String name) {
+        for (Kunde kunde : kundenMap.values()) {
+            if (kunde.getName().equalsIgnoreCase(name) || kunde.getVorname().equalsIgnoreCase(name) || kunde.getLoginName().equalsIgnoreCase(name)) {
                 return kunde;
             }
         }
         return null;
     }
 
-    public static void main(String[] args) {
-        Kundenverwaltung kv = new Kundenverwaltung();
-        kv.neuenKundenErstellen();
-
-        // Example usage:
-        // Kunde kunde = kv.getKundeByKundennummer(100000001);
-        // System.out.println(kunde.toString());
+    public void searchKunde() {
+        String searchQuery = JOptionPane.showInputDialog(null, "Suchen nach Name, Kundennummer oder Anmeldename:");
+        if (searchQuery != null) {
+            if (searchQuery.matches("\\d+")) { // search by customer number
+                int kundennummer = Integer.parseInt(searchQuery);
+                Kunde kunde = this.getKundeByKundennummer(kundennummer);
+                if (kunde != null) {
+                    this.displayKunde(kunde);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Kunde nicht gefunden!");
+                }
+            } else { // search by name or login name
+                Kunde kunde = this.sucheNachName(searchQuery); // search by name
+                if (kunde != null) {
+                    this.displayKunde(kunde);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Kunde nicht gefunden!");
+                }
+            }
+        }
     }
 }
