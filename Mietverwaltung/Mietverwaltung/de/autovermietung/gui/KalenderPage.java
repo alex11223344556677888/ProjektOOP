@@ -16,36 +16,43 @@ public class KalenderPage extends JPanel {
 
     public KalenderPage() {
     	//this.previousPage = previousPage;
-        mainPanel = new JPanel(new GridBagLayout());
+    	mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
+        mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
         // Header label
-        JLabel lblHeader = new JLabel("Gib das Von- und Bis-Datum ein");
+        JLabel lblHeader = new RoundedLabel(" Gib das Von- und Bis-Datum ein ");
         lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
+        lblHeader.setBackground(Color.WHITE);
+        lblHeader.setForeground(Color.BLACK);
         mainPanel.add(lblHeader, gbc);
         
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
         // Labels and spinners for the form
-        JLabel lblVonDatum = new JLabel("Von Datum:");
+        JLabel lblVonDatum = new RoundedLabel(" Von Datum: ");
         spinnerVonDatum = createSpinner();
         gbc.gridx = 0;
         gbc.gridy = 1;
+        lblHeader.setBackground(Color.WHITE);
+        lblHeader.setForeground(Color.BLACK);
         mainPanel.add(lblVonDatum, gbc);
         gbc.gridx = 1;
         mainPanel.add(spinnerVonDatum, gbc);
 
-        JLabel lblBisDatum = new JLabel("Bis Datum:");
+        JLabel lblBisDatum = new RoundedLabel(" Bis Datum: ");
         spinnerBisDatum = createSpinner();
         gbc.gridx = 0;
         gbc.gridy = 2;
+        lblHeader.setBackground(Color.WHITE);
+        lblHeader.setForeground(Color.BLACK);
         mainPanel.add(lblBisDatum, gbc);
         gbc.gridx = 1;
         mainPanel.add(spinnerBisDatum, gbc);
