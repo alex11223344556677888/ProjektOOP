@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 //Custom JPanel class to paint background image
 
+// Ihr müsst euch das Bild von Lucas irgndwo in eurem prjekt abspeichern und dann den Pfad zu dem bild einfügen anstelle von meinem 
 
 public class BackgroundPanel extends JPanel {
     private static final long serialVersionUID = 1L;
