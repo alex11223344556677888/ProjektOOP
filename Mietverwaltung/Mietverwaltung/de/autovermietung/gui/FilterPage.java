@@ -23,6 +23,7 @@ public class FilterPage extends JPanel {
     private DefaultListModel<String> listModel;
 
     private PKWVerwaltung pkwVerwaltung = new PKWVerwaltung();
+    private List<PKW> filteredPKWs; // List to store the filtered PKWs
 
     public FilterPage() {
         mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
@@ -53,7 +54,6 @@ public class FilterPage extends JPanel {
         mainPanel.add(cmbKategorie, gbc);
 
         JLabel lblGetriebe = new RoundedLabel(" Getriebe: ");
-        //cmbGetriebe = new JComboBox<>(new String[]{"", "Manuell", "Automatik"}); // Das wieder entkommentieren, sobald die Testobjekte zw Manuell und Automatik unterscheiden
         cmbGetriebe = new JComboBox<>(new String[]{"", "Schaltgetriebe", "Automatik"});
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -136,7 +136,7 @@ public class FilterPage extends JPanel {
                 if (evt.getClickCount() == 2) {
                     // Double-click detected
                     int index = list.locationToIndex(evt.getPoint());
-                    PKW selectedPKW = pkwVerwaltung.getPkwListe().get(index);
+                    PKW selectedPKW = filteredPKWs.get(index);
                     showCustomMessageDialog(selectedPKW);
                 }
             }
@@ -235,6 +235,10 @@ public class FilterPage extends JPanel {
 
         for (int i = 0; i < ausstattungItems1.length; i++) {
             checkBoxes[i] = new JCheckBox(ausstattungItems1[i]);
+            checkBoxes[i].setSelected(false);
+            checkBoxes[i].setEnabled(false);
+            checkBoxes[i].setDisabledIcon(checkBoxes[i].getIcon());
+            checkBoxes[i].setDisabledSelectedIcon(checkBoxes[i].getIcon());
             gbcSub.gridx = 0;
             gbcSub.gridy = i;
             subPanel.add(checkBoxes[i], gbcSub);
@@ -279,14 +283,61 @@ public class FilterPage extends JPanel {
 
         JLabel lblZeitraum = new JLabel("Zeitraum:");
         gbc.gridx = 0;
-        gbc.gridy = 13;
+        gbc.gridy = 7;
         gbc.gridwidth = 1;
         panel.add(lblZeitraum, gbc);
 
-        JTextField txtZeitraum = new JTextField("Der vorher angegebene", 20);
+        JTextField txtZeitraum = new JTextField(20);
         txtZeitraum.setEditable(false);
         gbc.gridx = 1;
         panel.add(txtZeitraum, gbc);
+
+        // Zusatzbuchungen
+        JLabel lblZusatzbuchungen = new JLabel("Zusatzbuchungen:");
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 1;
+        panel.add(lblZusatzbuchungen, gbc);
+
+        String[] zusatzbuchungenItems = {"Kindersitz", "Dachbox", "Auslandsfahrt", "Kilometerpaket"};
+        JTextField txtKindersitz = new JTextField(2);
+        txtKindersitz.setVisible(false);
+
+        for (int i = 0; i < zusatzbuchungenItems.length; i++) {
+            JCheckBox checkBox = new JCheckBox(zusatzbuchungenItems[i]);
+            gbc.gridx = 0;
+            gbc.gridy = 9 + i * 2; // Adjust y position to make room for the text field
+            panel.add(checkBox, gbc);
+
+            // Add action listener to show/hide text field for "Kindersitz"
+            if (zusatzbuchungenItems[i].equals("Kindersitz")) {
+                gbc.gridy = 9 + i * 2 + 1; // Position directly below the checkbox
+                panel.add(txtKindersitz, gbc);
+
+                checkBox.addActionListener(e -> {
+                    txtKindersitz.setVisible(checkBox.isSelected());
+                    panel.revalidate();
+                    panel.repaint();
+                });
+            }
+        }
+
+        // Versicherungspaket
+        JLabel lblVersicherungspaket = new JLabel("Versicherungspaket:");
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        panel.add(lblVersicherungspaket, gbc);
+
+        String[] versicherungspaketItems = {"Teilkasko", "Vollkasko", "Vollkasko Plus"};
+        ButtonGroup versicherungspaketGroup = new ButtonGroup();
+
+        for (int i = 0; i < versicherungspaketItems.length; i++) {
+            JRadioButton radioButton = new JRadioButton(versicherungspaketItems[i]);
+            gbc.gridx = 1;
+            gbc.gridy = 9 + i;
+            panel.add(radioButton, gbc);
+            versicherungspaketGroup.add(radioButton);
+        }
 
         JLabel lblPreis = new JLabel("Preis:");
         gbc.gridx = 0;
@@ -300,7 +351,7 @@ public class FilterPage extends JPanel {
 
         JButton btnBuchen = new JButton("Buchen");
         btnBuchen.setBackground(Color.ORANGE);
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 15;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
@@ -352,6 +403,7 @@ public class FilterPage extends JPanel {
 
         // Update the list model with the filtered results
         listModel.clear();
+        filteredPKWs = tempList; // Store the filtered PKWs in the list
         for (PKW pkw : tempList) {
             listModel.addElement("<html>Marke: " + pkw.getFzgmarke() + "<br/>Preis: " + pkw.getAnzahltüren() + "<br/>Baujahr: " + pkw.getBaujahr() + "<br/>------" + "</html>");
         }
