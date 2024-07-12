@@ -1,150 +1,103 @@
-package de.autovermietung.Fachklassen;
-import de.autovermietung.Verwaltungsklassen.Kostenberechnung;
-import de.autovermietung.Verwaltungsklassen.PKWVerwaltung;
+package autovermietung.Fachklassen;
+import autovermietung.Fachklassen.Kunde;
+import autovermietung.Fachklassen.PKW;
 
-import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Vertrag implements Serializable {
-    private int kundennummer;
-    private int pkwID;
-    private String fzgkategorie;
-    private boolean elektrofrahrzeug;
-    private boolean parkassistent;
-    private boolean fahrassistent;
-    private boolean klimatisiert;
-    private int fuehrerscheinalter;
-    private boolean kindersitz;
-    private boolean dachbox;
-    private boolean auslandsfahrt;
-    private int versicherungsklasse;
-    private boolean kilometerpaket;
-    private double preis;
+public class Vertrag {
+    private Kunde kunde;
+    private PKW pkw;
+    private LocalDate vertragsbeginn;
+    private LocalDate vertragsende;
+    private double mietpreis;
+    private double kilometerpreis;
+    private int gebuchteTage;
+    private int gebuchteKilometer;
 
-    public Vertrag(int kundennummer, int pkwID, String fzgkategorie, boolean elektrofrahrzeug, boolean parkassistent, boolean fahrassistent, boolean klimatisiert, int fuehrerscheinalter, boolean kindersitz, boolean dachbox, boolean auslandsfahrt, int versicherungsklasse, boolean kilometerpaket, double preis) {
-        this.kundennummer = kundennummer;
-        this.pkwID = pkwID;
-        this.fzgkategorie = fzgkategorie;
-        this.elektrofrahrzeug = elektrofrahrzeug;
-        this.parkassistent = parkassistent;
-        this.fahrassistent = fahrassistent;
-        this.klimatisiert = klimatisiert;
-        this.fuehrerscheinalter = fuehrerscheinalter;
-        this.kindersitz = kindersitz;
-        this.dachbox = dachbox;
-        this.auslandsfahrt = auslandsfahrt;
-        this.versicherungsklasse = versicherungsklasse;
-        this.kilometerpaket = kilometerpaket;
-        this.preis = preis;
+    private static List<Vertrag> vertragsliste = new ArrayList<>();
+
+    public Vertrag(Kunde kunde, PKW pkw, LocalDate vertragsbeginn, LocalDate vertragsende, double mietpreis, double kilometerpreis, int gebuchteTage, int gebuchteKilometer) {
+        this.kunde = kunde;
+        this.pkw = pkw;
+        this.vertragsbeginn = vertragsbeginn;
+        this.vertragsende = vertragsende;
+        this.mietpreis = mietpreis;
+        this.kilometerpreis = kilometerpreis;
+        this.gebuchteTage = gebuchteTage;
+        this.gebuchteKilometer = gebuchteKilometer;
     }
 
-    public int getKundennummer() {
-        return kundennummer;
-    }
-    public int getPkwID() {
-        return pkwID;
+    public Kunde getKunde() {
+        return kunde;
     }
 
-
-    public String getFzgkategorie() {
-        return fzgkategorie;
+    public PKW getPkw() {
+        return pkw;
     }
 
-    public boolean isElektrofrahrzeug() {
-        return elektrofrahrzeug;
+    public LocalDate getVertragsbeginn() {
+        return vertragsbeginn;
     }
 
-    public boolean isParkassistent() {
-        return parkassistent;
+    public LocalDate getVertragsende() {
+        return vertragsende;
     }
 
-    public boolean isFahrassistent() {
-        return fahrassistent;
+    public double getMietpreis() {
+        return mietpreis;
     }
 
-    public boolean isKlimatisiert() {
-        return klimatisiert;
+    public double getKilometerpreis() {
+        return kilometerpreis;
     }
 
-    public int getFuehrerscheinalter() {
-        return fuehrerscheinalter;
+    public int getGebuchteTage() {
+        return gebuchteTage;
     }
 
-    public boolean isKindersitz() {
-        return kindersitz;
+    public int getGebuchteKilometer() {
+        return gebuchteKilometer;
     }
 
-    public boolean isDachbox() {
-        return dachbox;
+    
+    public String toString() {
+        return "Vertrag{" +
+                "Kunde: " + kunde.getName() + " " + kunde.getVorname() + ", Kundennummer: " + kunde.getKundennummer() +
+                ", PKW: " + pkw.getFzgmarke() + " " + pkw.getFzgkategorie() + ", PKW-ID: " + pkw.getId() +
+                ", Vertragsbeginn: " + vertragsbeginn +
+                ", Vertragsende: " + vertragsende +
+                ", Mietpreis: " + mietpreis +
+                ", Kilometerpreis: " + kilometerpreis +
+                ", Gebuchte Tage: " + gebuchteTage +
+                ", Gebuchte Kilometer: " + gebuchteKilometer +
+                '}';
+    }
+    
+    public static void erstelleVertrag(Kunde kunde, PKW pkw, LocalDate vertragsbeginn, LocalDate vertragsende, double mietpreis, double kilometerpreis, int gebuchteTage, int gebuchteKilometer) {
+        Vertrag vertrag = new Vertrag(kunde, pkw, vertragsbeginn, vertragsende, mietpreis, kilometerpreis, gebuchteTage, gebuchteKilometer);
+        vertragsliste.add(vertrag);
     }
 
-    public boolean isAuslandsfahrt() {
-        return auslandsfahrt;
+    public static void vertragAnzeigen() {
+        for (Vertrag vertrag : vertragsliste) {
+            System.out.println(vertrag);
+        }
     }
 
-    public int getVersicherungsklasse() {
-        return versicherungsklasse;
+    public static void vertragLoeschen(Vertrag vertrag) {
+        vertragsliste.remove(vertrag);
     }
 
-    public boolean isKilometerpaket() {
-        return kilometerpaket;
+    public static void vertragBearbeiten(Vertrag vertrag, Kunde kunde, PKW pkw, LocalDate vertragsbeginn, LocalDate vertragsende, double mietpreis, double kilometerpreis, int gebuchteTage, int gebuchteKilometer) {
+        vertrag.kunde = kunde;
+        vertrag.pkw = pkw;
+        vertrag.vertragsbeginn = vertragsbeginn;
+        vertrag.vertragsende = vertragsende;
+        vertrag.mietpreis = mietpreis;
+        vertrag.kilometerpreis = kilometerpreis;
+        vertrag.gebuchteTage = gebuchteTage;
+        vertrag.gebuchteKilometer = gebuchteKilometer;
     }
-
-    public double getPreis() {
-        return preis;
-    }
-    //einen neuen Vertrag erstellen
-    public static Vertrag erstelleVertrag(int kundennummer, int pkwID, String fzgkategorie, boolean elektrofrahrzeug, boolean parkassistent, boolean fahrassistent, boolean klimatisiert, int fuehrerscheinalter, boolean kindersitz, boolean dachbox, boolean auslandsfahrt, int versicherungsklasse, boolean kilometerpaket, double preis) {
-        return new Vertrag(kundennummer, pkwID, fzgkategorie, elektrofrahrzeug, parkassistent, fahrassistent, klimatisiert, fuehrerscheinalter, kindersitz, dachbox, auslandsfahrt, versicherungsklasse, kilometerpaket, preis);
-    }
-
-    public void vertragAnzeigen() {                  //Soll den fertigen Vertrag anzeigen
-        System.out.println("Vertrag Nr. " + kundennummer);
-        System.out.println("Fahrzeug ID: " + pkwID);
-        System.out.println("Fahrzeugkategorie: " + fzgkategorie);
-        System.out.println("Elektrofahrzeug: " + elektrofrahrzeug);
-        System.out.println("Parkassistent: " + parkassistent );
-        System.out.println("Fahrassistent: " + fahrassistent );
-        System.out.println("Klimatisiert: " + klimatisiert );
-        System.out.println("Führerscheinalter: " + fuehrerscheinalter);
-        System.out.println("Kindersitz: " + kindersitz );
-        System.out.println("Dachbox: " + dachbox );
-        System.out.println("Auslandsfahrt: " + auslandsfahrt);
-        System.out.println("Versicherungsklasse: " + versicherungsklasse);
-        System.out.println("Kilometerpaket: " + kilometerpaket );
-        System.out.println("Preis: " + preis + " €");
-    }
-    //Soll einen vorhandenen Vertrag löschen
-    public void vertragLoeschen() {
-        kundennummer = 0;
-        pkwID = 0;
-        fzgkategorie = null;
-        elektrofrahrzeug = false;
-        parkassistent = false;
-        fahrassistent = false;
-        klimatisiert = false;
-        fuehrerscheinalter = 0;
-        kindersitz = false;
-        dachbox = false;
-        auslandsfahrt = false;
-        versicherungsklasse = 0;
-        kilometerpaket = false;
-        preis = 0.0;
-    }
-        // einen vorhandenen Vertrag bearbeiten
-    public void vertragBearbeiten(int neueKundennummer, int neuepkwID, String neueFzgkategorie, boolean neueElektrofrahrzeug, boolean neueParkassistent, boolean neueFahrassistent, boolean neueKlimatisiert, int neueFuehrerscheinalter, boolean neueKindersitz, boolean neueDachbox, boolean neueAuslandsfahrt, int neueVersicherungsklasse, boolean neueKilometerpaket, double neuePreis) {
-        
-        kundennummer = neueKundennummer;
-        pkwID = neuepkwID;
-        fzgkategorie = neueFzgkategorie;
-        elektrofrahrzeug = neueElektrofrahrzeug;
-        parkassistent = neueParkassistent;
-        fahrassistent = neueFahrassistent;
-        klimatisiert = neueKlimatisiert;
-        fuehrerscheinalter = neueFuehrerscheinalter;
-        kindersitz = neueKindersitz;
-        dachbox = neueDachbox;
-        auslandsfahrt = neueAuslandsfahrt;
-        versicherungsklasse = neueVersicherungsklasse;
-        kilometerpaket = neueKilometerpaket;
-        preis = neuePreis;
-    }}
+}
