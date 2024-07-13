@@ -2,10 +2,9 @@ package de.autovermietung.gui;
 import javax.swing.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import de.autovermietung.fachklassen.PKW;
 import de.autovermietung.verwaltungsklassen.PKWVerwaltung;
-import de.autovermietung.verwaltungsklassen.Terminplanung;
+import de.autovermietung.verwaltungsklassen.TerminVerwaltung;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,9 +22,20 @@ public class FilterPage extends JPanel {
     private DefaultListModel<String> listModel;
 
     private PKWVerwaltung pkwVerwaltung = new PKWVerwaltung();
+    private TerminVerwaltung terminVerwaltung = new TerminVerwaltung();
     private List<PKW> filteredPKWs; // List to store the filtered PKWs
 
-    public FilterPage() {
+    private int startTag, startMonat, startJahr, endeTag, endeMonat, endeJahr;
+
+    
+    public FilterPage(int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
+        this.startTag = startTag;
+        this.startMonat = startMonat;
+        this.startJahr = startJahr;
+        this.endeTag = endeTag;
+        this.endeMonat = endeMonat;
+        this.endeJahr = endeJahr;
+
         mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -371,9 +381,19 @@ public class FilterPage extends JPanel {
         // Display the custom panel in a JOptionPane
         JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{btnZurueck});
         JDialog dialog = optionPane.createDialog(this, "Auto Details");
+
+        btnBuchen.addActionListener(e -> {
+            try {
+                terminVerwaltung.buchePKW(pkw.getId(), startTag, startMonat, startJahr, endeTag, endeMonat, endeJahr);
+                JOptionPane.showMessageDialog(this, "PKW erfolgreich gebucht!");
+                dialog.dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Fehler bei der Buchung: " + ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         dialog.setVisible(true);
     }
-
 
     private void filterPKWs() {
         List<PKW> tempList = pkwVerwaltung.getPkwListe(); // start mit allen PKWs in der Liste
