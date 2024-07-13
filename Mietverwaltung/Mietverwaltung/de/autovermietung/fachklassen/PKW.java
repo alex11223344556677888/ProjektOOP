@@ -16,7 +16,9 @@ public class PKW implements Serializable{
 
     private boolean klimatisiert;
     private boolean beheizt;
+    //
     private boolean gebucht;
+    //
     private boolean navi;
     private boolean elektrofahrzeug;
     private boolean fahrassistent;
@@ -31,9 +33,11 @@ public class PKW implements Serializable{
     private int motorleistung;
     private int baujahr;
 
+    private Termin termin;
+
         //Konstruktor
 
-        public PKW(int id, String fzgkategorie, String fzgmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltüren, int sitzplätze, int co2emission, int minalter, String führerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi, boolean fahrassistent, boolean parkassistent, boolean elektrofahrzeug) {
+        public PKW(int id, String fzgkategorie, String fzgmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltüren, int sitzplätze, int co2emission, int minalter, String führerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi, boolean elektrofahrzeug, boolean fahrassistent, boolean parkassistent) {
         this.id = id;
         this.fzgkategorie = fzgkategorie;
         this.getriebe =getriebe;
@@ -55,6 +59,7 @@ public class PKW implements Serializable{
         this.parkassistent = parkassistent;
         this.elektrofahrzeug = elektrofahrzeug;
         this.baujahr = baujahr;
+        this.kraftstoff = kraftstoff;
     }
 
     // @Override
@@ -276,4 +281,34 @@ public class PKW implements Serializable{
     public void setParkassistent(boolean parkassistent) {
         this.parkassistent = parkassistent;
     }
+    public boolean istGebucht() {
+        return gebucht;
+    }
+
+    public void buchen(Termin termin) {
+        if (!gebucht) {
+            this.gebucht = true;
+            this.termin = termin;
+        } else {
+            System.out.println("Der PKW ist bereits gebucht!");
+        }
+    }
+
+    public void entbuchen() {
+        if (gebucht) {
+            this.gebucht = false;
+            this.termin = null;
+        } else {
+            System.out.println("Der PKW ist nicht gebucht!");
+        }
+    }
+
+    public Termin getTermin() {
+        return termin;
+    }
+    
+    public void setTermin(Termin termin) {
+        this.termin = termin;
+    }
+
 }
