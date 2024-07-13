@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,6 +19,8 @@ import java.util.List;
 public class PKWVerwaltung implements Serializable{
     private  List<PKW> pkwListe;
     private int pkwIDCounter = 1000;
+   
+
 
     public PKWVerwaltung() {
         this.pkwListe = new ArrayList<>();
@@ -29,6 +33,12 @@ public class PKWVerwaltung implements Serializable{
         }
         
     }
+
+    
+
+   
+
+
     //PKW hinzufügen
     // public void pkwHinzufuegen(String fzgkategorie, String fahrzeugmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltueren, int sitzplaetze, int co2emission, int minalter, String fuehrerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi) {
     //     int id = pkwIDCounter++;
@@ -376,7 +386,39 @@ public void entbuchePKW(int id) {
         }
         return gefilterteListe;
     }
+
     
+    public List<PKW> deserializePkwListe(String filename) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            return (List<PKW>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Error deserializing pkwListe.ser", e);
+        }
+    }
+
+    public void checkPKWStatus(int pkwId) {
+        PKW pkw = null;
+        for (PKW p : pkwListe) {
+            if (p.getId() == pkwId) {
+                pkw = p;
+                break;
+            }
+        }
+    
+        if (pkw != null) {
+            System.out.println("PKW ID: " + pkwId + " gebucht: " + pkw.isGebucht());
+        } else {
+            System.out.println("PKW ID: " + pkwId + " nicht gefunden.");
+        }
+    }
+
+    public void PKWentbucheAlle() {
+        for (PKW pkw : pkwListe) {
+            pkw.setGebucht(false);
+        }
+        pkwSpeichern();
+        System.out.println("Alle PKWs wurden entbucht.");
+    }
 
 }
 
