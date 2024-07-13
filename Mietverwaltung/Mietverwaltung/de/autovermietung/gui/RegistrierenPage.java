@@ -1,11 +1,19 @@
 package Gui;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import javax.swing.*;
+import javax.swing.text.*;
+import java.util.regex.Pattern;
 
 public class RegistrierenPage extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -80,7 +88,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(txtAlter, gbc);
 
         JLabel lblTelefonnummer = new RoundedLabel(" Telefonnummer: ");
-        txtTelefonnummer = new JTextField(15);
+        JTextField txtTelefonnummer = new JTextField(15);
         lblTelefonnummer.setBackground(Color.WHITE);
         lblTelefonnummer.setForeground(Color.BLACK);
         gbc.gridx = 0;
@@ -89,8 +97,40 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtTelefonnummer, gbc);
 
+        // Define a DocumentFilter to allow only numeric input and limit the length
+        ((AbstractDocument) txtTelefonnummer.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private final int MAX_LENGTH = 13;
+
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() + string.length()) <= MAX_LENGTH && string.matches("\\d*")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() - length + text.length()) <= MAX_LENGTH && text.matches("\\d*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+
+            @Override
+            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+                super.remove(fb, offset, length);
+            }
+        });
+
         JLabel lblEmail = new RoundedLabel(" Email: ");
-        txtEmail = new JTextField(15);
+        JTextField txtEmail = new JTextField(15);
         lblEmail.setBackground(Color.WHITE);
         lblEmail.setForeground(Color.BLACK);
         gbc.gridx = 0;
@@ -98,6 +138,34 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblEmail, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtEmail, gbc);
+
+        // Define an InputVerifier to allow only valid email addresses
+        txtEmail.setInputVerifier(new InputVerifier() {
+            private final Pattern emailPattern = Pattern.compile(
+                "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
+            );
+
+            @Override
+            public boolean verify(JComponent input) {
+                JTextField textField = (JTextField) input;
+                String text = textField.getText().trim();
+                
+                // Allow empty input without showing the message box
+                if (text.isEmpty()) {
+                    return true;
+                }
+                
+                boolean isValid = emailPattern.matcher(text).matches();
+                if (!isValid) {
+                    JOptionPane.showMessageDialog(input, "Bitte geben Sie eine gültige E-Mail-Adresse ein.", "Ungültige E-Mail", JOptionPane.ERROR_MESSAGE);
+                }
+                return isValid;
+            }
+        });
+
+        // Set the font of txtTelefonnummer to be the same as txtEmail
+        Font emailFont = txtEmail.getFont();
+        txtTelefonnummer.setFont(emailFont);
 
         JLabel lblStrasse = new RoundedLabel(" Straße: ");
         txtStrasse = new JTextField(15);
@@ -136,7 +204,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblPLZ, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtPLZ, gbc);
-
+ 
         // Kundenkarte section
         JLabel lblKundenkarte = new RoundedLabel(" Kundenkarte: ");
         rdbJa = new JRadioButton("Ja");
@@ -164,7 +232,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(txtFuehrerscheinzeit, gbc);
 
         JLabel lblFuehrerscheinklasse = new RoundedLabel(" Führerscheinklasse: ");
-        String[] fuehrerscheinklassen = {" ", "A", "B", "C", "D"};
+        String[] fuehrerscheinklassen = {" ", "B", "C"};
         cmbFuehrerscheinklasse = new JComboBox<>(fuehrerscheinklassen);
         gbc.gridx = 0;
         gbc.gridy = 11;
