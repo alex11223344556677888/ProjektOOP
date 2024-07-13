@@ -156,6 +156,7 @@ public class FilterPage extends JPanel {
         return mainPanel;
     }
 
+    // --------- Message Box
     private void showCustomMessageDialog(PKW pkw) {
         // Create a custom panel for the message dialog
         JPanel panel = new JPanel(new GridBagLayout());
@@ -341,7 +342,7 @@ public class FilterPage extends JPanel {
 
         JLabel lblPreis = new JLabel("Preis:");
         gbc.gridx = 0;
-        gbc.gridy = 14;
+        gbc.gridy = 16;
         panel.add(lblPreis, gbc);
 
         JTextField txtPreis = new JTextField("100", 20);
@@ -352,14 +353,27 @@ public class FilterPage extends JPanel {
         JButton btnBuchen = new JButton("Buchen");
         btnBuchen.setBackground(Color.ORANGE);
         gbc.gridx = 1;
-        gbc.gridy = 15;
+        gbc.gridy = 17;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         panel.add(btnBuchen, gbc);
 
+        // Custom button for the JOptionPane
+        JButton btnZurueck = new JButton("Zurück");
+        btnZurueck.addActionListener(e -> {
+            // Close the dialog
+            Window window = SwingUtilities.getWindowAncestor(btnZurueck);
+            if (window != null) {
+                window.dispose();
+            }
+        });
+
         // Display the custom panel in a JOptionPane
-        JOptionPane.showMessageDialog(this, panel, "Auto Details", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{btnZurueck});
+        JDialog dialog = optionPane.createDialog(this, "Auto Details");
+        dialog.setVisible(true);
     }
+
 
     private void filterPKWs() {
         List<PKW> tempList = pkwVerwaltung.getPkwListe(); // start mit allen PKWs in der Liste
@@ -409,5 +423,7 @@ public class FilterPage extends JPanel {
         }
     }
 }
+
+
 
 
