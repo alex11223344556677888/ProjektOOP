@@ -1,12 +1,15 @@
 package de.autovermietung.testklassen;
 
+import de.autovermietung.verwaltungsklassen.PKWVerwaltung;
 import de.autovermietung.verwaltungsklassen.TerminVerwaltung;
 
 public class TerminVerwaltungTest {
     private TerminVerwaltung terminVerwaltung;
+    private PKWVerwaltung pkwVerwaltung; // PKWVerwaltung Instanz
 
     public void setup() {
         terminVerwaltung = new TerminVerwaltung();
+        pkwVerwaltung = new PKWVerwaltung(); // Initialisiere PKWVerwaltung
     }
 
     public static void main(String[] args) {
@@ -14,11 +17,36 @@ public class TerminVerwaltungTest {
         test.setup();
 
         // Aufrufe der jeweiligen Funktionen mit Datum als Parameter
-        test.terminVerwaltung.testBuchePKW(1020, 1, 7, 2024, 28, 7, 2024);
-        test.terminVerwaltung.testEntbuchePKW(1020, 16, 7, 2024, 18, 7, 2024);
-        test.terminVerwaltung.testPruefeTermine();
-        test.terminVerwaltung.testSpeichereTerminListeAlsDatei();
-        test.terminVerwaltung.testPruefeBuchungsZeitraum(1020, 15, 7, 2024, 17, 7, 2024); 
-        test.terminVerwaltung.testPruefeBuchungsZeitraum(1020, 28, 7, 2024, 31, 7, 2024);// Überprüfen, ob am 15.7. gebucht ist
+        // test.terminVerwaltung.buchePKW(1020, 7, 7, 2024, 12, 7, 2024);
+        // test.terminVerwaltung.buchePKW(1021, 9, 7, 2024, 15, 7, 2024);
+        // test.terminVerwaltung.buchePKW(1019, 10, 7, 2024, 20, 7, 2024);
+        // test.terminVerwaltung.pruefeTermine();
+        // test.terminVerwaltung.speichereTerminListeAlsDatei();
+        // test.terminVerwaltung.pruefeBuchungsZeitraum(1020, 7, 7, 2024, 9, 7, 2024);
+        // test.terminVerwaltung.pruefeBuchungsZeitraumPKWListe(6, 7, 2024, 12, 7, 2024);
+        // test.terminVerwaltung.buchePKW(1021, 1, 7, 2024, 10, 7, 2024);
+        // test.terminVerwaltung.buchePKW(1020, 1, 7, 2024, 10, 7, 2024);
+        // test.terminVerwaltung.buchePKW(1019, 1, 7, 2024, 10, 7, 2024);
+        // test.terminVerwaltung.buchePKW(1021, 11, 7, 2024, 15, 7, 2024);
+        // test.terminVerwaltung.buchePKW(1021, 13, 7, 2024, 18, 7, 2024);
+
+        // test.terminVerwaltung.entbuchePKW(1019,1,7,2024,10,7,2024);
+        // test.terminVerwaltung.entbuchePKW(1020, 1, 7, 2024, 5, 7, 2024);
+
+        //test.terminVerwaltung.terminListeAusgeben();
+        test.pkwVerwaltung.PKWentbucheAlle();
+        test.pkwVerwaltung.checkPKWStatus(1001); // Überprüfe PKW Status
+        test.pkwVerwaltung.checkPKWStatus(1002); // Überprüfe PKW Status
+        test.pkwVerwaltung.checkPKWStatus(1003); // Überprüfe PKW Status
+        test.pkwVerwaltung.checkPKWStatus(1004); // Überprüfe PKW Status
+        test.pkwVerwaltung.checkPKWStatus(1005); // Überprüfe PKW Status
+        test.pkwVerwaltung.checkPKWStatus(1006); // Überprüfe PKW Status
+        
+
+        // test.terminVerwaltung.loescheTermin(5000);
+        // test.terminVerwaltung.loescheTermin(5005);
+        // test.terminVerwaltung.loescheTermin(5004);
+        // test.terminVerwaltung.loescheTermin(5003); 
+        //test.terminVerwaltung.loescheAlleTermine(null);
     }
 }
