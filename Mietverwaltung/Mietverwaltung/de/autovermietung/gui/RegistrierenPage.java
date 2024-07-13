@@ -17,104 +17,128 @@ public class RegistrierenPage extends JPanel {
     private JPasswordField txtPasswort, txtPasswortWdh;
 
     public RegistrierenPage() {
-        mainPanel = new BackgroundPanel(new GridBagLayout(), "bilder/5D363845-E5AD-4FC3-8A5F-DF965141DCED.jpeg"); // Update with the correct path to your image
+        mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
+        mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
         // Header label
-        JLabel lblHeader = new JLabel("Gib deine Persönliche Daten ein");
+        JLabel lblHeader = new RoundedLabel(" Gib deine Persönliche Daten ein ");
         lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 4;
         gbc.anchor = GridBagConstraints.CENTER;
+        //lblHeader.setBorder(LineBorder.createBlackLineBorder());
+        lblHeader.setBackground(Color.WHITE);
+        lblHeader.setForeground(Color.BLACK);
         mainPanel.add(lblHeader, gbc);
         
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
         // Labels and text fields for the form
-        JLabel lblVorname = new JLabel("Vorname:");
+        JLabel lblVorname = new RoundedLabel(" Vorname: ");
         txtVorname = new JTextField(15);
         gbc.gridx = 0;
         gbc.gridy = 1;
+        lblVorname.setBackground(Color.WHITE);
+        lblVorname.setForeground(Color.BLACK);
         mainPanel.add(lblVorname, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtVorname, gbc);
 
-        JLabel lblName = new JLabel("Name:");
+        JLabel lblName = new RoundedLabel(" Name: ");
         txtName = new JTextField(15);
         gbc.gridx = 0;
         gbc.gridy = 2;
+        lblName.setBackground(Color.WHITE);
+        lblName.setForeground(Color.BLACK);
         mainPanel.add(lblName, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtName, gbc);
 
-        JLabel lblGeburtsdatum = new JLabel("Geburtsdatum:");
+        JLabel lblGeburtsdatum = new RoundedLabel(" Geburtsdatum: ");
         JFormattedTextField txtGeburtsdatum = createFormattedDateField();
         gbc.gridx = 0;
         gbc.gridy = 3;
+        lblGeburtsdatum.setBackground(Color.WHITE);
+        lblGeburtsdatum.setForeground(Color.BLACK);
         mainPanel.add(lblGeburtsdatum, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtGeburtsdatum, gbc);
 
-        JLabel lblAlter = new JLabel("Alter:");
+        JLabel lblAlter = new RoundedLabel(" Alter: ");
         txtAlter = new JTextField(15);
+        lblAlter.setBackground(Color.WHITE);
+        lblAlter.setForeground(Color.BLACK);
         gbc.gridx = 0;
         gbc.gridy = 4;
         mainPanel.add(lblAlter, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtAlter, gbc);
 
-        JLabel lblTelefonnummer = new JLabel("Telefonnummer:");
+        JLabel lblTelefonnummer = new RoundedLabel(" Telefonnummer: ");
         txtTelefonnummer = new JTextField(15);
+        lblTelefonnummer.setBackground(Color.WHITE);
+        lblTelefonnummer.setForeground(Color.BLACK);
         gbc.gridx = 0;
         gbc.gridy = 5;
         mainPanel.add(lblTelefonnummer, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtTelefonnummer, gbc);
 
-        JLabel lblEmail = new JLabel("Email:");
+        JLabel lblEmail = new RoundedLabel(" Email: ");
         txtEmail = new JTextField(15);
+        lblEmail.setBackground(Color.WHITE);
+        lblEmail.setForeground(Color.BLACK);
         gbc.gridx = 0;
         gbc.gridy = 6;
         mainPanel.add(lblEmail, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtEmail, gbc);
 
-        JLabel lblStrasse = new JLabel("Straße:");
+        JLabel lblStrasse = new RoundedLabel(" Straße: ");
         txtStrasse = new JTextField(15);
+        lblStrasse.setBackground(Color.WHITE);
+        lblStrasse.setForeground(Color.BLACK);
         gbc.gridx = 0;
         gbc.gridy = 7;
         mainPanel.add(lblStrasse, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtStrasse, gbc);
 
-        JLabel lblNr = new JLabel("Nr.:");
+        JLabel lblNr = new RoundedLabel( " Nr.: ");
         txtNr = new JTextField(5);
+        lblNr.setBackground(Color.WHITE);
+        lblNr.setForeground(Color.BLACK);
         gbc.gridx = 2;
         mainPanel.add(lblNr, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtNr, gbc);
 
-        JLabel lblOrt = new JLabel("Ort:");
+        JLabel lblOrt = new RoundedLabel(" Ort: ");
         txtOrt = new JTextField(15);
+        lblOrt.setBackground(Color.WHITE);
+        lblOrt.setForeground(Color.BLACK);
         gbc.gridx = 0;
         gbc.gridy = 8;
         mainPanel.add(lblOrt, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtOrt, gbc);
 
-        JLabel lblPLZ = new JLabel("PLZ:");
+        JLabel lblPLZ = new RoundedLabel(" PLZ: ");
         txtPLZ = new JTextField(5);
+        lblPLZ.setBackground(Color.WHITE);
+        lblPLZ.setForeground(Color.BLACK);
         gbc.gridx = 2;
         mainPanel.add(lblPLZ, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtPLZ, gbc);
 
         // Kundenkarte section
-        JLabel lblKundenkarte = new JLabel("Kundenkarte:");
+        JLabel lblKundenkarte = new RoundedLabel(" Kundenkarte: ");
         rdbJa = new JRadioButton("Ja");
         rdbNein = new JRadioButton("Nein");
         ButtonGroup bgKundenkarte = new ButtonGroup();
@@ -131,7 +155,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(kundenkartePanel, gbc);
 
-        JLabel lblFuehrerscheinzeit = new JLabel("Führerscheinzeit:");
+        JLabel lblFuehrerscheinzeit = new RoundedLabel(" Führerscheinzeit: ");
         txtFuehrerscheinzeit = new JTextField(15);
         gbc.gridx = 0;
         gbc.gridy = 10;
@@ -139,8 +163,8 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtFuehrerscheinzeit, gbc);
 
-        JLabel lblFuehrerscheinklasse = new JLabel("Führerscheinklasse:");
-        String[] fuehrerscheinklassen = {"A", "B", "C", "D"};
+        JLabel lblFuehrerscheinklasse = new RoundedLabel(" Führerscheinklasse: ");
+        String[] fuehrerscheinklassen = {" ", "A", "B", "C", "D"};
         cmbFuehrerscheinklasse = new JComboBox<>(fuehrerscheinklassen);
         gbc.gridx = 0;
         gbc.gridy = 11;
@@ -148,7 +172,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(cmbFuehrerscheinklasse, gbc);
 
-        JLabel lblPasswort = new JLabel("Passwort:");
+        JLabel lblPasswort = new RoundedLabel(" Passwort: ");
         txtPasswort = new JPasswordField(15);
         gbc.gridx = 0;
         gbc.gridy = 12;
@@ -156,7 +180,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtPasswort, gbc);
 
-        JLabel lblPasswortWdh = new JLabel("Passwort wiederholen:");
+        JLabel lblPasswortWdh = new RoundedLabel(" Passwort wiederholen: ");
         txtPasswortWdh = new JPasswordField(15);
         gbc.gridx = 0;
         gbc.gridy = 13;
@@ -177,11 +201,11 @@ public class RegistrierenPage extends JPanel {
         btnZurueck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
-                parentFrame.dispose(); // Close the current frame
-
-                WelcomePage welcomePage = new WelcomePage();
-                welcomePage.setVisible(true); // Make the WelcomePage frame visible
+            	JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                parentFrame.getContentPane().removeAll();
+                parentFrame.getContentPane().add(new WelcomePage().getMainPanel());
+                parentFrame.revalidate();
+                parentFrame.repaint();
             }
         });
 
@@ -233,34 +257,7 @@ public class RegistrierenPage extends JPanel {
         return mainPanel;
     }
 
-    // Custom JPanel class to paint background image
-    class BackgroundPanel extends JPanel {
-        private static final long serialVersionUID = 1L;
-		private Image backgroundImage;
-
-        public BackgroundPanel(LayoutManager layout, String imagePath) {
-            super(layout);
-            // Load the background image
-            backgroundImage = new ImageIcon(imagePath).getImage();
-            if (backgroundImage == null) {
-                System.err.println("Image not found: " + imagePath);
-            }
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            // Draw the background image
-            if (backgroundImage != null) {
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-            } else {
-                g.setColor(Color.RED);
-                g.fillRect(0, 0, getWidth(), getHeight());
-                g.setColor(Color.WHITE);
-                g.drawString("Image not found", getWidth() / 2, getHeight() / 2);
-            }
-        }
-    }
+   
 }
 
 
