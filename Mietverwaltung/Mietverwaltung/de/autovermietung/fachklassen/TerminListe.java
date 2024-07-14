@@ -1,4 +1,4 @@
-package de.autovermietung.fachklassen;
+package fachklassen;
 
 import java.util.ArrayList;
 import java.util.List;
