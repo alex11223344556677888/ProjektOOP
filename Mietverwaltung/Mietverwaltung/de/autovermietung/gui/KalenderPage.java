@@ -1,6 +1,6 @@
 package Gui;
 
-import de.autovermietung.verwaltungsklassen.TerminVerwaltung;
+import Verwaltungsklassen.TerminVerwaltung;
 
 import javax.swing.*;
 import java.awt.*;
@@ -118,5 +118,3 @@ public class KalenderPage extends JPanel {
         return mainPanel;
     }
 }
-
-
