@@ -1,14 +1,14 @@
-package autovermietung.Testklassen;
+package Testklassen;
 
 import java.time.LocalDate;
 
-import autovermietung.Fachklassen.Kunde;
-import autovermietung.Fachklassen.PKW;
-import autovermietung.Fachklassen.Vertrag;
+import fachklassen.Kunde;
+import fachklassen.PKW;
+import fachklassen.Vertrag;
 
 
-import autovermietung.Verwaltungsklassen.Kundenverwaltung;
-import autovermietung.Verwaltungsklassen.PKWVerwaltung;
+import Verwaltungsklassen.Kundenverwaltung;
+import Verwaltungsklassen.PKWVerwaltung;
 
 
 
