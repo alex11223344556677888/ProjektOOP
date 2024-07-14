@@ -1,5 +1,6 @@
 package Gui;
 
+import Verwaltungsklassen.Kundenverwaltung;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,8 +15,10 @@ public class Auftraguebersicht extends JPanel {
     private JList<String> list;
     private DefaultListModel<String> listModel;
     private JButton btnZurueck, btnNeuesAutoMieten;
+    private Kundenverwaltung kundenverwaltung; // Add this field
 
-    public Auftraguebersicht() {
+    public Auftraguebersicht(Kundenverwaltung kundenverwaltung) { // Accept Kundenverwaltung as a parameter
+        this.kundenverwaltung = kundenverwaltung; // Assign it to the field
         mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -76,7 +79,7 @@ public class Auftraguebersicht extends JPanel {
                 // Implement the action for the Zurück button
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new LoginPage().getMainPanel());
+                parentFrame.getContentPane().add(new LoginPage(kundenverwaltung).getMainPanel()); // Pass kundenverwaltung
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
@@ -238,7 +241,8 @@ public class Auftraguebersicht extends JPanel {
         txtZeitraum.setEditable(false);
         gbc.gridx = 1;
         panel.add(txtZeitraum, gbc);
-     // Zusatzbuchungen
+
+        // Zusatzbuchungen
         JLabel lblZusatzbuchungen = new JLabel("Zusatzbuchungen:");
         gbc.gridx = 0;
         gbc.gridy = 8;
@@ -266,16 +270,17 @@ public class Auftraguebersicht extends JPanel {
                     panel.repaint();
                 });
             }
-            JLabel lblPreis = new JLabel("Preis:");
-            gbc.gridx = 0;
-            gbc.gridy = 16;
-            panel.add(lblPreis, gbc);
-
-            JTextField txtPreis = new JTextField("100", 20);
-            txtPreis.setEditable(false);
-            gbc.gridx = 1;
-            panel.add(txtPreis, gbc);
         }
+
+        JLabel lblPreis = new JLabel("Preis:");
+        gbc.gridx = 0;
+        gbc.gridy = 16;
+        panel.add(lblPreis, gbc);
+
+        JTextField txtPreis = new JTextField("100", 20);
+        txtPreis.setEditable(false);
+        gbc.gridx = 1;
+        panel.add(txtPreis, gbc);
 
         // Versicherungspaket
         JLabel lblVersicherungspaket = new JLabel("Versicherungspaket:");
@@ -374,5 +379,3 @@ public class Auftraguebersicht extends JPanel {
         return mainPanel;
     }
 }
-
-
