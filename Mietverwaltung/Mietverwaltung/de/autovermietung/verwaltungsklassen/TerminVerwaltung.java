@@ -1,7 +1,7 @@
-package de.autovermietung.verwaltungsklassen;
+package Verwaltungsklassen;
 
-import de.autovermietung.fachklassen.PKW;
-import de.autovermietung.fachklassen.Termin;
+import fachklassen.PKW;
+import fachklassen.Termin;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
