@@ -6,40 +6,41 @@ import autovermietung.Fachklassen.Kunde;
 import autovermietung.Fachklassen.PKW;
 import autovermietung.Fachklassen.Vertrag;
 
-import autovermietung.Verwaltungsklassen.PKWVerwaltung;
+
 import autovermietung.Verwaltungsklassen.Kundenverwaltung;
-import java.time.LocalDate;
+import autovermietung.Verwaltungsklassen.PKWVerwaltung;
+
+
 
 public class VertragTest {
     public static void main(String[] args) {
-        // Create instances of PkwVerwaltung and KundenVerwaltung
-        PKWVerwaltung pkwverwaltung = new PKWVerwaltung();
+        // Objekte
         Kundenverwaltung kundenverwaltung = new Kundenverwaltung();
-
-        // Get sample customer and car data
+        PKWVerwaltung pkwverwaltung = new PKWVerwaltung();
+        
+        // Beispiel Kunde und PKW
         Kunde kunde = kundenverwaltung.getKundeByKundennummer(123456789);
-        //PKW pkw = pkwverwaltung.getPKWByID(1000);
+        PKW pkw = pkwverwaltung.getPkwById(1000);
 
-        // Define contract details
+        // Vertragsdetails definieren
         LocalDate vertragsbeginn = LocalDate.of(2023, 3, 1);
         LocalDate vertragsende = LocalDate.of(2023, 3, 10);
-        double mietpreis = 50.0;
-        double kilometerpreis = 0.25;
-        int gebuchteTage = 10;
-        int gebuchteKilometer = 500;
 
-        // Create a sample contract
-        Vertrag vertrag = new Vertrag(kunde, pkw, vertragsbeginn, vertragsende, mietpreis, kilometerpreis, gebuchteTage, gebuchteKilometer);
+        // Vertrag erstellen
+        Vertrag.erstelleVertrag(kunde, pkw, vertragsbeginn, vertragsende);
 
-        // Print the contract details
-        System.out.println("Vertrag Details:");
-        System.out.println(vertrag);
+        // Vertrag anzeigen
+        Vertrag.vertragAnzeigen(kunde, pkw);
 
-        // Add the contract to the contract list
-        Vertrag.erstelleVertrag(kunde, pkw, vertragsbeginn, vertragsende, mietpreis, kilometerpreis, gebuchteTage, gebuchteKilometer);
+        // Vertrag bearbeiten
+        vertragsbeginn = LocalDate.of(2023, 3, 5);
+        vertragsende = LocalDate.of(2023, 3, 15);
+        Vertrag.vertragBearbeiten(kunde, pkw, vertragsbeginn, vertragsende);
 
-        // Print all contracts in the contract list
-        System.out.println("\nAlle Verträge:");
-        Vertrag.vertragAnzeigen();
+        // Vertrag anzeigen nach Bearbeiten
+        Vertrag.vertragAnzeigen(kunde, pkw);
+
+        // Vertrag löschen
+        Vertrag.vertragLoeschen(kunde, pkw);
     }
 }
