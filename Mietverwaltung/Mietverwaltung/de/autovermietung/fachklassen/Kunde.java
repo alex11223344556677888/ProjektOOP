@@ -1,4 +1,4 @@
-package Fachklassen;
+package fachklassen;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -89,16 +89,34 @@ public class Kunde extends Person {
                 extractField(data[17], "Passwort: ") // Passwort
         );
     }
+
     private static String extractField(String field, String prefix) {
-        int startIndex = field.indexOf(prefix) + prefix.length();
-        int endIndex = field.indexOf(", ", startIndex);
-        return field.substring(startIndex, endIndex);
+        return field.substring(prefix.length()).trim();
     }
 
-    
-       
-        
-    
+    @Override
+    public String toString() {
+        return "Vorname: " + getVorname() + ", " +
+                "Name: " + getName() + ", " +
+                "Geburtsdatum: " + getGeburtsdatum() + ", " +
+                "Alter: " + getAlter() + ", " +
+                "Kundennummer: " + kundennummer + ", " +
+                "Telefonnummer: " + telefonnummer + ", " +
+                "Fuehrerscheinklasse: " + fuehrerscheinklasse + ", " +
+                "Email: " + email + ", " +
+                "Zahlungsmittel: " + zahlungsmittel + ", " +
+                "Historie: " + historie + ", " +
+                "Strasse: " + strasse + ", " +
+                "Hausnummer: " + hausnummer + ", " +
+                "Postleitzahl: " + postleitzahl + ", " +
+                "Ort: " + ort + ", " +
+                "Kundenkarte: " + kundenkarte + ", " +
+                "Fuehrerscheinzeitraum: " + fuehrerscheinzeitraum + ", " +
+                "Anmeldename: " + anmeldename + ", " +
+                "Passwort: " + passwort;
+    }
+
+    // Getters and setters
 
     public int getKundennummer() {
         return kundennummer;
@@ -214,5 +232,9 @@ public class Kunde extends Person {
 
     public String getLoginName() {
         return anmeldename;
+    }
+
+    public String getKundenName() {
+        return getVorname() + " " + getName();
     }
 }
