@@ -1,9 +1,9 @@
-package de.autovermietung.testklassen;
+package Testklassen;
 
-import de.autovermietung.fachklassen.Auftrag;
-import de.autovermietung.fachklassen.Kunde;
-import de.autovermietung.fachklassen.PKW;
-import de.autovermietung.verwaltungsklassen.Kostenberechnung;
+import fachklassen.Auftrag;
+import fachklassen.Kunde;
+import fachklassen.PKW;
+import Verwaltungsklassen.Kostenberechnung;
 
 public class KostenrechnungTest {
     public static void main(String[] args) {
