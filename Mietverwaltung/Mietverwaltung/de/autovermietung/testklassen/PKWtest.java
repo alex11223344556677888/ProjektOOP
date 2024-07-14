@@ -1,8 +1,8 @@
-package de.autovermietung.testklassen;
+package Testklassen;
 
-import de.autovermietung.fachklassen.PKW;
-import de.autovermietung.verwaltungsklassen.PKWVerwaltung;
-import de.autovermietung.verwaltungsklassen.TerminVerwaltung;
+import fachklassen.PKW;
+import Verwaltungsklassen.PKWVerwaltung;
+import Verwaltungsklassen.TerminVerwaltung;
 
 import java.util.List;
 
