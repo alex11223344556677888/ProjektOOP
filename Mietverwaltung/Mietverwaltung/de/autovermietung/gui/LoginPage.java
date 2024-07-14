@@ -1,16 +1,21 @@
 package Gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Verwaltungsklassen.Kundenverwaltung;
+
 public class LoginPage extends JPanel {
     private static final long serialVersionUID = 1L;
-
     private JPanel mainPanel;
+    private Kundenverwaltung kundenverwaltung;
 
-    public LoginPage() {
-    	mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
+    public LoginPage(Kundenverwaltung kundenverwaltung) {
+        this.kundenverwaltung = kundenverwaltung;
+
+        mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -83,33 +88,24 @@ public class LoginPage extends JPanel {
         mainPanel.add(buttonPanel, gbc);
 
         // Add action listener for the Back button
-        /*btnBack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
-                parentFrame.dispose();
-                new WelcomePage().setVisible(true);
-            }
-        });*/
-        
-        // Zurück button 
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new WelcomePage().getMainPanel());
+                parentFrame.getContentPane().add(new WelcomePage(kundenverwaltung).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
         });
-     // Add action listener for the Save button
+
+        // Add action listener for the Save button
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new Auftraguebersicht().getMainPanel());
+                parentFrame.getContentPane().add(new Auftraguebersicht(kundenverwaltung).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
@@ -120,7 +116,3 @@ public class LoginPage extends JPanel {
         return mainPanel;
     }
 }
-
-
-
-
