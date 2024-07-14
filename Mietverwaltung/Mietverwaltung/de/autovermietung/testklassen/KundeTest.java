@@ -1,10 +1,10 @@
 package Testklassen;
 
-import Fachklassen.Kunde;
+import fachklassen.Kunde;
 
 public class KundeTest {
     
-    @Test
+    @VertragTest
     public void testKundeCreation() {
         Kunde kunde = new Kunde("Max", "Mustermann", "01.01.1990", 31, 123456, 12345678, "B", "max.mustermann@example.com", "EC-Karte", "Keine besonderen Vorkommnisse", "Musterstraße", 1, 12345, "Musterstadt", true, 10, "max123", "passwortMax");
         
@@ -16,7 +16,7 @@ public class KundeTest {
         throw new UnsupportedOperationException("Unimplemented method 'assertNotNull'");
     }
 
-    @Test
+    @VertragTest
     public void testGettersAndSetters() {
         Kunde kunde = new Kunde("Max", "Mustermann", "01.01.1990", 31, 123456, 12345678, "B", "max.mustermann@example.com", "EC-Karte", "Keine besonderen Vorkommnisse", "Musterstraße", 1, 12345, "Musterstadt", true, 10, "max123", "passwortMax");
 
@@ -43,7 +43,7 @@ public class KundeTest {
         throw new UnsupportedOperationException("Unimplemented method 'assertEquals'");
     }
 
-    @Test
+    @VertragTest
     public void testLogin() {
         Kunde kunde = new Kunde("Max", "Mustermann", "01.01.1990", 31, 123456, 12345678, "B", "max.mustermann@example.com", "EC-Karte", "Keine besonderen Vorkommnisse", "Musterstraße", 1, 12345, "Musterstadt", true, 10,  "max123", "passwortMax");
         Kunde loggedKunde = Kunde.login("max123", "passwortMax");
