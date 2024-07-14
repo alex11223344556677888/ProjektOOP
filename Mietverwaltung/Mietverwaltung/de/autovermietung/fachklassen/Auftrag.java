@@ -1,7 +1,7 @@
-package de.autovermietung.fachklassen;
+package fachklassen;
 import java.util.Date;
 
-import de.autovermietung.verwaltungsklassen.*;
+import Verwaltungsklassen.*;
 
 
 //interface
