@@ -1,7 +1,7 @@
-package de.autovermietung.testklassen;
+package Testklassen;
 
-import de.autovermietung.verwaltungsklassen.PKWVerwaltung;
-import de.autovermietung.verwaltungsklassen.TerminVerwaltung;
+import Verwaltungsklassen.PKWVerwaltung;
+import Verwaltungsklassen.TerminVerwaltung;
 
 public class TerminVerwaltungTest {
     private TerminVerwaltung terminVerwaltung;
