@@ -1,8 +1,8 @@
-package de.autovermietung.verwaltungsklassen;
+package Verwaltungsklassen;
 
-import de.autovermietung.fachklassen.Auftrag;
-import de.autovermietung.fachklassen.Kunde;
-import de.autovermietung.fachklassen.PKW;
+import fachklassen.Auftrag;
+import fachklassen.Kunde;
+import fachklassen.PKW;
 
 public class Kostenberechnung {
     private Kunde kunde;
@@ -115,5 +115,3 @@ public class Kostenberechnung {
         return preis;
     }
 }
-
-
