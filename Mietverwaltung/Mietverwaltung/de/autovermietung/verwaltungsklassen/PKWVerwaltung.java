@@ -1,6 +1,6 @@
-package de.autovermietung.verwaltungsklassen;
+package Verwaltungsklassen;
 
-import de.autovermietung.fachklassen.*;
+import fachklassen.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
