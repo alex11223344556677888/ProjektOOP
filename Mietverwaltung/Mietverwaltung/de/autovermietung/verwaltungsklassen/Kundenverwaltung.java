@@ -1,18 +1,13 @@
 package Verwaltungsklassen;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import fachklassen.Kunde;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Scanner;
-
-import javax.swing.JOptionPane;
-
-import Fachklassen.Kunde;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class Kundenverwaltung {
     private HashMap<Integer, Kunde> kundenMap;
@@ -24,7 +19,14 @@ public class Kundenverwaltung {
     }
 
     public void neuenKundenErstellen(Kunde kunde) {
-        kundenMap.put(kunde.getKundennummer(), kunde);
+        int neueKundennummer = generateRandomKundennummer();
+        kunde.setKundennummer(neueKundennummer);
+        kundenMap.put(neueKundennummer, kunde);
+    }
+
+    private int generateRandomKundennummer() {
+        Random random = new Random();
+        return kundennummerCounter + random.nextInt(900000000); // add a random number between 0 and 900,000,000
     }
 
     public Kunde getKundeByKundennummer(int kundennummer) {
@@ -56,11 +58,6 @@ public class Kundenverwaltung {
         }
     }
 
-    public static void addKunde(Kunde kunde) {
-        // Add the customer to the database or file
-        kunde.saveDataToFile();
-    }
-
     public void displayKunde(Kunde kunde) {
         System.out.println("Nachname: " + kunde.getName() + ", Vorname: " + kunde.getVorname() + ", Kundennummer: " + kunde.getKundennummer() + "\n" +
                 "Geburtsdatum: " + kunde.getGeburtsdatum() + ", Alter: " + kunde.getAlter() + "\n" +
@@ -80,25 +77,26 @@ public class Kundenverwaltung {
         return null;
     }
 
-    public void searchKunde() {
-        String searchQuery = JOptionPane.showInputDialog(null, "Suchen nach Name, Kundennummer oder Anmeldename:");
-        if (searchQuery != null) {
-            if (searchQuery.matches("\\d+")) { // search by customer number
-                int kundennummer = Integer.parseInt(searchQuery);
-                Kunde kunde = this.getKundeByKundennummer(kundennummer);
-                if (kunde != null) {
-                    this.displayKunde(kunde);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Kunde nicht gefunden!");
-                }
-            } else { // search by name or login name
-                Kunde kunde = this.sucheNachName(searchQuery); // search by name
-                if (kunde != null) {
-                    this.displayKunde(kunde);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Kunde nicht gefunden!");
-                }
-            }
+    public String getKundenName(int kundennummer) {
+        Kunde kunde = getKundeByKundennummer(kundennummer);
+        if (kunde!= null) {
+            return kunde.getName();
+        } else {
+            return null;
         }
     }
+
+    private Kunde kunde;
+    public void setKundenName(String name) {
+        if (kunde != null) { // Überprüfen, ob kunde nicht null ist
+            kunde.setName(name); // Methode setName auf kunde aufrufen
+        } else {
+            System.err.println("Error: Kunde is null, cannot set name."); // Fehlermeldung ausgeben, falls kunde null ist
+            // Alternativ: throw new IllegalStateException("Kunde is null, cannot set name.");
+        }
+    }
+
+  
+   
+   
 }
