@@ -45,5 +45,6 @@ public class RoundedLabel extends JLabel {
     public void setBackground(Color bg) {
         this.backgroundColor = bg;
     }
-}
+} 
+    
 
