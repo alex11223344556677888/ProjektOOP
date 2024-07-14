@@ -7,6 +7,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
+
+import Verwaltungsklassen.Kundenverwaltung;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +26,7 @@ public class RegistrierenPage extends JPanel {
     private JRadioButton rdbJa, rdbNein;
     private JComboBox<String> cmbFuehrerscheinklasse;
     private JPasswordField txtPasswort, txtPasswortWdh;
+    private Kundenverwaltung kundenverwaltung;
 
     public RegistrierenPage() {
         mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
@@ -31,6 +35,7 @@ public class RegistrierenPage extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
+        kundenverwaltung = new Kundenverwaltung();
         // Header label
         JLabel lblHeader = new RoundedLabel(" Gib deine Persönliche Daten ein ");
         lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
@@ -269,14 +274,14 @@ public class RegistrierenPage extends JPanel {
         btnZurueck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new WelcomePage().getMainPanel());
+                parentFrame.getContentPane().add(new WelcomePage(kundenverwaltung).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
         });
-
+        
         // Add action listener for the Confirm button
         btnBestaetigen.addActionListener(new ActionListener() {
             @Override
@@ -297,7 +302,7 @@ public class RegistrierenPage extends JPanel {
                     rdbJa.isSelected() ? "Ja" : "Nein",
                     txtFuehrerscheinzeit.getText(),
                     (String) cmbFuehrerscheinklasse.getSelectedItem(),
-                    new String(txtPasswort.getPassword())
+                    new String(txtPasswort.getPassword()), null
                 ).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
@@ -327,9 +332,3 @@ public class RegistrierenPage extends JPanel {
 
    
 }
-
-
-
-
-
-
