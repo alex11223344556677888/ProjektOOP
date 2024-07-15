@@ -73,7 +73,7 @@ public class Vertrag implements Serializable {
                 ", Vertragsbeginn: " + vertragsbeginn +
                 ", Vertragsende: " + vertragsende;
     }
-
+    // Verträge abspeichern
     public static void speichereVertraege(List<Vertrag> vertraege) {
         try (FileOutputStream fos = new FileOutputStream(VERTRAG_DATEI);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
@@ -87,32 +87,35 @@ public class Vertrag implements Serializable {
     public static List<Vertrag> ladeVertraege() {
     List<Vertrag> vertraege = new ArrayList<>();
     File file = new File("vertraege.dat");
+    
 
     // FIle erstellen, wenn es nicht schon besteht
     if (!file.exists()) {
         try {
             file.createNewFile();
         } catch (IOException e) {
-            System.err.println("Error creating file: " + e.getMessage());
+            System.err.println("Fehler bei der Dateieinstellung " + e.getMessage());
         }
     }
 
-    // Lade Verträge vom file
+    // Verträge aus dem file laden
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
         vertraege = (List<Vertrag>) ois.readObject();
     } catch (IOException | ClassNotFoundException e) {
-        System.err.println("Error loading vertraege: " + e.getMessage());
+        System.err.println("Fehler beim Laden der Verträge " + e.getMessage());
     }
 
     return vertraege;
-}
+}   
+    //einen neuen Vetrag erstellen
     public static void erstelleVertrag(Kunde kunde, PKW pkw, LocalDate vertragsbeginn, LocalDate vertragsende) {
         Vertrag vertrag = new Vertrag(kunde, pkw, vertragsbeginn, vertragsende);
         List<Vertrag> vertraege = ladeVertraege();
         vertraege.add(vertrag);
         speichereVertraege(vertraege);
+        System.out.println("Vertrag gespeichert: " + kunde + ", " + pkw + ", " + vertragsbeginn + ", " + vertragsende);
     }
-
+    //kompletten Vertrag löschen
     public static void vertragLoeschen(Kunde kunde, PKW pkw) {
         List<Vertrag> vertraege = ladeVertraege();
         for (int i = 0; i < vertraege.size(); i++) {
@@ -127,7 +130,7 @@ public class Vertrag implements Serializable {
         }
         System.out.println("Kein Vertrag gefunden!");
     }
-
+    //vollständigen Vertrag anzeigen lassen
     public static void vertragAnzeigen(Kunde kunde, PKW pkw) {
         List<Vertrag> vertraege = ladeVertraege();
         for (Vertrag vertrag : vertraege) {
@@ -140,7 +143,7 @@ public class Vertrag implements Serializable {
         }
         System.out.println("Kein Vertrag gefunden!");
     }
-
+    //Veträge bearbeiten und Vertragsdetail ändern
     public static void vertragBearbeiten(Kunde kunde, PKW pkw, LocalDate vertragsbeginn, LocalDate vertragsende) {
         List<Vertrag> vertraege = ladeVertraege();
         for (Vertrag vertrag : vertraege) {
