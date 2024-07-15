@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vertrag implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Kunde kunde;
     private PKW pkw;
     private LocalDate vertragsbeginn;
@@ -74,9 +75,10 @@ public class Vertrag implements Serializable {
                 ", Vertragsende: " + vertragsende;
     }
     // Verträge abspeichern
-    public static void speichereVertraege(List<Vertrag> vertraege) {
+    public void speichereVertraege(List<Vertrag> vertraege) {
         try (FileOutputStream fos = new FileOutputStream(VERTRAG_DATEI);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            System.out.println("Speichert " + vertraege.size() + " Verträge zum file...");
             oos.writeObject(vertraege);
             System.out.println("Verträge erfolgreich gespeichert!");
         } catch (Exception e) {
@@ -84,7 +86,7 @@ public class Vertrag implements Serializable {
         }
     }
 
-    public static List<Vertrag> ladeVertraege() {
+    public List<Vertrag> ladeVertraege() {
     List<Vertrag> vertraege = new ArrayList<>();
     File file = new File("vertraege.dat");
     
@@ -97,6 +99,10 @@ public class Vertrag implements Serializable {
             System.err.println("Fehler bei der Dateieinstellung " + e.getMessage());
         }
     }
+    // Check ob das file leer ist
+    if (file.length() == 0) {
+        return vertraege; // Return an empty list if file is empty
+    }
 
     // Verträge aus dem file laden
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
@@ -108,7 +114,7 @@ public class Vertrag implements Serializable {
     return vertraege;
 }   
     //einen neuen Vetrag erstellen
-    public static void erstelleVertrag(Kunde kunde, PKW pkw, LocalDate vertragsbeginn, LocalDate vertragsende) {
+    public void erstelleVertrag(Kunde kunde, PKW pkw, LocalDate vertragsbeginn, LocalDate vertragsende) {
         Vertrag vertrag = new Vertrag(kunde, pkw, vertragsbeginn, vertragsende);
         List<Vertrag> vertraege = ladeVertraege();
         vertraege.add(vertrag);
@@ -116,7 +122,7 @@ public class Vertrag implements Serializable {
         System.out.println("Vertrag gespeichert: " + kunde + ", " + pkw + ", " + vertragsbeginn + ", " + vertragsende);
     }
     //kompletten Vertrag löschen
-    public static void vertragLoeschen(Kunde kunde, PKW pkw) {
+    public void vertragLoeschen(Kunde kunde, PKW pkw) {
         List<Vertrag> vertraege = ladeVertraege();
         for (int i = 0; i < vertraege.size(); i++) {
             Vertrag vertrag = vertraege.get(i);
@@ -124,6 +130,7 @@ public class Vertrag implements Serializable {
                 if (vertrag.getKunde() != null && vertrag.getKunde().equals(kunde) && vertrag.getPkw().equals(pkw)) {
                     vertraege.remove(i);
                     speichereVertraege(vertraege);
+                    System.out.println("Vertrag erfolgreich gelöscht!");
                     return;
                 }
             }
@@ -131,7 +138,7 @@ public class Vertrag implements Serializable {
         System.out.println("Kein Vertrag gefunden!");
     }
     //vollständigen Vertrag anzeigen lassen
-    public static void vertragAnzeigen(Kunde kunde, PKW pkw) {
+    public void vertragAnzeigen(Kunde kunde, PKW pkw) {
         List<Vertrag> vertraege = ladeVertraege();
         for (Vertrag vertrag : vertraege) {
             if (vertrag != null && kunde != null && pkw != null) {
@@ -143,20 +150,7 @@ public class Vertrag implements Serializable {
         }
         System.out.println("Kein Vertrag gefunden!");
     }
-    //Veträge bearbeiten und Vertragsdetail ändern
-    public static void vertragBearbeiten(Kunde kunde, PKW pkw, LocalDate vertragsbeginn, LocalDate vertragsende) {
-        List<Vertrag> vertraege = ladeVertraege();
-        for (Vertrag vertrag : vertraege) {
-            if (vertrag != null && kunde != null && pkw != null) {
-                if (vertrag.getKunde() != null && vertrag.getKunde().equals(kunde) && vertrag.getPkw().equals(pkw)) {
-                    vertrag.setVertragsbeginn(vertragsbeginn);
-                    vertrag.setVertragsende(vertragsende);
-                    speichereVertraege(vertraege);
-                    return;
-                }
-            }
-        }
-        System.out.println("Kein Vertrag gefunden!");
-    }
+
+    
    
 }
