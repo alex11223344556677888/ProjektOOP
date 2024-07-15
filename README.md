@@ -25,6 +25,9 @@ https://1drv.ms/w/c/067ab1af87a5c49c/EVjTVjSFj3RIlDIHy777qWIBzlGUa4bNC9L-uf42BoD
 Hier ist die Datei von Roman:
 https://1drv.ms/w/c/067ab1af87a5c49c/ERcvX2qZKjRNiQ_iIH1ftyIBPJ3HaC1Glr3ysvn6C4AIOQ?e=PxxISO
 
+Excel Datei:
+https://1drv.ms/x/c/067ab1af87a5c49c/Edo5M-vCoIJEuruIYy3X_LcBhYW_2c-oTtEHyS_4GCuBjA?e=EQAdPj
+
 
 
 
