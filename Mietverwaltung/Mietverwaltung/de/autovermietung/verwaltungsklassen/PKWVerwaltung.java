@@ -1,6 +1,6 @@
-package Verwaltungsklassen;
+package de.autovermietung.verwaltungsklassen;
 
-import fachklassen.*;
+import de.autovermietung.fachklassen.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,40 +21,25 @@ public class PKWVerwaltung implements Serializable{
     private int pkwIDCounter = 1000;
    
 
-
+//Konstrukor der auf die Datei zugreift oder eine bestellt
     public PKWVerwaltung() {
         this.pkwListe = new ArrayList<>();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("pkwListe.ser"))) {
             pkwListe = (List<PKW>) ois.readObject();
         } catch (IOException e) {
-            // File does not exist, create a new list
+            // Falls Datei nicht da ist wird hier eine erstellt
         } catch (ClassNotFoundException e) {
             System.err.println("Fehler beim Laden der PKW-Liste: " + e.getMessage());
         }
         
     }
 
-    
-
-   
-
-
-    //PKW hinzufügen
-    // public void pkwHinzufuegen(String fzgkategorie, String fahrzeugmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltueren, int sitzplaetze, int co2emission, int minalter, String fuehrerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi) {
-    //     int id = pkwIDCounter++;
-    //     PKW neuerPkw = new PKW(id, fzgkategorie, fahrzeugmarke, getriebe, motorleistung, farbe, ausstattung, kraftstoff, klimatisiert, beheizt, baujahr, anzahltueren, sitzplaetze, co2emission, minalter, fuehrerscheinklasse, fzgnummer, kennzeichen, gebucht, navi);
-    //     if (!pkwListe.contains(neuerPkw)) {
-    //         pkwListe.add(neuerPkw);
-    //         System.out.println("PKW hinzugefügt: " + neuerPkw.getFahrzeugmarke() + " " + neuerPkw.getFzgkategorie());
-    //     } else {
-    //         System.out.println("PKW bereits in der Liste vorhanden.");
-    //     }
-        
-    // }
+//get Liste für die pkwListe   
     public List<PKW> getPkwListe() {
         return this.pkwListe;
     }
 
+//fügt einen PKW mit den entsprechend übergebenen Attributen hinzu, aber noch nicht in die Datei    
     public void pkwHinzufuegen(String fzgkategorie, String fzgmarke, String getriebe, int motorleistung, String farbe, String ausstattung, String kraftstoff, boolean klimatisiert, boolean beheizt, int baujahr, int anzahltüren, int sitzplätze, int co2emission, int minalter, String führerscheinklasse, int fzgnummer, String kennzeichen, boolean gebucht, boolean navi, boolean elektrofahrzeug, boolean fahrassistent, boolean parkassistent) {
         int id = pkwIDCounter++;
         PKW neuerPkw = new PKW(id, fzgkategorie, fzgmarke, getriebe, motorleistung, farbe, ausstattung, kraftstoff, klimatisiert, beheizt, baujahr, anzahltüren, sitzplätze, co2emission, minalter, führerscheinklasse, fzgnummer, kennzeichen, gebucht, navi, elektrofahrzeug, fahrassistent, parkassistent);
@@ -67,7 +52,7 @@ public class PKWVerwaltung implements Serializable{
     }
 
 
-   
+//Speichermethode der die erstellen PKWs in eine Datei speichert   
     public void pkwSpeichern() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("pkwListe.ser"))) {
         out.writeObject(pkwListe);
@@ -76,7 +61,7 @@ public class PKWVerwaltung implements Serializable{
     }
     }
 
-
+//gibt die Liste der PKWs in verkürzter Form wieder
     public void pkwListeAusgebenAusDatei() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("pkwListe.ser"))) {
             List<PKW> pkwListe = (List<PKW>) ois.readObject();
@@ -86,7 +71,7 @@ public class PKWVerwaltung implements Serializable{
                 System.out.println("Fahrzeugmarke: " + pkw.getFzgmarke());
                 System.out.println("Fahrzeugkategorie: " + pkw.getFzgkategorie());
                 System.out.println();
-                // man könnte noch mehr eigenschaften ausgeben aber lassen erstmal so damits übersichtlicher ist
+                // man könnte noch mehr eigenschaften ausgeben aber lassen es so damits übersichtlicher ist
             }
         } catch (IOException e) {
             System.err.println("Fehler beim Ausgeben der PKW-Liste: " + e.getMessage());
@@ -95,6 +80,7 @@ public class PKWVerwaltung implements Serializable{
         }
     }
 
+//Löscht einen PKW nach ID aus der Datei    
     public void pkwLoeschenAusDatei(int id) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("pkwliste.ser"))) {
             pkwListe = (List<PKW>) ois.readObject();
@@ -117,28 +103,30 @@ public class PKWVerwaltung implements Serializable{
 
 
     
-    //Allgemeine Liste mit allen Eigenschaften ausgeben
+//Allgemeine Liste mit allen Eigenschaften ausgeben
     public void pkwListeAusgeben() {
         System.out.println("PKW-Liste:");
         for (PKW pkw : this.pkwListe) {
             System.out.println("\t" + pkw);
         }
     }
-    //Liste ausgeben in Standardreihenfolge und in kurz
+
+//Liste ausgeben in Standardreihenfolge und in kurz
     public void pkwListeAusgebenKurz() {
         System.out.println("PKW-Liste (kurz):");
         for (PKW pkw : this.pkwListe) {
             System.out.println( pkw.getFzgmarke() + " " + pkw.getFzgkategorie() + " " + pkw.getFarbe());
         }
     }
-    //Liste ausgeben in Standardreihenfolge und in kurz mit Liste als Übergabeparameter
+
+//Liste ausgeben in Standardreihenfolge und in kurz mit Liste als Übergabeparameter
     public void pkwListeAusgebenKurz(List<PKW> pkwListe) {
         for (PKW pkw : pkwListe) {
             System.out.println("Marke: " + pkw.getFzgmarke() + ", Kategorie: " + pkw.getFzgkategorie() + " Kraftstoff: " + pkw.getKraftstoff());
         }
     }
 
-    //Sortierte Liste nach ID
+//Sortierte Liste nach ID
     public void sortierePKWListeNachID() {
         if (this.pkwListe.isEmpty()) {
             System.out.println("Die Liste ist leer");
@@ -152,7 +140,7 @@ public class PKWVerwaltung implements Serializable{
         System.out.println();
     }
 
-    //Sortierte Liste nach ID mit Liste als Übergabeparameter
+//Sortierte Liste nach ID mit Liste als Übergabeparameter
     public void sortierePKWListeNachID(List<PKW> pkwListe) {
         if (this.pkwListe.isEmpty()) {
             System.out.println("Die Liste ist leer");
@@ -166,7 +154,7 @@ public class PKWVerwaltung implements Serializable{
         System.out.println();
     }
 
-    //Sortierte Liste nach Motorisierung
+//Sortierte Liste nach Motorisierung
     public void sortierePKWListeNachMotorisierung() {
         if (this.pkwListe.isEmpty()) {
             System.out.println("Die Liste ist leer");
@@ -180,7 +168,7 @@ public class PKWVerwaltung implements Serializable{
         System.out.println();
     }
 
-    //Sortierte Liste nach Motorisierung mit Liste als Übergabeparameter
+//Sortierte Liste nach Motorisierung mit Liste als Übergabeparameter
     public void sortierePKWListeNachMotorisierung(List<PKW> pkwListe) {
         if (this.pkwListe.isEmpty()) {
             System.out.println("Die Liste ist leer");
@@ -194,7 +182,7 @@ public class PKWVerwaltung implements Serializable{
         System.out.println();
     }
 
-    //Sortierte Liste nach Baujahr
+//Sortierte Liste nach Baujahr
     public void sortierePKWListeNachBaujahr() {
         if (this.pkwListe.isEmpty()) {
             System.out.println("Die Liste ist leer");
@@ -208,7 +196,7 @@ public class PKWVerwaltung implements Serializable{
         System.out.println();
     }
 
-    //Sortierte Liste nach Baujahr mit Liste als Übergabeparameter
+//Sortierte Liste nach Baujahr mit Liste als Übergabeparameter
     public void sortierePKWListeNachBaujahr(List<PKW> pkwListe) {
         if (this.pkwListe.isEmpty()) {
             System.out.println("Die Liste ist leer");
@@ -266,7 +254,7 @@ public void entbuchePKW(int id) {
 }
     
 
-    //PKW nach ID ausgeben
+//PKW nach ID ausgeben
     public void ausgebenPKW(int id) {
         for (PKW pkw : pkwListe) {
             if (pkw.getId() == id) {
@@ -277,7 +265,7 @@ public void entbuchePKW(int id) {
         System.out.println("PKW mit ID " + id + " nicht gefunden.");
     }
 
-    //PKWs filtern
+//PKWs filtern nach den Attributen Antrieb, Marke, Fahrzeugtyp, Farbe, Elektro und dem gebucht Status, aber auch ausgabe kompletter Liste bei ""
     public List<PKW> filterPKW(String attribut, String wert) {
         if (pkwListe.isEmpty()) {
             throw new RuntimeException("Die Liste ist leer.");
@@ -331,7 +319,7 @@ public void entbuchePKW(int id) {
                         gefilterteListe.remove(pkw);                      
                     }
                     break;
-                // Weitere Attribute hinzufügen, wenn nötig
+                
                 default:
                     System.out.println("Attribut nicht gefunden");
                     break;
@@ -339,6 +327,9 @@ public void entbuchePKW(int id) {
         }
         return gefilterteListe;
     }
+
+//PKWs filtern nach den Attributen Antrieb, Marke, Fahrzeugtyp, Farbe, Elektro und dem gebucht Status, aber auch ausgabe kompletter Liste bei "" mit zusätzlichem Übergabeparameter, der Templiste 
+//damit man auch nach mehreren Attributen filtern kann und nicht nur einem   
     public List<PKW> filterPKW(String attribut, String wert, List<PKW> tempList) {
         List<PKW> gefilterteListe = new ArrayList<>();
         for (PKW pkw : tempList) {
@@ -387,7 +378,7 @@ public void entbuchePKW(int id) {
         return gefilterteListe;
     }
 
-    
+//deserialisiert die Liste    
     public List<PKW> deserializePkwListe(String filename) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             return (List<PKW>) ois.readObject();
@@ -396,6 +387,7 @@ public void entbuchePKW(int id) {
         }
     }
 
+//Gibt aus, ob der PKW den Status gebucht, oder frei hat, also isGebucht =true oder false    
     public void checkPKWStatus(int pkwId) {
         PKW pkw = null;
         for (PKW p : pkwListe) {
@@ -412,6 +404,7 @@ public void entbuchePKW(int id) {
         }
     }
 
+//setzt alle PKWs in der Liste auf den Status nicht gebucht, sozusagen ein reset der PKWs, und speichert die neue Liste dann   
     public void PKWentbucheAlle() {
         for (PKW pkw : pkwListe) {
             pkw.setGebucht(false);
@@ -421,7 +414,6 @@ public void entbuchePKW(int id) {
     }
 
 }
-
 
 
 
