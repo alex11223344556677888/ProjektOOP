@@ -1,7 +1,7 @@
-package Verwaltungsklassen;
+package de.autovermietung.verwaltungsklassen;
 
-import fachklassen.PKW;
-import fachklassen.Termin;
+import de.autovermietung.fachklassen.PKW;
+import de.autovermietung.fachklassen.Termin;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,12 +14,20 @@ public class TerminVerwaltung {
     private List<PKW> pkwListe;
     private int terminIDCounter;
 
+
+//Konstruktor der auf die pkwListe und terinListe Dateien lädt
     public TerminVerwaltung() {
         this.pkwListe = ladePKWListeAusDatei("pkwListe.ser");
         this.terminListe = ladeTerminListeAusDatei("terminListe.ser");
-        this.terminIDCounter = terminListe.isEmpty() ? 5000 : terminListe.stream().mapToInt(Termin::getId).max().orElse(4999) + 1;
+        if (terminListe.isEmpty()) {
+            this.terminIDCounter = 5000;
+        } else {
+            int maxId = terminListe.stream().mapToInt(Termin::getId).max().orElse(4999);
+            this.terminIDCounter = maxId + 1;
+        }
     }
 
+//Methode zum Laden der PKW-Liste aus der entsprechenden datei pkwListe, Warnung, da die Methode sonst geld unterstrichen ist.
     @SuppressWarnings("unchecked")
     private List<PKW> ladePKWListeAusDatei(String dateiname) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dateiname))) {
@@ -30,6 +38,7 @@ public class TerminVerwaltung {
         }
     }
 
+//Methode zum Laden der Termin-Liste aus der entsprechenden datei terminListe, Warnung, da die Methode sonst geld unterstrichen ist.    
     @SuppressWarnings("unchecked")
     private List<Termin> ladeTerminListeAusDatei(String dateiname) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dateiname))) {
@@ -41,40 +50,46 @@ public class TerminVerwaltung {
     }
     
 
+//get Methode für die pkwListe
     public List<PKW> getPkwListe() {
         return pkwListe;
     }
 
+//get Methode für terminListe
     public List<Termin> getTerminListe() {
         return terminListe;
     }
 
-   
+//Methode prüft für die einzelnen PKWs in der pkwListe ob sie im Zeitraum der in der Methode definiert ist frei doer belegt sind, nur Ausgabe in konsole   
     public void pruefeTermine() {
-        this.terminListe = ladeTerminListeAusDatei("terminListe.ser");
-        LocalDate startDate = LocalDate.of(2024, 7, 1);
-        LocalDate endDate = LocalDate.of(2024, 8, 1);
-    
-        for (PKW pkw : pkwListe) {
-            System.out.println("PKW " + pkw.getId() + ":");
-            for (LocalDate date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1)) {
-                LocalDateTime von = date.atStartOfDay();
-                LocalDateTime bis = date.atTime(23, 59, 59);
-                boolean available = true;
-                for (Termin termin : terminListe) {
-                    if (termin.getPkw().equals(pkw) && termin.isGebucht() &&
-                        !(bis.isBefore(termin.getStartzeitpunkt()) || von.isAfter(termin.getEndzeitpunkt()))) {
-                        available = false;
-                        break;
-                    }
+    this.terminListe = ladeTerminListeAusDatei("terminListe.ser");
+    LocalDate startDate = LocalDate.of(2024, 7, 1);
+    LocalDate endDate = LocalDate.of(2024, 8, 1);
+
+    for (PKW pkw : pkwListe) {
+        System.out.println("PKW " + pkw.getId() + ":");
+        for (LocalDate date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1)) {
+            LocalDateTime von = date.atStartOfDay();
+            LocalDateTime bis = date.atTime(23, 59, 59);
+            boolean available = true;
+            for (Termin termin : terminListe) {
+                if (termin.getPkw().equals(pkw) && termin.isGebucht() &&
+                    !(bis.isBefore(termin.getStartzeitpunkt()) || von.isAfter(termin.getEndzeitpunkt()))) {
+                    available = false;
+                    break;
                 }
-                System.out.println("  - " + date + " " + (available ? "frei" : "belegt"));
+            }
+            if (available) {
+                System.out.println("  - " + date + " frei");
+            } else {
+                System.out.println("  - " + date + " belegt");
             }
         }
-        System.out.println("Termine erfolgreich geprüft");
     }
+    System.out.println("Termine erfolgreich geprüft");
+}
 
-
+//findet PKWs in der Liste nach ihrer ID
     private PKW findePKWNachId(int pkwId) {
         for (PKW pkw : pkwListe) {
             if (pkw.getId() == pkwId) {
@@ -84,6 +99,7 @@ public class TerminVerwaltung {
         return null;
     }
 
+//Prüft ob der PKW für einen Zeitraum im Format LocalDateTime ob der PKW verfügbar ist    
     private boolean isPKWAvailable(PKW pkw, LocalDateTime von, LocalDateTime bis) {
         for (Termin termin : terminListe) {
             if (termin.getPkw().equals(pkw) && termin.isGebucht()) {
@@ -97,6 +113,7 @@ public class TerminVerwaltung {
         return true;
     }
 
+//speicherung der Termin-Liste in der entsprechenden Datei    
     public void speichereTerminListeAlsDatei(String filename) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(terminListe);
@@ -106,7 +123,7 @@ public class TerminVerwaltung {
         }
     }
 
-
+//Prüft ob das übergebene Datum zulässig ist
     private void validateDate(LocalDateTime dateTime) {
         if (dateTime.getYear() < 0) {
             throw new DateTimeException("Das Jahr muss eine positive Zahl sein.");
@@ -122,7 +139,7 @@ public class TerminVerwaltung {
     }
 
     
-
+//Methode zur Prüfung alle PKWs nach ihrer ID, ob sie verfügbar sind. Zeitraum wird mit einzelnen Integern übergeben
     public boolean pruefeBuchungsZeitraum(int pkwId, int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
         try {
             LocalDateTime von = LocalDateTime.of(startJahr, startMonat, startTag, 0, 0);
@@ -134,12 +151,16 @@ public class TerminVerwaltung {
             if (pkw != null) {
                 boolean isAvailable = isPKWAvailable(pkw, von, bis);
                 if (!isAvailable) {
-                    // Setze das Attribut "gebucht" auf true
+                    // Attribut "gebucht" auf true
                     pkw.setGebucht(true);
-                    // Speichere die aktualisierte PKW-Liste
+                    // Speichere  aktualisierte pkwListe
                     speicherePKWListe();
                 }
-                System.out.println("PKW ID: " + pkwId + " ist " + (isAvailable ? "verfügbar" : "nicht verfügbar") + " von " + startTag + "." + startMonat + "." + startJahr + " bis " + endeTag + "." + endeMonat + "." + endeJahr);
+                if (isAvailable) {
+                    System.out.println("PKW ID: " + pkwId + " ist verfügbar von " + startTag + "." + startMonat + "." + startJahr + " bis " + endeTag + "." + endeMonat + "." + endeJahr);
+                } else {
+                    System.out.println("PKW ID: " + pkwId + " ist nicht verfügbar von " + startTag + "." + startMonat + "." + startJahr + " bis " + endeTag + "." + endeMonat + "." + endeJahr);
+                }
                 return !isAvailable;
             } else {
                 System.out.println("PKW ID: " + pkwId + " nicht gefunden.");
@@ -151,49 +172,7 @@ public class TerminVerwaltung {
         }
     }
     
-
-    // public void pruefeBuchungsZeitraumPKWListe(int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
-    //     try {
-    //         LocalDateTime von = LocalDateTime.of(startJahr, startMonat, startTag, 0, 0);
-    //         LocalDateTime bis = LocalDateTime.of(endeJahr, endeMonat, endeTag, 23, 59, 59);
-    //         validateDate(von);
-    //         validateDate(bis);
-    
-    //         // Lade die Terminliste aus der Datei
-    //         List<Termin> terminListe = ladeTerminListeAusDatei("terminListe.ser");
-    
-    //         for (PKW pkw : pkwListe) {
-    //             boolean isAvailable = true;
-    
-    //             for (Termin termin : terminListe) {
-    //                 if (termin.getPkw().getId() == pkw.getId()) {
-    //                     LocalDateTime terminVon = termin.getStartzeitpunkt();
-    //                     LocalDateTime terminBis = termin.getEndzeitpunkt();
-    
-    //                     if (!(bis.isBefore(terminVon) || von.isAfter(terminBis))) {
-    //                         isAvailable = false;
-    //                         break;
-    //                     }
-    //                 }
-    //             }
-    
-    //             pkw.setGebucht(!isAvailable);
-    
-    //             if (isAvailable) {
-    //                 System.out.println("PKW ID: " + pkw.getId() + " ist verfügbar von " + startTag + "." + startMonat + "." + startJahr + " bis " + endeTag + "." + endeMonat + "." + endeJahr);
-    //             } else {
-    //                 System.out.println("PKW ID: " + pkw.getId() + " ist nicht verfügbar von " + startTag + "." + startMonat + "." + startJahr + " bis " + endeTag + "." + endeMonat + "." + endeJahr);
-    //             }
-    //         }
-    
-    //         // Speichere die aktualisierte PKW-Liste
-    //         speicherePKWListe();
-    //     } catch (DateTimeException e) {
-    //         System.err.println("Fehler bei der Überprüfung des Buchungszeitraums: " + e.getMessage());
-    //     }
-    // }
-    
-
+//Prüft für die gesamte PKW-Liste in der Datei für den übergegeben Zeitraum mit Int's, ob die PKWs verfügbar sind oder nicht
     public void pruefeBuchungsZeitraumPKWListe(int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
         try {
             LocalDateTime von = LocalDateTime.of(startJahr, startMonat, startTag, 0, 0);
@@ -237,29 +216,8 @@ public class TerminVerwaltung {
         }
     }
     
-    // public boolean validateDate(int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
-    //     try {
-    //         LocalDateTime von = LocalDateTime.of(startJahr, startMonat, startTag, 0, 0);
-    //         LocalDateTime bis = LocalDateTime.of(endeJahr, endeMonat, endeTag, 23, 59, 59);
-    //         return !von.isAfter(bis);
-    //     } catch (DateTimeException e) {
-    //         return false;
-    //     }
-    // }
-
-    // public boolean validateDate(int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
-    //     try {
-    //         LocalDateTime von = LocalDateTime.of(startJahr, startMonat, startTag, 0, 0);
-    //         LocalDateTime bis = LocalDateTime.of(endeJahr, endeMonat, endeTag, 23, 59, 59);
-    //         if (von.isAfter(bis)) {
-    //             return false;
-    //         }
-    //         return true;
-    //     } catch (DateTimeException e) {
-    //         return false;
-    //     }
-    // }
-
+    
+//Prüft ob das eingegebene Datum, welches inform von einzelnen start und ende Int's übergeben wird, zulässig ist 
     private boolean validateDate(int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
         try {
             LocalDate startDate = LocalDate.of(startJahr, startMonat, startTag);
@@ -274,6 +232,7 @@ public class TerminVerwaltung {
         }
     }
 
+//Speichermethode für pkwListe     
     private void speicherePKWListe() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("pkwListe.ser"))) {
             oos.writeObject(pkwListe);
@@ -281,7 +240,8 @@ public class TerminVerwaltung {
             System.err.println("Fehler beim Speichern der PKW-Liste: " + e.getMessage());
         }
     }
-    
+
+//finde PKW nach Id mit ID und der PKW-Liste als übergabe Parameter     
     @SuppressWarnings("unused")
     private PKW findePKWNachId(int pkwId, List<PKW> pkwListe) {
         for (PKW pkw : pkwListe) {
@@ -292,6 +252,7 @@ public class TerminVerwaltung {
         return null;
     }
 
+//Ausgabe der Terminliste    
     public void terminListeAusgeben() {
         if (terminListe.isEmpty()) {
             throw new IllegalStateException("Keine Termine vorhanden.");
@@ -303,11 +264,13 @@ public class TerminVerwaltung {
         }
     }
 
+//Setup methode für den Test in der Testklasse     
     public void setup() {
         this.terminListe = ladeTerminListeAusDatei("terminListe.ser");
         this.pkwListe = ladePKWListeAusDatei("pkwListe.ser");
     }
 
+//Methode zur löschung von Terminen in der terminListe Datei     
     public void loescheTermin(int terminId) {
         try {
             Termin terminZumLoeschen = null;
@@ -330,6 +293,7 @@ public class TerminVerwaltung {
         }
     }
 
+//Löscht alle Termine in der terminListe Datei, also resettet sie     
     public void loescheAlleTermine(PKWVerwaltung pkwVerwaltung) {
         terminListe.clear(); // Alle Termine aus der Liste entfernen
         speichereTerminListeAlsDatei("terminListe.ser"); // Leere Liste in die Datei schreiben
@@ -340,6 +304,7 @@ public class TerminVerwaltung {
         System.out.println("Alle Termine wurden gelöscht und alle PKWs wurden entbucht.");
     }
 
+//Methode zum Buchen eines PKWs über seine ID, und den Buchungszeitraum der inform von Int's übergeben wird     
     public void buchePKW(int pkwId, int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
         try {
             LocalDateTime von = LocalDateTime.of(startJahr, startMonat, startTag, 0, 0);
@@ -377,6 +342,7 @@ public class TerminVerwaltung {
         }
     }
 
+//Entbuchung eines PKWs über seine ID und den Zeitraum über Int's     
     public void entbuchePKW(int pkwId, int startTag, int startMonat, int startJahr, int endeTag, int endeMonat, int endeJahr) {
         try {
             PKW pkw = findePKWNachId(pkwId);
@@ -418,6 +384,7 @@ public class TerminVerwaltung {
         }
     }
 
+//Speicherung der Termine in der terminListe Datei 
     public void speichereTerminListeAlsDatei() {
         speichereTerminListeAlsDatei("terminListe.ser");
         System.out.println("Terminliste erfolgreich in Datei gespeichert");
