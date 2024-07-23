@@ -70,7 +70,7 @@ public class Kundenverwaltung {
 
     public Kunde sucheNachName(String name) {
         for (Kunde kunde : kundenMap.values()) {
-            if (kunde.getName().equalsIgnoreCase(name) || kunde.getVorname().equalsIgnoreCase(name) || kunde.getLoginName().equalsIgnoreCase(name)) {
+            if (kunde.getName().equalsIgnoreCase(name) || kunde.getVorname().equalsIgnoreCase(name) || kunde.getKundenName().equalsIgnoreCase(name)) {
                 return kunde;
             }
         }
@@ -96,7 +96,12 @@ public class Kundenverwaltung {
         }
     }
 
-  
-   
-   
+    public Kunde getKundeByEmail(String email) {
+        for (Kunde kunde : kundenMap.values()) {
+            if (kunde.getEmail().equalsIgnoreCase(email)) {
+                return kunde;
+            }
+        }
+        return null; // Return null if no customer with the specified email is found
+    }
 }
