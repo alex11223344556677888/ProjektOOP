@@ -1,59 +1,51 @@
-package fachklassen;        // das einzige was jetzt noch nicht passt sind die package bezeichnungen
+package fachklassen;
 
-public class Person {
-    private String vorname;
-    private String name;
-    private String geburtsdatum;
-    private int alter;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-    // Konstruktor
-    public Person(String vorname, String name, String geburtsdatum, int alter) {
-        this.vorname = vorname;
-        this.name = name;
-        this.geburtsdatum = geburtsdatum;
-        this.alter = alter;
+public class Termin implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private Kunde kunde;
+    private PKW pkw;
+    private LocalDateTime startzeitpunkt;
+    private LocalDateTime endzeitpunkt;
+    private boolean gebucht;
+
+    public Termin(int id, Kunde kunde, PKW pkw, LocalDateTime startzeitpunkt, LocalDateTime endzeitpunkt) {
+        this.id = id;
+        this.kunde = kunde;
+        this.pkw = pkw;
+        this.startzeitpunkt = startzeitpunkt;
+        this.endzeitpunkt = endzeitpunkt;
+        this.gebucht = true;
     }
 
-    // Getter and Setter
-    public String getVorname() {
-        return vorname;
+    public int getId() {
+        return id;
     }
 
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
+    public Kunde getKunde() {
+        return kunde;
     }
 
-    public String getName() {
-        return name;
+    public PKW getPkw() {
+        return pkw;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public LocalDateTime getStartzeitpunkt() {
+        return startzeitpunkt;
     }
 
-    public String getGeburtsdatum() {
-        return geburtsdatum;
+    public LocalDateTime getEndzeitpunkt() {
+        return endzeitpunkt;
     }
 
-    public void setGeburtsdatum(String geburtsdatum) {
-        this.geburtsdatum = geburtsdatum;
+    public boolean isGebucht() {
+        return gebucht;
     }
 
-    public int getAlter() {
-        return alter;
-    }
-
-    public void setAlter(int alter) {
-        this.alter = alter;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "Vorname='" + vorname + '\'' +
-                ", Name='" + name + '\'' +
-                ", Geburtsdatum='" + geburtsdatum + '\'' +
-                ", Alter=" + alter +
-                '}';
+    public void setGebucht(boolean gebucht) {
+        this.gebucht = gebucht;
     }
 }
