@@ -15,8 +15,14 @@ public class Auftraguebersicht extends JPanel {
     private JList<String> list;
     private DefaultListModel<String> listModel;
     private JButton btnZurueck, btnNeuesAutoMieten;
+    private Kundenverwaltung kundenverwaltung;
 
-    public Auftraguebersicht() {
+    public Auftraguebersicht(Kundenverwaltung kundenverwaltung) {
+        if (kundenverwaltung == null) {
+            throw new IllegalArgumentException("Kundenverwaltung darf nicht null sein.");
+        }
+        this.kundenverwaltung = kundenverwaltung;
+        
         mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -77,7 +83,7 @@ public class Auftraguebersicht extends JPanel {
                 // Implement the action for the Zurück button
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new LoginPage().getMainPanel());
+                parentFrame.getContentPane().add(new LoginPage(kundenverwaltung).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
@@ -88,7 +94,7 @@ public class Auftraguebersicht extends JPanel {
                 // Implement the action for the Neues Auto mieten button
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new KalenderPage().getMainPanel());
+                parentFrame.getContentPane().add(new KalenderPage(kundenverwaltung).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
@@ -357,8 +363,6 @@ public class Auftraguebersicht extends JPanel {
         gbc.gridx = 1;
         panel.add(textField, gbc);
     }
- //------------
-    
     
     private void addLabelAndTextField(JPanel panel, GridBagConstraints gbc, String labelText, String textFieldText, int yPos) {
         JLabel label = new JLabel(labelText);
