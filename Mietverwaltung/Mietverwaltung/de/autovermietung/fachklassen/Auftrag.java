@@ -1,119 +1,236 @@
 package fachklassen;
-import java.util.Date;
 
-import Verwaltungsklassen.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
+public class Kunde extends Person {
+    private int kundennummer;
+    private int telefonnummer;
+    private String fuehrerscheinklasse;
+    private String email;
+    private String zahlungsmittel;
+    private String historie;
+    private String strasse;
+    private int hausnummer;
+    private int postleitzahl;
+    private String ort;
+    private boolean kundenkarte;
+    private int fuehrerscheinzeitraum;
+    private String anmeldename;
+    private String passwort;
 
-//interface
-public class Auftrag {
-    private boolean kindersitz;
-    private boolean dachbox;
-    private boolean auslandsfahrt;
-    private int versicherungsklasse;
-    private boolean kilometerpaket;
-    private PKW pkw;
-    private Date vonDatum;
-    private Date bisDatum;
+    public Kunde(String vorname, String name, String geburtsdatum, int alter, int kundennummer, int telefonnummer, String fuehrerscheinklasse, String email, String zahlungsmittel, String historie, String strasse, int hausnummer, int postleitzahl, String ort, boolean kundenkarte, int fuehrerscheinzeitraum, String anmeldename, String passwort) {
+        super(vorname, name, geburtsdatum, alter);
+        this.kundennummer = kundennummer;
+        this.telefonnummer = telefonnummer;
+        this.fuehrerscheinklasse = fuehrerscheinklasse;
+        this.email = email;
+        this.zahlungsmittel = zahlungsmittel;
+        this.historie = historie;
+        this.strasse = strasse;
+        this.hausnummer = hausnummer;
+        this.postleitzahl = postleitzahl;
+        this.ort = ort;
+        this.kundenkarte = kundenkarte;
+        this.fuehrerscheinzeitraum = fuehrerscheinzeitraum;
+        this.anmeldename = anmeldename;
+        this.passwort = passwort;
 
-    PKWVerwaltung pkwVerwaltung = new PKWVerwaltung(); 
-
-
-    public Auftrag(int id, String fzgkategorie, boolean elektrofrahrzeug, boolean parkassistent, boolean fahrassistent, boolean klimatisiert, int kundennummer, int fuehrerscheinalter, boolean kindersitz, boolean dachbox, boolean auslandsfahrt, int versicherungsklasse, boolean kilometerpaket) {
-        this.kindersitz = kindersitz;
-        this.dachbox = dachbox;
-        this.auslandsfahrt = auslandsfahrt;
-        this.versicherungsklasse = versicherungsklasse;
-        this.kilometerpaket = kilometerpaket;
-       
-    }
-    
-
-
-    public PKW getPkw() {
-        return pkw;
-    }
-
-
-
-    public void setPkw(PKW pkw) {
-        this.pkw = pkw;
-    }
-
-
-
-    public Date getVonDatum() {
-        return vonDatum;
+        // Save customer data to file
+        saveDataToFile();
     }
 
-
-
-    public void setVonDatum(Date vonDatum) {
-        this.vonDatum = vonDatum;
+    public void saveDataToFile() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("kunden.dat", true))) {
+            writer.println(toString());
+        } catch (IOException e) {
+            System.err.println("Error saving data to file: " + e.getMessage());
+        }
     }
 
-
-
-    public Date getBisDatum() {
-        return bisDatum;
+    public static Kunde login(String anmeldename, String passwort) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("kunden.dat"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Kunde kunde = fromString(line); // Create a Kunde object from the string
+                if (kunde.getAnmeldename().equals(anmeldename) && kunde.getPasswort().equals(passwort)) {
+                    return kunde;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading data from file: " + e.getMessage());
+        }
+        return null; // Login failed
     }
 
-
-
-    public void setBisDatum(Date bisDatum) {
-        this.bisDatum = bisDatum;
+    public static Kunde fromString(String str) {
+        String[] data = str.split(", ");
+        return new Kunde(
+                extractField(data[0], "Vorname: "), // Vorname
+                extractField(data[1], "Name: "), // Name
+                extractField(data[2], "Geburtsdatum: "), // Geburtsdatum
+                Integer.parseInt(extractField(data[3], "Alter: ")), // Alter
+                Integer.parseInt(extractField(data[4], "Kundennummer: ")), // Kundennummer
+                Integer.parseInt(extractField(data[5], "Telefonnummer: ")), // Telefonnummer
+                extractField(data[6], "Fuehrerscheinklasse: "), // Fuehrerscheinklasse
+                extractField(data[7], "Email: "), // Email
+                extractField(data[8], "Zahlungsmittel: "), // Zahlungsmittel
+                extractField(data[9], "Historie: "), // Historie
+                extractField(data[10], "Strasse: "), // Strasse
+                Integer.parseInt(extractField(data[11], "Hausnummer: ")), // Hausnummer
+                Integer.parseInt(extractField(data[12], "Postleitzahl: ")), // Postleitzahl
+                extractField(data[13], "Ort: "), // Ort
+                Boolean.parseBoolean(extractField(data[14], "Kundenkarte: ")), // Kundenkarte
+                Integer.parseInt(extractField(data[15], "Fuehrerscheinzeitraum: ")), // Fuehrerscheinzeitraum
+                extractField(data[16], "Anmeldename: "), // Anmeldename
+                extractField(data[17], "Passwort: ") // Passwort
+        );
     }
 
-
-
-    public PKWVerwaltung getPkwVerwaltung() {
-        return pkwVerwaltung;
+    private static String extractField(String field, String prefix) {
+        return field.substring(prefix.length()).trim();
     }
 
-
-
-    public void setPkwVerwaltung(PKWVerwaltung pkwVerwaltung) {
-        this.pkwVerwaltung = pkwVerwaltung;
+    @Override
+    public String toString() {
+        return "Vorname: " + getVorname() + ", " +
+                "Name: " + getName() + ", " +
+                "Geburtsdatum: " + getGeburtsdatum() + ", " +
+                "Alter: " + getAlter() + ", " +
+                "Kundennummer: " + kundennummer + ", " +
+                "Telefonnummer: " + telefonnummer + ", " +
+                "Fuehrerscheinklasse: " + fuehrerscheinklasse + ", " +
+                "Email: " + email + ", " +
+                "Zahlungsmittel: " + zahlungsmittel + ", " +
+                "Historie: " + historie + ", " +
+                "Strasse: " + strasse + ", " +
+                "Hausnummer: " + hausnummer + ", " +
+                "Postleitzahl: " + postleitzahl + ", " +
+                "Ort: " + ort + ", " +
+                "Kundenkarte: " + kundenkarte + ", " +
+                "Fuehrerscheinzeitraum: " + fuehrerscheinzeitraum + ", " +
+                "Anmeldename: " + anmeldename + ", " +
+                "Passwort: " + passwort;
     }
 
+    // Getters and setters
 
-
-    public boolean isKindersitz() {
-        return kindersitz;
+    public int getKundennummer() {
+        return kundennummer;
     }
 
-    public void setKindersitz(boolean kindersitz) {
-        this.kindersitz = kindersitz;
+    public void setKundennummer(int kundennummer) {
+        this.kundennummer = kundennummer;
     }
 
-    public boolean isDachbox() {
-        return dachbox;
+    public int getTelefonnummer() {
+        return telefonnummer;
     }
 
-    public void setDachbox(boolean dachbox) {
-        this.dachbox = dachbox;
+    public void setTelefonnummer(int telefonnummer) {
+        this.telefonnummer = telefonnummer;
     }
 
-    public boolean isAuslandsfahrt() {
-        return auslandsfahrt;
+    public String getFuehrerscheinklasse() {
+        return fuehrerscheinklasse;
     }
 
-    public void setAuslandsfahrt(boolean auslandsfahrt) {
-        this.auslandsfahrt = auslandsfahrt;
+    public void setFuehrerscheinklasse(String fuehrerscheinklasse) {
+        this.fuehrerscheinklasse = fuehrerscheinklasse;
     }
 
-    public int getVersicherungsklasse() {
-        return versicherungsklasse;
+    public String getEmail() {
+        return email;
     }
 
-    public void setVersicherungsklasse(int versicherungsklasse) {
-        this.versicherungsklasse = versicherungsklasse;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public boolean isKilometerpaket() {
-        return kilometerpaket;
+    public String getZahlungsmittel() {
+        return zahlungsmittel;
     }
 
-    public void setKilometerpaket(boolean kilometerpaket) {
-        this.kilometerpaket = kilometerpaket;
+    public void setZahlungsmittel(String zahlungsmittel) {
+        this.zahlungsmittel = zahlungsmittel;
+    }
+
+    public String getHistorie() {
+        return historie;
+    }
+
+    public void setHistorie(String historie) {
+        this.historie = historie;
+    }
+
+    public String getStrasse() {
+        return strasse;
+    }
+
+    public void setStrasse(String strasse) {
+        this.strasse = strasse;
+    }
+
+    public int getHausnummer() {
+        return hausnummer;
+    }
+
+    public void setHausnummer(int hausnummer) {
+        this.hausnummer = hausnummer;
+    }
+
+    public int getPostleitzahl() {
+        return postleitzahl;
+    }
+
+    public void setPostleitzahl(int postleitzahl) {
+        this.postleitzahl = postleitzahl;
+    }
+
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
+    public boolean isKundenkarte() {
+        return kundenkarte;
+    }
+
+    public void setKundenkarte(boolean kundenkarte) {
+        this.kundenkarte = kundenkarte;
+    }
+
+    public int getFuehrerscheinzeitraum() {
+        return fuehrerscheinzeitraum;
+    }
+
+    public void setFuehrerscheinzeitraum(int fuehrerscheinzeitraum) {
+        this.fuehrerscheinzeitraum = fuehrerscheinzeitraum;
+    }
+
+    public String getAnmeldename() {
+        return anmeldename;
+    }
+
+    public void setAnmeldename(String anmeldename) {
+        this.anmeldename = anmeldename;
+    }
+
+    public String getPasswort() {
+        return passwort;
+    }
+
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
+
+    public String getKundenName() {
+        return getVorname() + " " + getName();
     }
 }
