@@ -101,11 +101,22 @@ public class LoginPage extends JPanel {
 
         // Add action listener for the Save button
         btnLogin.addActionListener(new ActionListener() {
-            @Override
+        	
+        	@Override
             public void actionPerformed(ActionEvent e) {
+                // Zeige eine Nachricht an
+        		// das die mesagebox die angezigt werden soll wenn die eingaben nicht korrkt sind 
+             /*   JOptionPane.showMessageDialog(
+                    mainPanel, 
+                    "Korrigieren Sie ihre Eingaben oder es existiert noch kein Konto", 
+                    "Fehler", 
+                    JOptionPane.WARNING_MESSAGE
+                );*/
+
+            
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new Auftraguebersicht(kundenverwaltung).getMainPanel());
+                parentFrame.getContentPane().add(new Auftraguebersicht().getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
