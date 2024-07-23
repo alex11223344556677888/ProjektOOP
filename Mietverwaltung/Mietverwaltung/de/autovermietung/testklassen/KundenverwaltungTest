@@ -1,0 +1,92 @@
+package Testklassen;
+
+import fachklassen.Kunde;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
+
+public class KundenverwaltungTest {
+    private Kundenverwaltung kundenverwaltung;
+
+    @Before
+    public void setUp() {
+        kundenverwaltung = new Kundenverwaltung();
+    }
+
+    @Test
+    public void testNeuenKundenErstellen() {
+        Kunde kunde = createTestKunde();
+        kundenverwaltung.neuenKundenErstellen(kunde);
+        
+        Kunde fetchedKunde = kundenverwaltung.getKundeByKundennummer(kunde.getKundennummer());
+        assertNotNull("Kunde should be found", fetchedKunde);
+        assertEquals("Kunde email should match", kunde.getEmail(), fetchedKunde.getEmail());
+    }
+
+    @Test
+    public void testGetKundeByEmail() {
+        Kunde kunde = createTestKunde();
+        kundenverwaltung.neuenKundenErstellen(kunde);
+        
+        Kunde fetchedKunde = kundenverwaltung.getKundeByEmail(kunde.getEmail());
+        assertNotNull("Kunde should be found by email", fetchedKunde);
+        assertEquals("Kunde email should match", kunde.getEmail(), fetchedKunde.getEmail());
+    }
+
+    @Test
+    public void testKundenLoeschen() {
+        Kunde kunde = createTestKunde();
+        kundenverwaltung.neuenKundenErstellen(kunde);
+        
+        kundenverwaltung.kundenLoeschen(kunde.getKundennummer());
+        Kunde fetchedKunde = kundenverwaltung.getKundeByKundennummer(kunde.getKundennummer());
+        assertNull("Kunde should be deleted", fetchedKunde);
+    }
+
+    @Test
+    public void testGetKundenListe() {
+        Kunde kunde1 = createTestKunde();
+        Kunde kunde2 = createTestKunde();
+        kundenverwaltung.neuenKundenErstellen(kunde1);
+        kundenverwaltung.neuenKundenErstellen(kunde2);
+        
+        ArrayList<Kunde> kundenListe = kundenverwaltung.getKundenListe();
+        assertEquals("Kundenliste size should match", 2, kundenListe.size());
+    }
+
+    @Test
+    public void testSucheNachName() {
+        Kunde kunde = createTestKunde();
+        kundenverwaltung.neuenKundenErstellen(kunde);
+        
+        Kunde fetchedKunde = kundenverwaltung.sucheNachName(kunde.getName());
+        assertNotNull("Kunde should be found by name", fetchedKunde);
+        assertEquals("Kunde name should match", kunde.getName(), fetchedKunde.getName());
+    }
+
+    private Kunde createTestKunde() {
+        return new Kunde(
+                "Max",
+                "Mustermann",
+                "01.01.1990",
+                30,
+                123456789,
+                1234567890,
+                "B",
+                "max.mustermann@example.com",
+                "Credit Card",
+                "No history",
+                "Musterstraße",
+                1,
+                12345,
+                "Musterstadt",
+                true,
+                10,
+                "maxmustermann",
+                "password123"
+        );
+    }
+}
