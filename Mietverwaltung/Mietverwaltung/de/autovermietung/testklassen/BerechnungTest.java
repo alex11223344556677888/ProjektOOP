@@ -5,7 +5,7 @@ import fachklassen.Kunde;
 import fachklassen.PKW;
 import Verwaltungsklassen.Kostenberechnung;
 
-public class KostenrechnungTest {
+public class BerechnungTest {
     public static void main(String[] args) {
         // Beispielkunde erstellen
         Kunde kunde = new Kunde(
