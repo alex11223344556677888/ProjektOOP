@@ -385,8 +385,14 @@ public class FilterPage extends JPanel {
         btnBuchen.addActionListener(e -> {
             try {
                 terminVerwaltung.buchePKW(pkw.getId(), startTag, startMonat, startJahr, endeTag, endeMonat, endeJahr);
-                JOptionPane.showMessageDialog(this, "PKW erfolgreich gebucht!");
+                //JOptionPane.showMessageDialog(this, "PKW erfolgreich gebucht!");
                 dialog.dispose();
+             // Show the SchlussPage after booking
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                parentFrame.getContentPane().removeAll();
+                parentFrame.getContentPane().add(new SchlussPage().getMainPanel());
+                parentFrame.revalidate();
+                parentFrame.repaint();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Fehler bei der Buchung: " + ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
