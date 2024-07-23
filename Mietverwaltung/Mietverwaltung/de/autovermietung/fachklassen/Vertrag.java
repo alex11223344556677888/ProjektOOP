@@ -1,5 +1,4 @@
-package autovermietung.Fachklassen;
-
+package fachklassen;
 
 
 import java.io.Serializable;
