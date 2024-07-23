@@ -82,7 +82,7 @@ public class WelcomePage extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new RegistrierenPage().getMainPanel());
+                parentFrame.getContentPane().add(new RegistrierenPage(kundenverwaltung).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
