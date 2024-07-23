@@ -1,5 +1,6 @@
 package Gui;
 
+import Verwaltungsklassen.Kundenverwaltung;
 import Verwaltungsklassen.TerminVerwaltung;
 
 import javax.swing.*;
@@ -14,8 +15,10 @@ public class KalenderPage extends JPanel {
     private JPanel mainPanel;
     private JSpinner spinnerVonDatum, spinnerBisDatum;
     private TerminVerwaltung terminVerwaltung;
+    private Kundenverwaltung kundenverwaltung;
 
-    public KalenderPage() {
+    public KalenderPage(Kundenverwaltung kundenverwaltung) {
+        this.kundenverwaltung = kundenverwaltung;
         this.terminVerwaltung = new TerminVerwaltung(); // Backend-Instanz erstellen
         mainPanel = new BackgroundPanel("DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
         mainPanel.setLayout(new GridBagLayout());
@@ -42,8 +45,8 @@ public class KalenderPage extends JPanel {
         spinnerVonDatum = createSpinner();
         gbc.gridx = 0;
         gbc.gridy = 1;
-        lblHeader.setBackground(Color.WHITE);
-        lblHeader.setForeground(Color.BLACK);
+        lblVonDatum.setBackground(Color.WHITE);
+        lblVonDatum.setForeground(Color.BLACK);
         mainPanel.add(lblVonDatum, gbc);
         gbc.gridx = 1;
         mainPanel.add(spinnerVonDatum, gbc);
@@ -52,8 +55,8 @@ public class KalenderPage extends JPanel {
         spinnerBisDatum = createSpinner();
         gbc.gridx = 0;
         gbc.gridy = 2;
-        lblHeader.setBackground(Color.WHITE);
-        lblHeader.setForeground(Color.BLACK);
+        lblBisDatum.setBackground(Color.WHITE);
+        lblBisDatum.setForeground(Color.BLACK);
         mainPanel.add(lblBisDatum, gbc);
         gbc.gridx = 1;
         mainPanel.add(spinnerBisDatum, gbc);
@@ -62,11 +65,10 @@ public class KalenderPage extends JPanel {
         JButton btnZurueck = new JButton("Zurück");
         JButton btnSpeichern = new JButton("Speichern");
         gbc.gridx = 0;
-        gbc.gridy = 14;
+        gbc.gridy = 3;
         mainPanel.add(btnZurueck, gbc);
         gbc.gridx = 1;
         mainPanel.add(btnSpeichern, gbc);
-        gbc.gridx = 2;
 
         // Add action listener for the Save button
         btnSpeichern.addActionListener(e -> speichereDatumUndPruefeVerfuegbarkeit());
@@ -75,10 +77,13 @@ public class KalenderPage extends JPanel {
         btnZurueck.addActionListener(e -> {
             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
             parentFrame.getContentPane().removeAll();
-            parentFrame.getContentPane().add(new RegistrierenPage().getMainPanel());
+            parentFrame.getContentPane().add(new RegistrierenPage(kundenverwaltung).getMainPanel());
             parentFrame.revalidate();
             parentFrame.repaint();
         });
+
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     private JSpinner createSpinner() {
