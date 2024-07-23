@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Verwaltungsklassen.Kundenverwaltung;
+import fachklassen.Kunde;
 
 public class LoginPage extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -13,6 +14,9 @@ public class LoginPage extends JPanel {
     private Kundenverwaltung kundenverwaltung;
 
     public LoginPage(Kundenverwaltung kundenverwaltung) {
+        if (kundenverwaltung == null) {
+            throw new IllegalArgumentException("Kundenverwaltung darf nicht null sein.");
+        }
         this.kundenverwaltung = kundenverwaltung;
 
         mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
@@ -101,24 +105,23 @@ public class LoginPage extends JPanel {
 
         // Add action listener for the Save button
         btnLogin.addActionListener(new ActionListener() {
-        	
-        	@Override
+            @Override
             public void actionPerformed(ActionEvent e) {
-                // Zeige eine Nachricht an
-        		// das die mesagebox die angezigt werden soll wenn die eingaben nicht korrkt sind 
-             /*   JOptionPane.showMessageDialog(
-                    mainPanel, 
-                    "Korrigieren Sie ihre Eingaben oder es existiert noch kein Konto", 
-                    "Fehler", 
-                    JOptionPane.WARNING_MESSAGE
-                );*/
+                String email = txtEmail.getText();
+                String password = new String(txtPassword.getPassword());
 
-            
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
-                parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new Auftraguebersicht().getMainPanel());
-                parentFrame.revalidate();
-                parentFrame.repaint();
+                // Check credentials
+                Kunde kunde = kundenverwaltung.getKundeByEmail(email);
+                if (kunde != null && kunde.getPasswort().equals(password)) {
+                    // Credentials are correct, switch to Auftraguebersicht
+                    JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                    parentFrame.getContentPane().removeAll();
+                    parentFrame.getContentPane().add(new Auftraguebersicht(kundenverwaltung).getMainPanel());
+                    parentFrame.revalidate();
+                    parentFrame.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(mainPanel, "E-Mail oder Passwort ist falsch.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
