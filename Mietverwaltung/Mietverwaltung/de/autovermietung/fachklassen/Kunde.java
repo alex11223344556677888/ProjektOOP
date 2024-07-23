@@ -230,10 +230,6 @@ public class Kunde extends Person {
         this.passwort = passwort;
     }
 
-    public String getLoginName() {
-        return anmeldename;
-    }
-
     public String getKundenName() {
         return getVorname() + " " + getName();
     }
