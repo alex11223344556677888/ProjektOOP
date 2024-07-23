@@ -3,7 +3,6 @@ package Gui;
 import javax.swing.*;
 import fachklassen.Kunde;
 import Verwaltungsklassen.Kundenverwaltung;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,11 +13,18 @@ public class ZusammenfassungPage extends JPanel {
     private JPanel mainPanel;
     private JTextField txtVorname, txtName, txtGeburtsdatum, txtAlter, txtTelefonnummer, txtEmail, txtStrasse, txtNr, txtOrt, txtPLZ, txtFuehrerscheinzeit;
     private JTextField txtKundenkarte, txtFuehrerscheinklasse, txtPasswort;
-    
+    private Kundenverwaltung kundenverwaltung;
+
     public ZusammenfassungPage(String vorname, String name, String geburtsdatum, String alter,
                                String telefonnummer, String email, String strasse, String nr,
                                String ort, String plz, String kundenkarte, String fuehrerscheinzeit,
                                String fuehrerscheinklasse, String passwort, Kundenverwaltung kundenverwaltung) {
+        
+        if (kundenverwaltung == null) {
+            throw new IllegalArgumentException("Kundenverwaltung darf nicht null sein.");
+        }
+        this.kundenverwaltung = kundenverwaltung;
+
         mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -39,7 +45,6 @@ public class ZusammenfassungPage extends JPanel {
         // Labels and text fields for the form
         JLabel lblVorname = new JLabel("Vorname:");
         txtVorname = new JTextField(vorname, 15);
-        txtVorname.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 1;
         mainPanel.add(lblVorname, gbc);
@@ -48,7 +53,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblName = new JLabel("Name:");
         txtName = new JTextField(name, 15);
-        txtName.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 2;
         mainPanel.add(lblName, gbc);
@@ -57,7 +61,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblGeburtsdatum = new JLabel("Geburtsdatum:");
         txtGeburtsdatum = new JTextField(geburtsdatum, 15);
-        txtGeburtsdatum.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 3;
         mainPanel.add(lblGeburtsdatum, gbc);
@@ -66,7 +69,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblAlter = new JLabel("Alter:");
         txtAlter = new JTextField(alter, 15);
-        txtAlter.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 4;
         mainPanel.add(lblAlter, gbc);
@@ -75,7 +77,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblTelefonnummer = new JLabel("Telefonnummer:");
         txtTelefonnummer = new JTextField(telefonnummer, 15);
-        txtTelefonnummer.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 5;
         mainPanel.add(lblTelefonnummer, gbc);
@@ -84,7 +85,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblEmail = new JLabel("Email:");
         txtEmail = new JTextField(email, 15);
-        txtEmail.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 6;
         mainPanel.add(lblEmail, gbc);
@@ -93,7 +93,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblStrasse = new JLabel("Straße:");
         txtStrasse = new JTextField(strasse, 15);
-        txtStrasse.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 7;
         mainPanel.add(lblStrasse, gbc);
@@ -102,7 +101,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblNr = new JLabel("Nr.:");
         txtNr = new JTextField(nr, 5);
-        txtNr.setEditable(true);
         gbc.gridx = 2;
         mainPanel.add(lblNr, gbc);
         gbc.gridx = 3;
@@ -110,7 +108,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblOrt = new JLabel("Ort:");
         txtOrt = new JTextField(ort, 15);
-        txtOrt.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 8;
         mainPanel.add(lblOrt, gbc);
@@ -119,7 +116,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblPLZ = new JLabel("PLZ:");
         txtPLZ = new JTextField(plz, 5);
-        txtPLZ.setEditable(true);
         gbc.gridx = 2;
         mainPanel.add(lblPLZ, gbc);
         gbc.gridx = 3;
@@ -127,7 +123,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblKundenkarte = new JLabel("Kundenkarte:");
         txtKundenkarte = new JTextField(kundenkarte, 15);
-        txtKundenkarte.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 9;
         mainPanel.add(lblKundenkarte, gbc);
@@ -136,7 +131,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblFuehrerscheinzeit = new JLabel("Führerscheinzeit:");
         txtFuehrerscheinzeit = new JTextField(fuehrerscheinzeit, 15);
-        txtFuehrerscheinzeit.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 10;
         mainPanel.add(lblFuehrerscheinzeit, gbc);
@@ -145,7 +139,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblFuehrerscheinklasse = new JLabel("Führerscheinklasse:");
         txtFuehrerscheinklasse = new JTextField(fuehrerscheinklasse, 15);
-        txtFuehrerscheinklasse.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 11;
         mainPanel.add(lblFuehrerscheinklasse, gbc);
@@ -154,7 +147,6 @@ public class ZusammenfassungPage extends JPanel {
 
         JLabel lblPasswort = new JLabel("Passwort:");
         txtPasswort = new JTextField(passwort, 15);
-        txtPasswort.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 12;
         mainPanel.add(lblPasswort, gbc);
@@ -177,7 +169,7 @@ public class ZusammenfassungPage extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new RegistrierenPage().getMainPanel());
+                parentFrame.getContentPane().add(new RegistrierenPage(kundenverwaltung).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
@@ -208,13 +200,21 @@ public class ZusammenfassungPage extends JPanel {
                         txtVorname.getText(), // anmeldename, using Vorname as placeholder
                         txtPasswort.getText()  // passwort
                     );
-        
+
                     kundenverwaltung.neuenKundenErstellen(kunde); // Correct method to add a new customer
-        
+
                     JOptionPane.showMessageDialog(mainPanel, "Daten erfolgreich gespeichert!");
-        
+
+                    // Switch to the Login page
+                    JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                    parentFrame.getContentPane().removeAll();
+                    parentFrame.getContentPane().add(new LoginPage(kundenverwaltung).getMainPanel());
+                    parentFrame.revalidate();
+                    parentFrame.repaint();
+
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(mainPanel, "Fehler beim Speichern der Daten: " + ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace(); // Print stack trace for debugging
                 }
             }
         });
