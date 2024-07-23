@@ -15,10 +15,8 @@ public class Auftraguebersicht extends JPanel {
     private JList<String> list;
     private DefaultListModel<String> listModel;
     private JButton btnZurueck, btnNeuesAutoMieten;
-    private Kundenverwaltung kundenverwaltung; // Add this field
 
-    public Auftraguebersicht(Kundenverwaltung kundenverwaltung) { // Accept Kundenverwaltung as a parameter
-        this.kundenverwaltung = kundenverwaltung; // Assign it to the field
+    public Auftraguebersicht() {
         mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -79,7 +77,7 @@ public class Auftraguebersicht extends JPanel {
                 // Implement the action for the Zurück button
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new LoginPage(kundenverwaltung).getMainPanel()); // Pass kundenverwaltung
+                parentFrame.getContentPane().add(new LoginPage().getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
@@ -99,14 +97,15 @@ public class Auftraguebersicht extends JPanel {
         // Add mouse listener to the list
         list.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() == 1) {
+                if (evt.getClickCount() == 2) {
                     // Single-click detected, show the message box
                     showCustomMessageDialog();
                 }
             }
         });
     }
-
+    
+    // Message box -------------
     private void showCustomMessageDialog() {
         // Create a custom panel for the message dialog
         JPanel panel = new JPanel(new GridBagLayout());
@@ -195,13 +194,6 @@ public class Auftraguebersicht extends JPanel {
             subPanel.add(checkBoxes[i], gbcSub);
         }
 
-        // Set checkbox states based on PKW attributes
-       /*checkBoxes[0].setSelected(pkw.isKlimatisiert());
-        checkBoxes[1].setSelected(pkw.isBeheizt());
-        checkBoxes[2].setSelected(pkw.isNavi());
-        checkBoxes[3].setSelected(pkw.isFahrassistent());
-        checkBoxes[4].setSelected(autoscrolls);*/
-
         // add image
         ImageIcon imageIcon = new ImageIcon("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg");
         Image image = imageIcon.getImage();
@@ -270,17 +262,16 @@ public class Auftraguebersicht extends JPanel {
                     panel.repaint();
                 });
             }
+            JLabel lblPreis = new JLabel("Preis:");
+            gbc.gridx = 0;
+            gbc.gridy = 16;
+            panel.add(lblPreis, gbc);
+
+            JTextField txtPreis = new JTextField("100", 20);
+            txtPreis.setEditable(false);
+            gbc.gridx = 1;
+            panel.add(txtPreis, gbc);
         }
-
-        JLabel lblPreis = new JLabel("Preis:");
-        gbc.gridx = 0;
-        gbc.gridy = 16;
-        panel.add(lblPreis, gbc);
-
-        JTextField txtPreis = new JTextField("100", 20);
-        txtPreis.setEditable(false);
-        gbc.gridx = 1;
-        panel.add(txtPreis, gbc);
 
         // Versicherungspaket
         JLabel lblVersicherungspaket = new JLabel("Versicherungspaket:");
@@ -305,26 +296,26 @@ public class Auftraguebersicht extends JPanel {
         gbcKunden.insets = new Insets(5, 5, 5, 5);
         gbcKunden.anchor = GridBagConstraints.WEST;
 
-        addLabelAndTextField(kundenPanel, gbcKunden, "Vorname:", "", 0);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Name:", "", 1);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Geburtsdatum:", "", 2);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Alter:", "", 3);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Telefonnummer:", "", 4);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Email:", "", 5);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Straße:", "", 6);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Nr.:", "", 7);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Ort:", "", 8);
-        addLabelAndTextField(kundenPanel, gbcKunden, "PLZ:", "", 9);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Kundenkarte:", "Nein", 10);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Führerscheinklasse:", "", 11);
-        addLabelAndTextField(kundenPanel, gbcKunden, "Führerscheinzeit:", "", 12);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Vorname:", "", 0);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Name:", "", 1);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Geburtsdatum:", "", 2);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Alter:", "", 3);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Telefonnummer:", "", 4);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Email:", "", 5);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Straße:", "", 6);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Nr.:", "", 7);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Ort:", "", 8);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "PLZ:", "", 9);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Kundenkarte:", "Nein", 10);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Führerscheinklasse:", "", 11);
+        addLabelAndTextField1(kundenPanel, gbcKunden, "Führerscheinzeit:", "", 12);
 
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.gridheight = 8;
         panel.add(kundenPanel, gbc);
 
-        // Custom button for the JOptionPane
+        // Custom buttons for the JOptionPane
         JButton btnZurueck = new JButton("Zurück");
         btnZurueck.addActionListener(e -> {
             // Close the dialog
@@ -334,16 +325,47 @@ public class Auftraguebersicht extends JPanel {
             }
         });
 
+        JButton btnLoeschen = new JButton("Löschen");
+        btnLoeschen.addActionListener(e -> {
+            // Action to be performed when "Löschen" is clicked
+            int confirmation = JOptionPane.showConfirmDialog(panel, "Möchten Sie wirklich löschen?", "Bestätigung", JOptionPane.YES_NO_OPTION);
+            if (confirmation == JOptionPane.YES_OPTION) {
+                // Perform the delete action here
+                // For now, just close the dialog
+                Window window = SwingUtilities.getWindowAncestor(btnLoeschen);
+                if (window != null) {
+                    window.dispose();
+                }
+            }
+        });
+
         // Display the custom panel in a JOptionPane
-        JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{btnZurueck});
+        JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{btnZurueck, btnLoeschen});
         JDialog dialog = optionPane.createDialog(this, "Vertragsübersicht");
         dialog.setVisible(true);
     }
 
+    // Helper method to add labels and text fields to the panel
+    private void addLabelAndTextField1(JPanel panel, GridBagConstraints gbc, String labelText, String textFieldText, int yPosition) {
+        JLabel label = new JLabel(labelText);
+        gbc.gridx = 0;
+        gbc.gridy = yPosition;
+        panel.add(label, gbc);
+
+        JTextField textField = new JTextField(textFieldText, 20);
+        textField.setEditable(false);
+        gbc.gridx = 1;
+        panel.add(textField, gbc);
+    }
+ //------------
+    
+    
     private void addLabelAndTextField(JPanel panel, GridBagConstraints gbc, String labelText, String textFieldText, int yPos) {
         JLabel label = new JLabel(labelText);
         JTextField textField = new JTextField(15);
         textField.setText(textFieldText);
+        textField.setEditable(false);
+        
         gbc.gridx = 0;
         gbc.gridy = yPos;
         panel.add(label, gbc);
