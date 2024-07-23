@@ -1,21 +1,16 @@
 package Gui;
 
+import Verwaltungsklassen.Kundenverwaltung;
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
-
-import Verwaltungsklassen.Kundenverwaltung;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import javax.swing.*;
-import javax.swing.text.*;
 import java.util.regex.Pattern;
 
 public class RegistrierenPage extends JPanel {
@@ -28,14 +23,18 @@ public class RegistrierenPage extends JPanel {
     private JPasswordField txtPasswort, txtPasswortWdh;
     private Kundenverwaltung kundenverwaltung;
 
-    public RegistrierenPage() {
-        mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
+    public RegistrierenPage(Kundenverwaltung kundenverwaltung) {
+        if (kundenverwaltung == null) {
+            throw new IllegalArgumentException("Kundenverwaltung darf nicht null sein.");
+        }
+        this.kundenverwaltung = kundenverwaltung;
+
+        mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg");
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        kundenverwaltung = new Kundenverwaltung();
         // Header label
         JLabel lblHeader = new RoundedLabel(" Gib deine Persönliche Daten ein ");
         lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
@@ -43,11 +42,10 @@ public class RegistrierenPage extends JPanel {
         gbc.gridy = 0;
         gbc.gridwidth = 4;
         gbc.anchor = GridBagConstraints.CENTER;
-        //lblHeader.setBorder(LineBorder.createBlackLineBorder());
         lblHeader.setBackground(Color.WHITE);
         lblHeader.setForeground(Color.BLACK);
         mainPanel.add(lblHeader, gbc);
-        
+
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
@@ -93,7 +91,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(txtAlter, gbc);
 
         JLabel lblTelefonnummer = new RoundedLabel(" Telefonnummer: ");
-        JTextField txtTelefonnummer = new JTextField(15);
+        txtTelefonnummer = new JTextField(15);
         lblTelefonnummer.setBackground(Color.WHITE);
         lblTelefonnummer.setForeground(Color.BLACK);
         gbc.gridx = 0;
@@ -135,7 +133,7 @@ public class RegistrierenPage extends JPanel {
         });
 
         JLabel lblEmail = new RoundedLabel(" Email: ");
-        JTextField txtEmail = new JTextField(15);
+        txtEmail = new JTextField(15);
         lblEmail.setBackground(Color.WHITE);
         lblEmail.setForeground(Color.BLACK);
         gbc.gridx = 0;
@@ -154,12 +152,12 @@ public class RegistrierenPage extends JPanel {
             public boolean verify(JComponent input) {
                 JTextField textField = (JTextField) input;
                 String text = textField.getText().trim();
-                
+
                 // Allow empty input without showing the message box
                 if (text.isEmpty()) {
                     return true;
                 }
-                
+
                 boolean isValid = emailPattern.matcher(text).matches();
                 if (!isValid) {
                     JOptionPane.showMessageDialog(input, "Bitte geben Sie eine gültige E-Mail-Adresse ein.", "Ungültige E-Mail", JOptionPane.ERROR_MESSAGE);
@@ -182,7 +180,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtStrasse, gbc);
 
-        JLabel lblNr = new RoundedLabel( " Nr.: ");
+        JLabel lblNr = new RoundedLabel(" Nr.: ");
         txtNr = new JTextField(5);
         lblNr.setBackground(Color.WHITE);
         lblNr.setForeground(Color.BLACK);
@@ -209,7 +207,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblPLZ, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtPLZ, gbc);
- 
+
         // Kundenkarte section
         JLabel lblKundenkarte = new RoundedLabel(" Kundenkarte: ");
         rdbJa = new JRadioButton("Ja");
@@ -281,7 +279,7 @@ public class RegistrierenPage extends JPanel {
                 parentFrame.repaint();
             }
         });
-        
+
         // Add action listener for the Confirm button
         btnBestaetigen.addActionListener(new ActionListener() {
             @Override
@@ -302,7 +300,8 @@ public class RegistrierenPage extends JPanel {
                     rdbJa.isSelected() ? "Ja" : "Nein",
                     txtFuehrerscheinzeit.getText(),
                     (String) cmbFuehrerscheinklasse.getSelectedItem(),
-                    new String(txtPasswort.getPassword()), null
+                    new String(txtPasswort.getPassword()),
+                    kundenverwaltung // Pass the Kundenverwaltung instance
                 ).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
@@ -329,6 +328,4 @@ public class RegistrierenPage extends JPanel {
     public JPanel getMainPanel() {
         return mainPanel;
     }
-
-   
 }
