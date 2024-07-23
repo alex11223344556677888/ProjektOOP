@@ -1,10 +1,12 @@
-package de.autovermietung.gui;
+package Gui;
+
 import javax.swing.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import de.autovermietung.fachklassen.PKW;
-import de.autovermietung.verwaltungsklassen.PKWVerwaltung;
-import de.autovermietung.verwaltungsklassen.TerminVerwaltung;
+import fachklassen.PKW;
+import Verwaltungsklassen.Kundenverwaltung;
+import Verwaltungsklassen.PKWVerwaltung;
+import Verwaltungsklassen.TerminVerwaltung;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +16,7 @@ import java.awt.event.MouseEvent;
 
 public class FilterPage extends JPanel {
     private static final long serialVersionUID = 1L;
-
+     private Kundenverwaltung kundenverwaltung; 
     private JPanel mainPanel;
     private JComboBox<String> cmbMarke, cmbKategorie, cmbGetriebe, cmbFarbe, cmbSortierenNach;
     private JRadioButton rdbJa, rdbNein;
@@ -156,7 +158,7 @@ public class FilterPage extends JPanel {
         btnZurueck.addActionListener(e -> {
             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
             parentFrame.getContentPane().removeAll();
-            parentFrame.getContentPane().add(new KalenderPage().getMainPanel());
+            parentFrame.getContentPane().add(new KalenderPage(kundenverwaltung).getMainPanel());
             parentFrame.revalidate();
             parentFrame.repaint();
         });
@@ -390,7 +392,7 @@ public class FilterPage extends JPanel {
              // Show the SchlussPage after booking
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new SchlussPage().getMainPanel());
+                parentFrame.getContentPane().add(new SchlussPage(kundenverwaltung).getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             } catch (Exception ex) {
@@ -449,7 +451,3 @@ public class FilterPage extends JPanel {
         }
     }
 }
-
-
-
-
