@@ -80,6 +80,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtGeburtsdatum, gbc);
 
+// Alter Textfeld + nur Zahlen sind erlaubt 
         JLabel lblAlter = new RoundedLabel(" Alter: ");
         txtAlter = new JTextField(15);
         lblAlter.setBackground(Color.WHITE);
@@ -88,21 +89,10 @@ public class RegistrierenPage extends JPanel {
         gbc.gridy = 4;
         mainPanel.add(lblAlter, gbc);
         gbc.gridx = 1;
-        mainPanel.add(txtAlter, gbc);
-
-        JLabel lblTelefonnummer = new RoundedLabel(" Telefonnummer: ");
-        txtTelefonnummer = new JTextField(15);
-        lblTelefonnummer.setBackground(Color.WHITE);
-        lblTelefonnummer.setForeground(Color.BLACK);
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        mainPanel.add(lblTelefonnummer, gbc);
-        gbc.gridx = 1;
-        mainPanel.add(txtTelefonnummer, gbc);
-
-        // Define a DocumentFilter to allow only numeric input and limit the length
-        ((AbstractDocument) txtTelefonnummer.getDocument()).setDocumentFilter(new DocumentFilter() {
-            private final int MAX_LENGTH = 13;
+        mainPanel.add(txtAlter, gbc);  
+     // Define a DocumentFilter to allow only numeric input and limit the length for txtAlter
+        ((AbstractDocument) txtAlter.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private final int MAX_LENGTH = 2;
 
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
@@ -112,6 +102,8 @@ public class RegistrierenPage extends JPanel {
 
                 if ((fb.getDocument().getLength() + string.length()) <= MAX_LENGTH && string.matches("\\d*")) {
                     super.insertString(fb, offset, string, attr);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
                 }
             }
 
@@ -123,6 +115,54 @@ public class RegistrierenPage extends JPanel {
 
                 if ((fb.getDocument().getLength() - length + text.length()) <= MAX_LENGTH && text.matches("\\d*")) {
                     super.replace(fb, offset, length, text, attrs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+                super.remove(fb, offset, length);
+            }
+        });
+
+// Telefonnummer Textfeld + das nur Zahlen erlaubt sind und eine beschränkte länge haben 
+        JLabel lblTelefonnummer = new RoundedLabel(" Telefonnummer: ");
+        JTextField txtTelefonnummer = new JTextField(15);
+        lblTelefonnummer.setBackground(Color.WHITE);
+        lblTelefonnummer.setForeground(Color.BLACK);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        mainPanel.add(lblTelefonnummer, gbc);
+        gbc.gridx = 1;
+        mainPanel.add(txtTelefonnummer, gbc);
+        // Define a DocumentFilter to allow only numeric input and limit the length for txtTelefonnummer
+        ((AbstractDocument) txtTelefonnummer.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private final int MAX_LENGTH = 13;
+
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() + string.length()) <= MAX_LENGTH && string.matches("\\d*")) {
+                    super.insertString(fb, offset, string, attr);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() - length + text.length()) <= MAX_LENGTH && text.matches("\\d*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
                 }
             }
 
@@ -189,6 +229,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 3;
         mainPanel.add(txtNr, gbc);
 
+// Ort Textfeld + keine Zahlen sind erlaubt 
         JLabel lblOrt = new RoundedLabel(" Ort: ");
         txtOrt = new JTextField(15);
         lblOrt.setBackground(Color.WHITE);
@@ -198,7 +239,41 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblOrt, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtOrt, gbc);
+        // Define a DocumentFilter to disallow numeric input for txtOrt
+        ((AbstractDocument) txtOrt.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string == null) {
+                    return;
+                }
 
+                if (string.matches("[^\\d]*")) {
+                    super.insertString(fb, offset, string, attr);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) {
+                    return;
+                }
+
+                if (text.matches("[^\\d]*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+                super.remove(fb, offset, length);
+            }
+        });
+
+// PLZ Textfeld + das nur Zahlen erlaubt sind 
         JLabel lblPLZ = new RoundedLabel(" PLZ: ");
         txtPLZ = new JTextField(5);
         lblPLZ.setBackground(Color.WHITE);
@@ -207,6 +282,41 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblPLZ, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtPLZ, gbc);
+        // Define a DocumentFilter to allow only numeric input for txtPLZ
+        ((AbstractDocument) txtPLZ.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private final int MAX_LENGTH = 5;
+
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() + string.length()) <= MAX_LENGTH && string.matches("\\d*")) {
+                    super.insertString(fb, offset, string, attr);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() - length + text.length()) <= MAX_LENGTH && text.matches("\\d*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+                super.remove(fb, offset, length);
+            }
+        });
 
         // Kundenkarte section
         JLabel lblKundenkarte = new RoundedLabel(" Kundenkarte: ");
