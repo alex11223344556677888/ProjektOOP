@@ -25,144 +25,373 @@ public class ZusammenfassungPage extends JPanel {
         }
         this.kundenverwaltung = kundenverwaltung;
 
-        mainPanel = new JPanel(new GridBagLayout());
+       // Layout und Constraints für das Hauptpanel festlegen
+        mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Header label
-        JLabel lblHeader = new JLabel("Zusammenfassung deiner Eingaben");
+        // Header-Label erstellen und hinzufügen
+        JLabel lblHeader = new RoundedLabel(" Sind deine Eingaben korrekt? ");
         lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 4;
         gbc.anchor = GridBagConstraints.CENTER;
+        lblHeader.setBackground(Color.WHITE);
+        lblHeader.setForeground(Color.BLACK);
         mainPanel.add(lblHeader, gbc);
 
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Labels and text fields for the form
-        JLabel lblVorname = new JLabel("Vorname:");
+        // Vorname-Label und Textfeld erstellen und hinzufügen
+        JLabel lblVorname = new RoundedLabel(" Vorname: ");
         txtVorname = new JTextField(vorname, 15);
+        txtVorname.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 1;
+        lblVorname.setBackground(Color.WHITE);
+        lblVorname.setForeground(Color.BLACK);
         mainPanel.add(lblVorname, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtVorname, gbc);
 
-        JLabel lblName = new JLabel("Name:");
+        // Name-Label und Textfeld erstellen und hinzufügen
+        JLabel lblName = new RoundedLabel(" Name: ");
         txtName = new JTextField(name, 15);
+        txtName.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 2;
+        lblName.setBackground(Color.WHITE);
+        lblName.setForeground(Color.BLACK);
         mainPanel.add(lblName, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtName, gbc);
 
-        JLabel lblGeburtsdatum = new JLabel("Geburtsdatum:");
+        // Geburtsdatum-Label und Textfeld erstellen und hinzufügen
+        JLabel lblGeburtsdatum = new RoundedLabel(" Geburtsdatum: ");
         txtGeburtsdatum = new JTextField(geburtsdatum, 15);
+        txtGeburtsdatum.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 3;
+        lblGeburtsdatum.setBackground(Color.WHITE);
+        lblGeburtsdatum.setForeground(Color.BLACK);
         mainPanel.add(lblGeburtsdatum, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtGeburtsdatum, gbc);
 
-        JLabel lblAlter = new JLabel("Alter:");
+        // Alter-Label und Textfeld erstellen und hinzufügen
+        JLabel lblAlter = new RoundedLabel(" Alter: ");
         txtAlter = new JTextField(alter, 15);
+        txtAlter.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 4;
+        lblAlter.setBackground(Color.WHITE);
+        lblAlter.setForeground(Color.BLACK);
         mainPanel.add(lblAlter, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtAlter, gbc);
 
-        JLabel lblTelefonnummer = new JLabel("Telefonnummer:");
+        // Define a DocumentFilter to allow only numeric input and limit the length for txtAlter
+        ((AbstractDocument) txtAlter.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private final int MAX_LENGTH = 2;
+
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() + string.length()) <= MAX_LENGTH && string.matches("\\d*")) {
+                    super.insertString(fb, offset, string, attr);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() - length + text.length()) <= MAX_LENGTH && text.matches("\\d*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+                super.remove(fb, offset, length);
+            }
+        });
+
+        // Telefonnummer-Label und Textfeld erstellen und hinzufügen
+        JLabel lblTelefonnummer = new RoundedLabel(" Telefonnummer: ");
         txtTelefonnummer = new JTextField(telefonnummer, 15);
+        txtTelefonnummer.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 5;
+        lblTelefonnummer.setBackground(Color.WHITE);
+        lblTelefonnummer.setForeground(Color.BLACK);
         mainPanel.add(lblTelefonnummer, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtTelefonnummer, gbc);
 
-        JLabel lblEmail = new JLabel("Email:");
+        // DocumentFilter für Telefonnummer, um nur numerische Eingaben zu erlauben
+        ((AbstractDocument) txtTelefonnummer.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private final int MAX_LENGTH = 13;
+
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() + string.length()) <= MAX_LENGTH && string.matches("\\d*")) {
+                    super.insertString(fb, offset, string, attr);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() - length + text.length()) <= MAX_LENGTH && text.matches("\\d*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+                super.remove(fb, offset, length);
+            }
+        });
+
+        // Email-Label und Textfeld erstellen und hinzufügen
+        JLabel lblEmail = new RoundedLabel(" Email: ");
         txtEmail = new JTextField(email, 15);
+        txtEmail.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 6;
+        lblEmail.setBackground(Color.WHITE);
+        lblEmail.setForeground(Color.BLACK);
         mainPanel.add(lblEmail, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtEmail, gbc);
 
-        JLabel lblStrasse = new JLabel("Straße:");
+        // Formatiert txtEmail
+        txtEmail.setInputVerifier(new InputVerifier() {
+            private final Pattern emailPattern = Pattern.compile(
+                "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
+            );
+
+            @Override
+            public boolean verify(JComponent input) {
+                JTextField textField = (JTextField) input;
+                String text = textField.getText().trim();
+                
+                // Erlaubt leere Eingaben ohne Fehlermeldung
+                if (text.isEmpty()) {
+                    return true;
+                }
+                
+                boolean isValid = emailPattern.matcher(text).matches();
+                if (!isValid) {
+                    JOptionPane.showMessageDialog(input, "Bitte geben Sie eine gültige E-Mail-Adresse ein.", "Ungültige E-Mail", JOptionPane.ERROR_MESSAGE);
+                }
+                return isValid;
+            }
+        });
+
+        // Setzt die Schriftart von txtTelefonnummer auf die gleiche wie txtEmail
+        Font emailFont = txtEmail.getFont();
+        txtTelefonnummer.setFont(emailFont);
+
+        // Straße-Label und Textfeld erstellen und hinzufügen
+        JLabel lblStrasse = new RoundedLabel(" Straße: ");
         txtStrasse = new JTextField(strasse, 15);
+        txtStrasse.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 7;
+        lblStrasse.setBackground(Color.WHITE);
+        lblStrasse.setForeground(Color.BLACK);
         mainPanel.add(lblStrasse, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtStrasse, gbc);
 
-        JLabel lblNr = new JLabel("Nr.:");
+        // Nr.-Label und Textfeld erstellen und hinzufügen
+        JLabel lblNr = new RoundedLabel(" Nr.: ");
         txtNr = new JTextField(nr, 5);
+        txtNr.setEditable(true);
         gbc.gridx = 2;
+        lblNr.setBackground(Color.WHITE);
+        lblNr.setForeground(Color.BLACK);
         mainPanel.add(lblNr, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtNr, gbc);
 
-        JLabel lblOrt = new JLabel("Ort:");
+        // Ort-Label und Textfeld erstellen und hinzufügen
+        JLabel lblOrt = new RoundedLabel(" Ort: ");
         txtOrt = new JTextField(ort, 15);
+        txtOrt.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 8;
+        lblOrt.setBackground(Color.WHITE);
+        lblOrt.setForeground(Color.BLACK);
         mainPanel.add(lblOrt, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtOrt, gbc);
 
-        JLabel lblPLZ = new JLabel("PLZ:");
+        // DocumentFilter für Ort, um numerische Eingaben zu verbieten
+        ((AbstractDocument) txtOrt.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string == null) {
+                    return;
+                }
+
+                if (string.matches("[^\\d]*")) {
+                    super.insertString(fb, offset, string, attr);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) {
+                    return;
+                }
+
+                if (text.matches("[^\\d]*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+                super.remove(fb, offset, length);
+            }
+        });
+
+        // PLZ-Label und Textfeld erstellen und hinzufügen
+        JLabel lblPLZ = new RoundedLabel(" PLZ: ");
         txtPLZ = new JTextField(plz, 5);
+        txtPLZ.setEditable(true);
         gbc.gridx = 2;
+        lblPLZ.setBackground(Color.WHITE);
+        lblPLZ.setForeground(Color.BLACK);
         mainPanel.add(lblPLZ, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtPLZ, gbc);
 
-        JLabel lblKundenkarte = new JLabel("Kundenkarte:");
-        txtKundenkarte = new JTextField(kundenkarte, 15);
+        // DocumentFilter für PLZ, um nur numerische Eingaben zu erlauben und die Länge zu begrenzen
+        ((AbstractDocument) txtPLZ.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private final int MAX_LENGTH = 5;
+
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() + string.length()) <= MAX_LENGTH && string.matches("\\d*")) {
+                    super.insertString(fb, offset, string, attr);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text == null) {
+                    return;
+                }
+
+                if ((fb.getDocument().getLength() - length + text.length()) <= MAX_LENGTH && text.matches("\\d*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+                }
+            }
+
+            @Override
+            public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+                super.remove(fb, offset, length);
+            }
+        });
+
+        // Kundenkarte-Label und Textfeld erstellen und hinzufügen
+        JLabel lblKundenkarte = new RoundedLabel(" Kundenkarte: ");
+        JTextField txtKundenkarte = new JTextField(kundenkarte, 15);
+        txtKundenkarte.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 9;
+        lblKundenkarte.setBackground(Color.WHITE);
+        lblKundenkarte.setForeground(Color.BLACK);
         mainPanel.add(lblKundenkarte, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtKundenkarte, gbc);
 
-        JLabel lblFuehrerscheinzeit = new JLabel("Führerscheinzeit:");
+        // Führerscheinzeit-Label und Textfeld erstellen und hinzufügen
+        JLabel lblFuehrerscheinzeit = new RoundedLabel(" Führerscheinzeit: ");
         txtFuehrerscheinzeit = new JTextField(fuehrerscheinzeit, 15);
+        txtFuehrerscheinzeit.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 10;
+        lblFuehrerscheinzeit.setBackground(Color.WHITE);
+        lblFuehrerscheinzeit.setForeground(Color.BLACK);
         mainPanel.add(lblFuehrerscheinzeit, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtFuehrerscheinzeit, gbc);
 
-        JLabel lblFuehrerscheinklasse = new JLabel("Führerscheinklasse:");
-        txtFuehrerscheinklasse = new JTextField(fuehrerscheinklasse, 15);
+        // Führerscheinklasse-Label und Textfeld erstellen und hinzufügen
+        JLabel lblFuehrerscheinklasse = new RoundedLabel(" Führerscheinklasse: ");
+        JTextField txtFuehrerscheinklasse = new JTextField(fuehrerscheinklasse, 15);
+        txtFuehrerscheinklasse.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 11;
+        lblFuehrerscheinklasse.setBackground(Color.WHITE);
+        lblFuehrerscheinklasse.setForeground(Color.BLACK);
         mainPanel.add(lblFuehrerscheinklasse, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtFuehrerscheinklasse, gbc);
 
-        JLabel lblPasswort = new JLabel("Passwort:");
-        txtPasswort = new JTextField(passwort, 15);
+        // Passwort-Label und Textfeld erstellen und hinzufügen
+        JLabel lblPasswort = new RoundedLabel(" Passwort: ");
+        JTextField txtPasswort = new JTextField(passwort, 15);
+        txtPasswort.setEditable(true);
         gbc.gridx = 0;
         gbc.gridy = 12;
+        lblPasswort.setBackground(Color.WHITE);
+        lblPasswort.setForeground(Color.BLACK);
         mainPanel.add(lblPasswort, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtPasswort, gbc);
 
-        // Buttons
+        // Zurück- und Speichern-Buttons erstellen und hinzufügen
         JButton btnZurueck = new JButton("Zurück");
         JButton btnSpeichern = new JButton("Speichern");
         gbc.gridx = 0;
         gbc.gridy = 14;
+        lblHeader.setBackground(Color.WHITE);
+        lblHeader.setForeground(Color.BLACK);
         mainPanel.add(btnZurueck, gbc);
         gbc.gridx = 1;
         mainPanel.add(btnSpeichern, gbc);
         gbc.gridx = 2;
-
         // Add action listener for the Back button
         btnZurueck.addActionListener(new ActionListener() {
             @Override
