@@ -29,13 +29,13 @@ public class RegistrierenPage extends JPanel {
         }
         this.kundenverwaltung = kundenverwaltung;
 
-        mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg");
+       // Layout und Constraints für das Hauptpanel festlegen
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-// Header label
+        // Header-Label erstellen und hinzufügen
         JLabel lblHeader = new RoundedLabel(" Gib deine Persönliche Daten ein ");
         lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0;
@@ -49,7 +49,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
-// Vorname
+        // Vorname-Label und Textfeld erstellen und hinzufügen
         JLabel lblVorname = new RoundedLabel(" Vorname: ");
         txtVorname = new JTextField(15);
         gbc.gridx = 0;
@@ -60,7 +60,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtVorname, gbc);
 
-// Name 
+        // Name-Label und Textfeld erstellen und hinzufügen
         JLabel lblName = new RoundedLabel(" Name: ");
         txtName = new JTextField(15);
         gbc.gridx = 0;
@@ -71,7 +71,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtName, gbc);
 
-// Geburtstag
+        // Geburtsdatum-Label und formatiertes Textfeld erstellen und hinzufügen
         JLabel lblGeburtsdatum = new RoundedLabel(" Geburtsdatum: ");
         JFormattedTextField txtGeburtsdatum = createFormattedDateField();
         gbc.gridx = 0;
@@ -82,7 +82,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtGeburtsdatum, gbc);
 
-// Alter Textfeld + nur Zahlen sind erlaubt 
+        // Alter-Label und Textfeld erstellen und hinzufügen
         JLabel lblAlter = new RoundedLabel(" Alter: ");
         txtAlter = new JTextField(15);
         lblAlter.setBackground(Color.WHITE);
@@ -91,8 +91,9 @@ public class RegistrierenPage extends JPanel {
         gbc.gridy = 4;
         mainPanel.add(lblAlter, gbc);
         gbc.gridx = 1;
-        mainPanel.add(txtAlter, gbc);  
-     
+        mainPanel.add(txtAlter, gbc);
+
+        // Define a DocumentFilter to allow only numeric input and limit the length for txtAlter
         ((AbstractDocument) txtAlter.getDocument()).setDocumentFilter(new DocumentFilter() {
             private final int MAX_LENGTH = 2;
 
@@ -128,7 +129,7 @@ public class RegistrierenPage extends JPanel {
             }
         });
 
-// Telefonnummer Textfeld + das nur Zahlen erlaubt sind und eine beschränkte länge haben 
+        // Telefonnummer-Label und Textfeld erstellen und hinzufügen
         JLabel lblTelefonnummer = new RoundedLabel(" Telefonnummer: ");
         JTextField txtTelefonnummer = new JTextField(15);
         lblTelefonnummer.setBackground(Color.WHITE);
@@ -138,7 +139,8 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblTelefonnummer, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtTelefonnummer, gbc);
-        
+
+        // DocumentFilter für Telefonnummer, um nur numerische Eingaben zu erlauben und die Länge zu begrenzen
         ((AbstractDocument) txtTelefonnummer.getDocument()).setDocumentFilter(new DocumentFilter() {
             private final int MAX_LENGTH = 13;
 
@@ -174,8 +176,9 @@ public class RegistrierenPage extends JPanel {
             }
         });
 
+        // Email-Label und Textfeld erstellen und hinzufügen
         JLabel lblEmail = new RoundedLabel(" Email: ");
-        txtEmail = new JTextField(15);
+        JTextField txtEmail = new JTextField(15);
         lblEmail.setBackground(Color.WHITE);
         lblEmail.setForeground(Color.BLACK);
         gbc.gridx = 0;
@@ -184,7 +187,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtEmail, gbc);
 
-        
+        // Formatiert txtEmail
         txtEmail.setInputVerifier(new InputVerifier() {
             private final Pattern emailPattern = Pattern.compile(
                 "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
@@ -194,12 +197,12 @@ public class RegistrierenPage extends JPanel {
             public boolean verify(JComponent input) {
                 JTextField textField = (JTextField) input;
                 String text = textField.getText().trim();
-
-                // Allow empty input without showing the message box
+                
+                // Erlaubt leere Eingaben ohne Fehlermeldung
                 if (text.isEmpty()) {
                     return true;
                 }
-
+                
                 boolean isValid = emailPattern.matcher(text).matches();
                 if (!isValid) {
                     JOptionPane.showMessageDialog(input, "Bitte geben Sie eine gültige E-Mail-Adresse ein.", "Ungültige E-Mail", JOptionPane.ERROR_MESSAGE);
@@ -208,9 +211,11 @@ public class RegistrierenPage extends JPanel {
             }
         });
 
+        // Setzt die Schriftart von txtTelefonnummer auf die gleiche wie txtEmail
         Font emailFont = txtEmail.getFont();
         txtTelefonnummer.setFont(emailFont);
 
+        // Straße-Label und Textfeld erstellen und hinzufügen
         JLabel lblStrasse = new RoundedLabel(" Straße: ");
         txtStrasse = new JTextField(15);
         lblStrasse.setBackground(Color.WHITE);
@@ -221,7 +226,8 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtStrasse, gbc);
 
-        JLabel lblNr = new RoundedLabel(" Nr.: ");
+        // Nr.-Label und Textfeld erstellen und hinzufügen
+        JLabel lblNr = new RoundedLabel( " Nr.: ");
         txtNr = new JTextField(5);
         lblNr.setBackground(Color.WHITE);
         lblNr.setForeground(Color.BLACK);
@@ -230,7 +236,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 3;
         mainPanel.add(txtNr, gbc);
 
-// Ort Textfeld + keine Zahlen sind erlaubt 
+        // Ort-Label und Textfeld erstellen und hinzufügen
         JLabel lblOrt = new RoundedLabel(" Ort: ");
         txtOrt = new JTextField(15);
         lblOrt.setBackground(Color.WHITE);
@@ -240,7 +246,8 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblOrt, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtOrt, gbc);
-    
+
+        // DocumentFilter für Ort, um numerische Eingaben zu verbieten
         ((AbstractDocument) txtOrt.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
@@ -274,7 +281,7 @@ public class RegistrierenPage extends JPanel {
             }
         });
 
-// PLZ Textfeld + das nur Zahlen erlaubt sind 
+        // PLZ-Label und Textfeld erstellen und hinzufügen
         JLabel lblPLZ = new RoundedLabel(" PLZ: ");
         txtPLZ = new JTextField(5);
         lblPLZ.setBackground(Color.WHITE);
@@ -283,7 +290,8 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblPLZ, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtPLZ, gbc);
-        
+
+        // DocumentFilter für PLZ, um nur numerische Eingaben zu erlauben und die Länge zu begrenzen
         ((AbstractDocument) txtPLZ.getDocument()).setDocumentFilter(new DocumentFilter() {
             private final int MAX_LENGTH = 5;
 
@@ -319,7 +327,7 @@ public class RegistrierenPage extends JPanel {
             }
         });
 
-        // Kundenkarte section
+        // Kundenkarte-Label und Radio-Buttons erstellen und hinzufügen
         JLabel lblKundenkarte = new RoundedLabel(" Kundenkarte: ");
         rdbJa = new JRadioButton("Ja");
         rdbNein = new JRadioButton("Nein");
@@ -330,13 +338,14 @@ public class RegistrierenPage extends JPanel {
         gbc.gridy = 9;
         mainPanel.add(lblKundenkarte, gbc);
 
-        
+        // Panel für die Kundenkarte-Radio-Buttons erstellen und hinzufügen
         JPanel kundenkartePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         kundenkartePanel.add(rdbJa);
         kundenkartePanel.add(rdbNein);
         gbc.gridx = 1;
         mainPanel.add(kundenkartePanel, gbc);
 
+        // Führerscheinzeit-Label und Textfeld erstellen und hinzufügen
         JLabel lblFuehrerscheinzeit = new RoundedLabel(" Führerscheinzeit: ");
         txtFuehrerscheinzeit = new JTextField(15);
         gbc.gridx = 0;
@@ -345,6 +354,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtFuehrerscheinzeit, gbc);
 
+        // Führerscheinklasse-Label und ComboBox erstellen und hinzufügen
         JLabel lblFuehrerscheinklasse = new RoundedLabel(" Führerscheinklasse: ");
         String[] fuehrerscheinklassen = {" ", "B", "C"};
         cmbFuehrerscheinklasse = new JComboBox<>(fuehrerscheinklassen);
@@ -354,6 +364,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(cmbFuehrerscheinklasse, gbc);
 
+        // Passwort-Label und Passwortfeld erstellen und hinzufügen
         JLabel lblPasswort = new RoundedLabel(" Passwort: ");
         txtPasswort = new JPasswordField(15);
         gbc.gridx = 0;
@@ -362,6 +373,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtPasswort, gbc);
 
+        // Passwort wiederholen-Label und Passwortfeld erstellen und hinzufügen
         JLabel lblPasswortWdh = new RoundedLabel(" Passwort wiederholen: ");
         txtPasswortWdh = new JPasswordField(15);
         gbc.gridx = 0;
@@ -370,7 +382,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtPasswortWdh, gbc);
 
-        // Buttons
+        // Zurück- und Bestätigen-Buttons erstellen und hinzufügen
         JButton btnZurueck = new JButton("Zurück");
         JButton btnBestaetigen = new JButton("Bestätigen");
         gbc.gridx = 0;
