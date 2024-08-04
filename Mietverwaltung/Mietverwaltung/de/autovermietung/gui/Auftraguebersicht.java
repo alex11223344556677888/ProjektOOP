@@ -23,13 +23,13 @@ public class Auftraguebersicht extends JPanel {
         }
         this.kundenverwaltung = kundenverwaltung;
         
-        mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
+       mainPanel = new BackgroundPanel("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg"); // Update with the correct path to your image
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.CENTER;
 
-        // Header label
+        // Header-Label erstellen und hinzufügen
         JLabel lblHeader = new JLabel("Buchungsverlauf");
         lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0;
@@ -40,14 +40,14 @@ public class Auftraguebersicht extends JPanel {
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Create the list model and populate it
+        // ListModel erstellen und mit Daten füllen
         listModel = new DefaultListModel<>();
         listModel.addElement("<html> ---Modell---- <br/> ---Buchungszeitraum---- <br/> ----Abgeschlossen---- <br/>------</html>");
         listModel.addElement("<html>----Modell---- <br/>----Buchungszeitraum---- <br/> ----Offen---- <br/>------</html>");
         listModel.addElement("Element 3");
         listModel.addElement("Element 4");
 
-        // Create the JList with the list model
+        // JList mit dem ListModel erstellen
         list = new JList<>(listModel);
         list.setCellRenderer(new CustomListCellRenderer());
         JScrollPane scrollPane = new JScrollPane(list);
@@ -58,11 +58,11 @@ public class Auftraguebersicht extends JPanel {
         gbc.gridwidth = 2;
         mainPanel.add(scrollPane, gbc);
 
-        // Create buttons
+        // Buttons erstellen
         btnZurueck = new JButton("Zurück");
         btnNeuesAutoMieten = new JButton("Neues Auto mieten");
 
-        // Add buttons to the panel
+        // Buttons zum Panel hinzufügen
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 1;
@@ -72,54 +72,56 @@ public class Auftraguebersicht extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(btnNeuesAutoMieten, gbc);
 
-        // Set layout and add main panel to this panel
+        // Layout setzen und mainPanel zum Hauptpanel hinzufügen
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        // Add action listeners for buttons
+        // ActionListener für den Zurück-Button
         btnZurueck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Implement the action for the Zurück button
+                // Aktion für den Zurück-Button implementieren
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
                 parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new LoginPage(kundenverwaltung).getMainPanel());
-                parentFrame.revalidate();
-                parentFrame.repaint();
-            }
-        });
-        btnNeuesAutoMieten.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Implement the action for the Neues Auto mieten button
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
-                parentFrame.getContentPane().removeAll();
-                parentFrame.getContentPane().add(new KalenderPage(kundenverwaltung).getMainPanel());
+                parentFrame.getContentPane().add(new LoginPage().getMainPanel());
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
         });
 
-        // Add mouse listener to the list
+        // ActionListener für den Neues Auto mieten-Button
+        btnNeuesAutoMieten.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aktion für den Neues Auto mieten-Button implementieren
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                parentFrame.getContentPane().removeAll();
+                parentFrame.getContentPane().add(new KalenderPage().getMainPanel());
+                parentFrame.revalidate();
+                parentFrame.repaint();
+            }
+        });
+
+        // MouseListener zur Liste hinzufügen
         list.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
-                    // Single-click detected, show the message box
+                    // Doppelklick erkannt, zeige die benutzerdefinierte Nachricht an
                     showCustomMessageDialog();
                 }
             }
         });
     }
-    
-    // Message box -------------
+
+    // Methode zur Anzeige einer benutzerdefinierten Nachricht
     private void showCustomMessageDialog() {
-        // Create a custom panel for the message dialog
+        // Panel für die benutzerdefinierte Nachricht erstellen
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Auto details (left side)
+        // Auto-Details (linke Seite)
         JLabel lblMarke = new JLabel("Marke:");
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -180,7 +182,7 @@ public class Auftraguebersicht extends JPanel {
         gbc.gridx = 1;
         panel.add(txtFarbe, gbc);
 
-        // Ausstattung checkboxes
+        // Ausstattung Checkboxes erstellen und hinzufügen
         JPanel subPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbcSub = new GridBagConstraints();
         gbcSub.insets = new Insets(5, 5, 5, 5);
@@ -200,7 +202,7 @@ public class Auftraguebersicht extends JPanel {
             subPanel.add(checkBoxes[i], gbcSub);
         }
 
-        // add image
+        // Bild hinzufügen
         ImageIcon imageIcon = new ImageIcon("bilder/DFF4179E-6663-4C59-9991-ACE68B2C9392.jpeg");
         Image image = imageIcon.getImage();
 
@@ -240,7 +242,7 @@ public class Auftraguebersicht extends JPanel {
         gbc.gridx = 1;
         panel.add(txtZeitraum, gbc);
 
-        // Zusatzbuchungen
+        // Zusatzbuchungen erstellen und hinzufügen
         JLabel lblZusatzbuchungen = new JLabel("Zusatzbuchungen:");
         gbc.gridx = 0;
         gbc.gridy = 8;
@@ -254,12 +256,12 @@ public class Auftraguebersicht extends JPanel {
         for (int i = 0; i < zusatzbuchungenItems.length; i++) {
             JCheckBox checkBox = new JCheckBox(zusatzbuchungenItems[i]);
             gbc.gridx = 0;
-            gbc.gridy = 9 + i * 2; // Adjust y position to make room for the text field
+            gbc.gridy = 9 + i * 2; // Y-Position anpassen, um Platz für das Textfeld zu schaffen
             panel.add(checkBox, gbc);
 
-            // Add action listener to show/hide text field for "Kindersitz"
+            // ActionListener hinzufügen, um das Textfeld für "Kindersitz" ein-/auszublenden
             if (zusatzbuchungenItems[i].equals("Kindersitz")) {
-                gbc.gridy = 9 + i * 2 + 1; // Position directly below the checkbox
+                gbc.gridy = 9 + i * 2 + 1; // Position direkt unterhalb der Checkbox
                 panel.add(txtKindersitz, gbc);
 
                 checkBox.addActionListener(e -> {
@@ -268,6 +270,8 @@ public class Auftraguebersicht extends JPanel {
                     panel.repaint();
                 });
             }
+
+            // Preisfeld hinzufügen
             JLabel lblPreis = new JLabel("Preis:");
             gbc.gridx = 0;
             gbc.gridy = 16;
@@ -279,7 +283,7 @@ public class Auftraguebersicht extends JPanel {
             panel.add(txtPreis, gbc);
         }
 
-        // Versicherungspaket
+        // Versicherungspaket erstellen und hinzufügen
         JLabel lblVersicherungspaket = new JLabel("Versicherungspaket:");
         gbc.gridx = 1;
         gbc.gridy = 8;
@@ -296,7 +300,7 @@ public class Auftraguebersicht extends JPanel {
             versicherungspaketGroup.add(radioButton);
         }
 
-        // Kundendaten (right side)
+        // Kundendaten (rechte Seite) erstellen und hinzufügen
         JPanel kundenPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbcKunden = new GridBagConstraints();
         gbcKunden.insets = new Insets(5, 5, 5, 5);
@@ -321,10 +325,10 @@ public class Auftraguebersicht extends JPanel {
         gbc.gridheight = 8;
         panel.add(kundenPanel, gbc);
 
-        // Custom buttons for the JOptionPane
+        // Benutzerdefinierte Buttons für das JOptionPane
         JButton btnZurueck = new JButton("Zurück");
         btnZurueck.addActionListener(e -> {
-            // Close the dialog
+            // Schließt den Dialog
             Window window = SwingUtilities.getWindowAncestor(btnZurueck);
             if (window != null) {
                 window.dispose();
@@ -333,11 +337,11 @@ public class Auftraguebersicht extends JPanel {
 
         JButton btnLoeschen = new JButton("Löschen");
         btnLoeschen.addActionListener(e -> {
-            // Action to be performed when "Löschen" is clicked
+            // Aktion ausführen, wenn "Löschen" angeklickt wird
             int confirmation = JOptionPane.showConfirmDialog(panel, "Möchten Sie wirklich löschen?", "Bestätigung", JOptionPane.YES_NO_OPTION);
             if (confirmation == JOptionPane.YES_OPTION) {
-                // Perform the delete action here
-                // For now, just close the dialog
+                // Löschen-Aktion hier ausführen
+                // Vorläufig wird nur der Dialog geschlossen
                 Window window = SwingUtilities.getWindowAncestor(btnLoeschen);
                 if (window != null) {
                     window.dispose();
@@ -345,13 +349,13 @@ public class Auftraguebersicht extends JPanel {
             }
         });
 
-        // Display the custom panel in a JOptionPane
+        // Benutzerdefiniertes Panel in einem JOptionPane anzeigen
         JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{btnZurueck, btnLoeschen});
         JDialog dialog = optionPane.createDialog(this, "Vertragsübersicht");
         dialog.setVisible(true);
     }
 
-    // Helper method to add labels and text fields to the panel
+    // Hilfsmethode zum Hinzufügen von Labels und Textfeldern zum Panel
     private void addLabelAndTextField1(JPanel panel, GridBagConstraints gbc, String labelText, String textFieldText, int yPosition) {
         JLabel label = new JLabel(labelText);
         gbc.gridx = 0;
@@ -363,20 +367,8 @@ public class Auftraguebersicht extends JPanel {
         gbc.gridx = 1;
         panel.add(textField, gbc);
     }
-    
-    private void addLabelAndTextField(JPanel panel, GridBagConstraints gbc, String labelText, String textFieldText, int yPos) {
-        JLabel label = new JLabel(labelText);
-        JTextField textField = new JTextField(15);
-        textField.setText(textFieldText);
-        textField.setEditable(false);
-        
-        gbc.gridx = 0;
-        gbc.gridy = yPos;
-        panel.add(label, gbc);
-        gbc.gridx = 1;
-        panel.add(textField, gbc);
-    }
 
+    // Benutzerdefinierte ListCellRenderer-Klasse
     static class CustomListCellRenderer extends DefaultListCellRenderer {
         private static final long serialVersionUID = 1L;
 
@@ -401,6 +393,7 @@ public class Auftraguebersicht extends JPanel {
         }
     }
 
+    // Getter für das Hauptpanel
     public JPanel getMainPanel() {
         return mainPanel;
     }
