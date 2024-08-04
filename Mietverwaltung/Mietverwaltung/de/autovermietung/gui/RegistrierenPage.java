@@ -35,7 +35,7 @@ public class RegistrierenPage extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Header label
+// Header label
         JLabel lblHeader = new RoundedLabel(" Gib deine Persönliche Daten ein ");
         lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0;
@@ -49,7 +49,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Labels and text fields for the form
+// Vorname
         JLabel lblVorname = new RoundedLabel(" Vorname: ");
         txtVorname = new JTextField(15);
         gbc.gridx = 0;
@@ -60,6 +60,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtVorname, gbc);
 
+// Name 
         JLabel lblName = new RoundedLabel(" Name: ");
         txtName = new JTextField(15);
         gbc.gridx = 0;
@@ -70,6 +71,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtName, gbc);
 
+// Geburtstag
         JLabel lblGeburtsdatum = new RoundedLabel(" Geburtsdatum: ");
         JFormattedTextField txtGeburtsdatum = createFormattedDateField();
         gbc.gridx = 0;
@@ -90,7 +92,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblAlter, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtAlter, gbc);  
-     // Define a DocumentFilter to allow only numeric input and limit the length for txtAlter
+     
         ((AbstractDocument) txtAlter.getDocument()).setDocumentFilter(new DocumentFilter() {
             private final int MAX_LENGTH = 2;
 
@@ -136,7 +138,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblTelefonnummer, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtTelefonnummer, gbc);
-        // Define a DocumentFilter to allow only numeric input and limit the length for txtTelefonnummer
+        
         ((AbstractDocument) txtTelefonnummer.getDocument()).setDocumentFilter(new DocumentFilter() {
             private final int MAX_LENGTH = 13;
 
@@ -182,7 +184,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridx = 1;
         mainPanel.add(txtEmail, gbc);
 
-        // Define an InputVerifier to allow only valid email addresses
+        
         txtEmail.setInputVerifier(new InputVerifier() {
             private final Pattern emailPattern = Pattern.compile(
                 "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
@@ -206,7 +208,6 @@ public class RegistrierenPage extends JPanel {
             }
         });
 
-        // Set the font of txtTelefonnummer to be the same as txtEmail
         Font emailFont = txtEmail.getFont();
         txtTelefonnummer.setFont(emailFont);
 
@@ -239,7 +240,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblOrt, gbc);
         gbc.gridx = 1;
         mainPanel.add(txtOrt, gbc);
-        // Define a DocumentFilter to disallow numeric input for txtOrt
+    
         ((AbstractDocument) txtOrt.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
@@ -282,7 +283,7 @@ public class RegistrierenPage extends JPanel {
         mainPanel.add(lblPLZ, gbc);
         gbc.gridx = 3;
         mainPanel.add(txtPLZ, gbc);
-        // Define a DocumentFilter to allow only numeric input for txtPLZ
+        
         ((AbstractDocument) txtPLZ.getDocument()).setDocumentFilter(new DocumentFilter() {
             private final int MAX_LENGTH = 5;
 
@@ -329,7 +330,7 @@ public class RegistrierenPage extends JPanel {
         gbc.gridy = 9;
         mainPanel.add(lblKundenkarte, gbc);
 
-        // Create a JPanel with FlowLayout to hold the radio buttons side by side
+        
         JPanel kundenkartePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         kundenkartePanel.add(rdbJa);
         kundenkartePanel.add(rdbNein);
