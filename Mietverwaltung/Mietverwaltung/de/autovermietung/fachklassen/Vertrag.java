@@ -18,28 +18,25 @@ import autovermietung.Fachklassen.Auftrag;
 
 public class Vertrag implements Serializable {
     private static final long serialVersionUID = 1L;
+    private int vertragsID;
     private Kunde kunde; //Referenz zum Kundenobjekt
     private PKW pkw;     //Referenz zum PKW Objekt
     private Termin termin;
-    //private LocalDate vertragsbeginn;
-   // private LocalDate vertragsende;
     private Auftrag auftrag;
     private Kostenberechnung kostenberechnung;
     
     //Speicherung des Dateinamens für die Vertragsdaten
     private static final String VERTRAG_DATEI = "vertraege.dat";
 
-   
+    private static int nextVertragsID = 1;
     //Konstruktor
     public Vertrag(Kunde kunde, PKW pkw, Termin termin) {
     this.kunde = kunde;
     //System.out.println("Kunde set to: " + kunde);
     this.pkw = pkw;
     this.termin = termin;
-    //this.vertragsbeginn = vertragsbeginn;
-   //this.vertragsende = vertragsende;
-    //this.auftrag = new Auftrag(1, "someCategory", true, true, true, true, 1, 1, true, true, true, 1, true); // create a new Auftrag object
-    //this.kostenberechnung = new Kostenberechnung(kunde, pkw, auftrag); // pass the Auftrag object to Kostenberechnung
+
+    this.vertragsID = nextVertragsID++;
 }
     //verschiedene set-Methoden
 
@@ -53,14 +50,11 @@ public class Vertrag implements Serializable {
     public void setTermin(Termin termin) {
         this.termin = termin;
     }
+    public int getVertragsID() {
+        return vertragsID;
+    }
 
-    //public void setVertragsbeginn(LocalDate vertragsbeginn) {
-      //  this.vertragsbeginn = vertragsbeginn;
-    //}
 
-    //public void setVertragsende(LocalDate vertragsende) {
-    //    this.vertragsende = vertragsende;
-    //}
 
     
     //verschiedene get-Methoden
@@ -136,10 +130,7 @@ public class Vertrag implements Serializable {
 }   
     //erstellt einen neuen Vertrag
     public void erstelleVertrag(Kunde kunde, PKW pkw, Termin termin) {
-      //  if (kunde == null) {
-        //    System.out.println("Kunde is null!");
-        //    return;
-       //}
+      
         Vertrag vertrag = new Vertrag(kunde, pkw, termin);
         //vertrag.setKunde(kunde);
         List<Vertrag> vertraege = ladeVertraege();
