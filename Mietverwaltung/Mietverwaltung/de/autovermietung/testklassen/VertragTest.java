@@ -22,22 +22,20 @@ public class VertragTest {
         Kundenverwaltung kundenverwaltung = new Kundenverwaltung();
         PKWVerwaltung pkwverwaltung = new PKWVerwaltung();
 
-        Kunde kunde1 = new Kunde("Max", "Mustermann", "01.01.1990", 31, 123456, 12345678, "B", "max.mustermann@example.com", "EC-Karte", "Keine besonderen Vorkommnisse", "Musterstraße", 1, 12345, "Musterstadt", true, 10, "max123", "passwortMax");
+        Kunde kunde1 = new Kunde("Max", "mustermann", "01.01.1990", 31, 123456, 12345678, "B", "max.mustermann@example.com", "EC-Karte", "Keine besonderen Vorkommnisse", "Musterstraße", 1, 12345, "Musterstadt", true, 10, "max123", "passwortMax");
        // Kunde kunde1 = new Kunde("Max", "Mustermann", "01.01.1990", 31, 123456, 12345678, "B", "max.mustermann@example.com", "EC-Karte", "Keine besonderen Vorkommnisse", "Musterstraße", 1, 12345, "Musterstadt", true, 10, "max123", "passwortMax");
-        Kunde kunde2 = new Kunde("John", "Doe", "02.02.1992", 32, 789012, 34567890, "A", "john.doe@example.com", "Kreditkarte", "Keine besonderen Vorkommnisse", "Examplestraße", 2, 67890, "Examplestadt", true, 20, "johndoe", "passwordJohn");
+        Kunde kunde2 = new Kunde("John", "doe", "02.02.1992", 32, 789012, 34567890, "A", "john.doe@example.com", "Kreditkarte", "Keine besonderen Vorkommnisse", "Examplestraße", 2, 67890, "Examplestadt", true, 20, "johndoe", "passwordJohn");
         // Beispiel Kunde und PKW
         kundenverwaltung.neuenKundenErstellen(kunde1);
         kundenverwaltung.neuenKundenErstellen(kunde2);
         Kunde kundeByEmail = kundenverwaltung.getKundeByEmail("max.mustermann@example.com");
         Kunde kundeByKundennummer = kundenverwaltung.getKundeByKundennummer(kunde2.getKundennummer());
-       // Kunde kunde1 = kundenverwaltung.getKundeByEmail("max.mustermann@example.com");
-        //Kunde kunde2 = kundenverwaltung.getKundeByKundennummer(849877410);
+       
         PKW pkw1 = pkwverwaltung.getPkwById(1003);
         PKW pkw2 = pkwverwaltung.getPkwById(1004);
 
         // Vertragsdetails definieren
-        //LocalDate vertragsbeginn = LocalDate.of(2023, 3, 1);
-        //LocalDate vertragsende = LocalDate.of(2023, 3, 10);
+
         Termin termin1 = new Termin(1, kunde1, pkw1, LocalDateTime.of(2023, 3, 1, 9, 0), LocalDateTime.of(2023, 3, 10, 17, 0));
         Termin termin2 = new Termin(2, kunde2, pkw2, LocalDateTime.of(2023, 3, 15, 12, 0), LocalDateTime.of(2023, 3, 20, 10, 0));
 
